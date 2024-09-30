@@ -21,7 +21,7 @@ jobs:
       - name: Build project
         uses: ./.github/actions/build
         with:
-          target-directory: "./src/"
+          target-directory: "./src"
 
       - name: Tests
         uses: ./.github/actions/tests
