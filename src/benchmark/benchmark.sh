@@ -1,15 +1,5 @@
 #!/bin/bash
 
-# Function to calculate average time in seconds from an array of times
-calculate_average() {
-    local sum=0
-    local count=$#
-    for time in "$@"; do
-        sum=$(echo "$sum + $time" | bc)
-    done
-    echo "scale=6; $sum / $count" | bc
-}
-
 # Start Docker containers
 echo "Starting Docker containers..."
 docker-compose down
