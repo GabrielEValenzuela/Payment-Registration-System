@@ -1,0 +1,15 @@
+basePath: /
+host: localhost:8080
+info:
+  contact:
+    email: https://github.com/GabrielEValenzuela/Payment-Registration-System
+    name: API Support
+  description: Payment Registration System API for Database Management Course UNLP
+  license:
+    name: MIT License
+    url: http://www.apache.org/licenses/MIT.html
+  termsOfService: http://swagger.io/terms/
+  title: Payment Registration System
+  version: "1.0"
+paths: {}
+swagger: "2.0"
