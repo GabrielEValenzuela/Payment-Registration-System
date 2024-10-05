@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_benchmark
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: benchmark
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3306:3306"
+    networks:
+      - benchmark-net
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  mongodb:
+    image: mongo:5.0
+    container_name: mongodb_benchmark
+    ports:
+      - "27017:27017"
+    networks:
+      - benchmark-net
+    volumes:
+      - mongodb_data:/data/db
+
+networks:
+  benchmark-net:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  mongodb_data:
+
