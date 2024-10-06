@@ -1,8 +1,6 @@
 package gorm
 
 import (
-	"context"
-
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/infrastructure/persistence/gorm/mapper"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/promotion"
 	"gorm.io/gorm"
@@ -18,7 +16,7 @@ func NewBankRepository(db *gorm.DB) *BankRepositoryGORM {
 }
 
 // Implementación de la interfaz BankRepository
-func (r *BankRepositoryGORM) AddFinancingPromotionToBank(ctx context.Context, promotionFinancing promotion.Financing) error {
+func (r *BankRepositoryGORM) AddFinancingPromotionToBank(promotionFinancing *promotion.Financing) error {
 	// Lógica para agregar la promoción al banco
 	return r.db.Create(mapper.ToFinancingEntity(promotionFinancing)).Error
 }

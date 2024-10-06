@@ -8,8 +8,9 @@ import (
 )
 
 // Bank a BankModel mapper
-func ToBankEntity(bank bank.Bank) entities.BankEntity {
-	return entities.BankEntity{
+func ToBankEntity(bank *bank.Bank) *entities.BankEntity {
+	return &entities.BankEntity{
+		Name:      bank.Name,
 		Cuit:      bank.Cuit,
 		Address:   bank.Address,
 		Telephone: bank.Telephone,
@@ -19,8 +20,8 @@ func ToBankEntity(bank bank.Bank) entities.BankEntity {
 }
 
 // BankModel a Bank mapper (si necesitas convertir de nuevo)
-func ToBank(bankModel entities.BankEntity) bank.Bank {
-	return bank.Bank{
+func ToBank(bankModel *entities.BankEntity) *bank.Bank {
+	return &bank.Bank{
 		Cuit:      bankModel.Cuit,
 		Address:   bankModel.Address,
 		Telephone: bankModel.Telephone,

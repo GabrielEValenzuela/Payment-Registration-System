@@ -9,6 +9,7 @@ func (BankEntity) TableName() string {
 // Bank represents a financial institution that holds customers and issues cards.
 type BankEntity struct {
 	ID        uint   `gorm:"primaryKey"`
+	Name      string `gorm:"size:255"`
 	Cuit      string `gorm:"size:255"`
 	Address   string `gorm:"size:255"`
 	Telephone string `gorm:"size:255"`
