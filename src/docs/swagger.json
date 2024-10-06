@@ -1,0 +1,20 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Payment Registration System API for Database Management Course UNLP",
+        "title": "Payment Registration System",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "email": "https://github.com/GabrielEValenzuela/Payment-Registration-System"
+        },
+        "license": {
+            "name": "MIT License",
+            "url": "http://www.apache.org/licenses/MIT.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8080",
+    "basePath": "/",
+    "paths": {}
+}
