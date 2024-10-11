@@ -1,8 +1,8 @@
 package mapper
 
 import (
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/infrastructure/persistence/gorm/entities"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/promotion"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/entities"
 )
 
 // Mapper from PromotionModel to Promotion

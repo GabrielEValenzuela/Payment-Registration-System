@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/infrastructure/persistence/gorm/entities"
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/infrastructure/persistence/gorm/mapper"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/bank"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/promotion"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/entities"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/mapper"
 	"github.com/stretchr/testify/assert"
 )
 

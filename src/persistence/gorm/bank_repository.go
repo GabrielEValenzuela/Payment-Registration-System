@@ -1,8 +1,8 @@
 package gorm
 
 import (
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/infrastructure/persistence/gorm/mapper"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/promotion"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/mapper"
 	"gorm.io/gorm"
 )
 
