@@ -40,7 +40,17 @@ func initSQLDB(database *gorm.DB) error {
 	}
 
 	// Create tablets
-	err := database.AutoMigrate(&entities.BankEntity{}, entities.FinancingEntity{})
+	err := database.AutoMigrate(
+		&entities.BankEntity{},
+		&entities.CustomerEntity{},
+		&entities.CardEntity{},
+		&entities.QuotaEntity{},
+		&entities.PurchaseMonthlyPaymentsEntity{},
+		&entities.PurchaseSinglePaymentEntity{},
+		&entities.DiscountEntity{},
+		&entities.FinancingEntity{},
+		&entities.PaymentSummaryEntity{},
+	)
 
 	return err
 }
