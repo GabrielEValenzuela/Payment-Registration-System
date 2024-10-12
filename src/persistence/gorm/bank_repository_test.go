@@ -20,10 +20,6 @@ func TestBankRepositoryWithMySQL(t *testing.T) {
 		t.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	// Migrate the models (create the tables if they don't exist)
-	database.Migrator().DropTable(&entities.BankEntity{}, entities.FinancingEntity{})
-	database.AutoMigrate(&entities.BankEntity{}, entities.FinancingEntity{})
-
 	// insert new bank
 	newBank := bank.Bank{
 		Name:      "Santander",

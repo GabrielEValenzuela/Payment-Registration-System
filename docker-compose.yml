@@ -11,8 +11,8 @@ services:
       MYSQL_PASSWORD: testpassword            # Password for the additional user
     ports:
       - "3306:3306"           # Expose MySQL port 3306 to the host
-    volumes:
-      - ./data:/var/lib/mysql  # Persist data in the ./data folder
+    #volumes:
+    #  - ./data:/var/lib/mysql  # Persist data in the ./data folder
     networks:
       - mynetwork
 

@@ -20,7 +20,7 @@ func ToPromotion(promotionEntity *entities.PromotionEntity) *promotion.Promotion
 }
 
 // Mapper from Promotion to PromotionModel
-func ToPromotionEntity(promotion *promotion.Promotion) *entities.PromotionEntity {
+func ToPromotionEntity(promotion *promotion.Promotion, bankId uint) *entities.PromotionEntity {
 	return &entities.PromotionEntity{
 		Code:              promotion.Code,
 		PromotionTitle:    promotion.PromotionTitle,
@@ -30,7 +30,7 @@ func ToPromotionEntity(promotion *promotion.Promotion) *entities.PromotionEntity
 		ValidityEndDate:   promotion.ValidityEndDate,
 		Comments:          promotion.Comments,
 		Bank:              *ToBankEntity(&promotion.Bank), // Use the existing mapper for BankModel
-		//BankID:            bankId,                       // Assign the bank's ID
+		BankID:            bankId,                         // Assign the bank's ID
 	}
 }
 
@@ -44,9 +44,9 @@ func ToFinancing(financingEntity *entities.FinancingEntity) *promotion.Financing
 }
 
 // Mapper from Financing to FinancingModel
-func ToFinancingEntity(financing *promotion.Financing) *entities.FinancingEntity {
+func ToFinancingEntity(financing *promotion.Financing, bankId uint) *entities.FinancingEntity {
 	return &entities.FinancingEntity{
-		PromotionEntity: *ToPromotionEntity(&financing.Promotion), // Reuse the Promotion mapping
+		PromotionEntity: *ToPromotionEntity(&financing.Promotion, bankId), // Reuse the Promotion mapping
 		NumberOfQuotas:  financing.NumberOfQuotas,
 		Interest:        financing.Interest,
 	}

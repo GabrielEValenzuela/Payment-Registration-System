@@ -3,6 +3,7 @@ package gorm
 import (
 	"log"
 
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/entities"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -19,6 +20,27 @@ func NewMySQLDB() (*gorm.DB, error) {
 		return nil, err
 	}
 
+	err = initSQLDB(db)
+	if err != nil {
+		log.Fatalf("Failed to connect to MySQL database: %v", err)
+		return nil, err
+	}
+
 	// Return the DB instance
 	return db, nil
+}
+
+func initSQLDB(database *gorm.DB) error {
+	// Clean Database
+	var tables []string
+	database.Raw("SHOW TABLES").Scan(&tables)
+
+	for _, table := range tables {
+		database.Migrator().DropTable(table)
+	}
+
+	// Create tablets
+	err := database.AutoMigrate(&entities.BankEntity{}, entities.FinancingEntity{})
+
+	return err
 }
