@@ -7,7 +7,7 @@ runs:
       shell: bash
       id: coverage
       run: |
-        go test -coverprofile=coverage.out ./...
+        go test -cover github.com/GabrielEValenzuela/Payment-Registration-System/src/... -coverprofile=coverage.out && go tool cover -html=coverage.out -o coverage.html
         coverage=$(go tool cover -func=coverage.out | grep total | awk '{print $3}' | sed 's/%//')
 
         echo "Coverage is $coverage%"
@@ -19,3 +19,9 @@ runs:
           echo "Coverage is not greater than 90%"
           exit 1
         fi
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: ./coverage.html
+        retention-days: 7
