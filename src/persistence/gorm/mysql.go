@@ -30,6 +30,16 @@ func NewMySQLDB() (*gorm.DB, error) {
 	return db, nil
 }
 
+func CloseDB(database *gorm.DB) error {
+	db, err := database.DB()
+	if err != nil {
+		log.Fatalf("Failed to connect to MySQL database: %v", err)
+		return err
+	}
+	db.Close()
+	return nil
+}
+
 func initSQLDB(database *gorm.DB) error {
 	// Clean Database
 	var tables []string
