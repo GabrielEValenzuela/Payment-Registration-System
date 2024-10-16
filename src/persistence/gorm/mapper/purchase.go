@@ -6,7 +6,7 @@ import (
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/entities"
 )
 
-func toPurchaseSinglePayment(entity *entities.PurchaseSinglePaymentEntity) *purchase.PurchaseSinglePayment {
+func ToPurchaseSinglePayment(entity *entities.PurchaseSinglePaymentEntity) *purchase.PurchaseSinglePayment {
 	return &purchase.PurchaseSinglePayment{
 		Purchase:      *toPurchase(&entity.PurchaseEntity),
 		StoreDiscount: entity.StoreDiscount,
@@ -20,7 +20,7 @@ func ToPurchaseSinglePaymentEntity(model *purchase.PurchaseSinglePayment) *entit
 	}
 }
 
-func toPurchaseMonthlyPayments(entity *entities.PurchaseMonthlyPaymentsEntity) *purchase.PurchaseMonthlyPayment {
+func ToPurchaseMonthlyPayments(entity *entities.PurchaseMonthlyPaymentsEntity) *purchase.PurchaseMonthlyPayment {
 	var quotas []quota.Quota
 	for _, src := range entity.Quotas {
 		quotas = append(quotas, *ToQuota(&src))
@@ -60,7 +60,7 @@ func ToPurchaseEntity(model *purchase.Purchase) *entities.PurchaseEntity {
 func toPurchase(entity *entities.PurchaseEntity) *purchase.Purchase {
 	return &purchase.Purchase{
 		PaymentVoucher: entity.PaymentVoucher,
-		Store:          entity.CuitStore,
+		Store:          entity.Store,
 		CuitStore:      entity.CuitStore,
 		Amount:         entity.Amount,
 		FinalAmount:    entity.FinalAmount,
@@ -70,7 +70,7 @@ func toPurchase(entity *entities.PurchaseEntity) *purchase.Purchase {
 func ConvertPurchaseMonthlyPaymentsList(paymentEntityList *[]entities.PurchaseMonthlyPaymentsEntity) *[]purchase.PurchaseMonthlyPayment {
 	var payments []purchase.PurchaseMonthlyPayment
 	for _, v := range *paymentEntityList {
-		payments = append(payments, *toPurchaseMonthlyPayments(&v))
+		payments = append(payments, *ToPurchaseMonthlyPayments(&v))
 	}
 	return &payments
 }
@@ -78,7 +78,7 @@ func ConvertPurchaseMonthlyPaymentsList(paymentEntityList *[]entities.PurchaseMo
 func ConvertPurchaseSinglePaymentList(paymentEntityList *[]entities.PurchaseSinglePaymentEntity) *[]purchase.PurchaseSinglePayment {
 	var payments []purchase.PurchaseSinglePayment
 	for _, v := range *paymentEntityList {
-		payments = append(payments, *toPurchaseSinglePayment(&v))
+		payments = append(payments, *ToPurchaseSinglePayment(&v))
 	}
 	return &payments
 }

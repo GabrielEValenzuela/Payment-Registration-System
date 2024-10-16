@@ -93,5 +93,63 @@ func TestGetCardsExpiringInNext30Days(t *testing.T) {
 		log.Fatalf("Failed to execute SQL file: %v", err)
 	}
 
-	assert.Equal(t, len(cards), 2)
+	assert.Equal(t, len(*cards), 2)
+}
+
+func TestGetPurchaseSingle(t *testing.T) {
+	paymentVoucher := "PV20241001"
+	cuit := "30-12345678-9"
+	finalAmount := 100.00
+
+	// Database
+	database, err := NewMySQLDB()
+	if err != nil {
+		t.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer CloseDB(database)
+
+	// Insert Data
+	err = testresource.ExecuteSQLFile(database, "./test_resource/insert.sql")
+	if err != nil {
+		log.Fatalf("Failed to execute SQL file: %v", err)
+	}
+
+	cardRepo := NewCardRepository(database)
+
+	payment, err := cardRepo.GetPurchaseSingle(cuit, finalAmount, paymentVoucher)
+	if err != nil {
+		log.Fatalf("Failed to execute SQL file: %v", err)
+	}
+
+	assert.Equal(t, payment.Purchase.Store, "Store A")
+}
+
+func TestGetPurchaseMonthly(t *testing.T) {
+	paymentVoucher := "PV20241101"
+	cuit := "20-98765432-1"
+	finalAmount := 440.0
+
+	// Database
+	database, err := NewMySQLDB()
+	if err != nil {
+		t.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer CloseDB(database)
+
+	// Insert Data
+	err = testresource.ExecuteSQLFile(database, "./test_resource/insert.sql")
+	if err != nil {
+		log.Fatalf("Failed to execute SQL file: %v", err)
+	}
+
+	cardRepo := NewCardRepository(database)
+
+	payment, err := cardRepo.GetPurchaseMonthly(cuit, finalAmount, paymentVoucher)
+	if err != nil {
+		log.Fatalf("Failed to execute SQL file: %v", err)
+	}
+
+	assert.Equal(t, payment.Purchase.Store, "Store B")
+	assert.Equal(t, payment.Purchase.Amount, 110.00)
+	assert.Equal(t, len(payment.Quota), 4)
 }

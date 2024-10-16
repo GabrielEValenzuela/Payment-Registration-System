@@ -6,6 +6,7 @@ import (
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/card"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/payment_summary"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/purchase"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/entities"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/mapper"
 	"gorm.io/gorm"
@@ -76,7 +77,7 @@ func (r *CardRepositoryGORM) GetPaymentSummary(cardNumber string, month int, yea
 	return mapper.ToPaymentSummary(&paymentSummary), nil
 }
 
-func (r *CardRepositoryGORM) GetCardsExpiringInNext30Days(day int, month int, year int) ([]card.Card, error) {
+func (r *CardRepositoryGORM) GetCardsExpiringInNext30Days(day int, month int, year int) (*[]card.Card, error) {
 	startDate := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
 	next30Days := startDate.AddDate(0, 0, 30)
 
@@ -91,5 +92,27 @@ func (r *CardRepositoryGORM) GetCardsExpiringInNext30Days(day int, month int, ye
 		cards = append(cards, *mapper.ToCard(&src.Card))
 	}
 
-	return cards, nil
+	return &cards, nil
+}
+
+func (r *CardRepositoryGORM) GetPurchaseSingle(cuit string, finalAmount float64, paymentVoucher string) (*purchase.PurchaseSinglePayment, error) {
+	var paymentEntity entities.PurchaseSinglePaymentEntity
+
+	if err := r.db.Where("cuit_store = ? AND final_amount = ? AND payment_voucher = ?", cuit, finalAmount, paymentVoucher).
+		First(&paymentEntity).Error; err != nil {
+		return nil, err
+	}
+
+	return mapper.ToPurchaseSinglePayment(&paymentEntity), nil
+}
+
+func (r *CardRepositoryGORM) GetPurchaseMonthly(cuit string, finalAmount float64, paymentVoucher string) (*purchase.PurchaseMonthlyPayment, error) {
+	var paymentEntity entities.PurchaseMonthlyPaymentsEntity
+
+	if err := r.db.Preload("Quotas").Where("cuit_store = ? AND final_amount = ? AND payment_voucher = ?", cuit, finalAmount, paymentVoucher).
+		First(&paymentEntity).Error; err != nil {
+		return nil, err
+	}
+
+	return mapper.ToPurchaseMonthlyPayments(&paymentEntity), nil
 }
