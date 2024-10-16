@@ -15,12 +15,12 @@ func ToPaymentSummary(entity *entities.PaymentSummaryEntity) *payment_summary.Pa
 		SurchargePercentage: entity.SurchargePercentage,
 		TotalPrice:          entity.TotalPrice,
 		Card:                *ToCard(&entity.Card),
-		//MonthlyPayments:     entity.Card.PurchaseMonthlyPayments,
-		//SinglePayments:      entity.Card.PurchaseMonthlyPayments,
+		MonthlyPayments:     *ConvertPurchaseMonthlyPaymentsList(&entity.Card.PurchaseMonthlyPayments),
+		SinglePayments:      *ConvertPurchaseSinglePaymentList(&entity.Card.PurchaseSinglePayments),
 	}
 }
 
-func ToPaymentSummaryEntity(model *payment_summary.PaymentSummary, cardId uint) *entities.PaymentSummaryEntity {
+func PaymentSummaryEntity(model *payment_summary.PaymentSummary, cardId uint) *entities.PaymentSummaryEntity {
 	return &entities.PaymentSummaryEntity{
 		Code:                model.Code,
 		Month:               model.Month,

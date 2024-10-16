@@ -7,13 +7,14 @@ import (
 
 func ToCard(entity *entities.CardEntity) *card.Card {
 	return &card.Card{
-		Number:               entity.Number,
-		Ccv:                  entity.Ccv,
-		CardholderNameInCard: entity.CardholderNameInCard,
-		Since:                entity.Since,
-		ExpirationDate:       entity.ExpirationDate,
-		Bank:                 *ToBank(&entity.Bank),
-		//Purchases: ,
+		Number:                  entity.Number,
+		Ccv:                     entity.Ccv,
+		CardholderNameInCard:    entity.CardholderNameInCard,
+		Since:                   entity.Since,
+		ExpirationDate:          entity.ExpirationDate,
+		Bank:                    *ToBank(&entity.Bank),
+		PurchaseMonthlyPayments: *ConvertPurchaseMonthlyPaymentsList(&entity.PurchaseMonthlyPayments),
+		PurchaseSinglePayments:  *ConvertPurchaseSinglePaymentList(&entity.PurchaseSinglePayments),
 	}
 }
 

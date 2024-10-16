@@ -71,6 +71,8 @@ func (r *CardRepositoryGORM) GetPaymentSummary(cardNumber string, month int, yea
 		return nil, fmt.Errorf("error inserting payment summary: %v", err)
 	}
 
+	paymentSummary.Card = card
+
 	return mapper.ToPaymentSummary(&paymentSummary), nil
 }
 
@@ -80,7 +82,7 @@ func (r *CardRepositoryGORM) GetCardsExpiringInNext30Days(day int, month int, ye
 
 	var paymentSummaryList []entities.PaymentSummaryEntity
 
-	if err := r.db.Preload("Card").Where("firstExpiration BETWEEN ? AND ?", startDate, next30Days).Find(&paymentSummaryList).Error; err != nil {
+	if err := r.db.Preload("Card").Where("first_expiration BETWEEN ? AND ?", startDate, next30Days).Find(&paymentSummaryList).Error; err != nil {
 		return nil, err
 	}
 
