@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/card"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/payment_summary"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/entities"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/mapper"
 	"gorm.io/gorm"
 )
 
@@ -17,7 +20,7 @@ func NewCardRepository(db *gorm.DB) *CardRepositoryGORM {
 	return &CardRepositoryGORM{db: db}
 }
 
-func (r *CardRepositoryGORM) GetPaymentSummary(cardNumber string, month int, year int) error {
+func (r *CardRepositoryGORM) GetPaymentSummary(cardNumber string, month int, year int) (*payment_summary.PaymentSummary, error) {
 	// Retrieve a card and its purchases in a specific month
 	var card entities.CardEntity
 
@@ -31,7 +34,7 @@ func (r *CardRepositoryGORM) GetPaymentSummary(cardNumber string, month int, yea
 		Preload("PurchaseSinglePayments", "created_at >= ? AND created_at < ?", startDate, endDate).
 		Preload("PurchaseMonthlyPayments", "created_at >= ? AND created_at < ?", startDate, endDate).
 		First(&card).Error; err != nil {
-		return nil
+		return nil, err
 	}
 
 	// Calculate the total purchases in that month
@@ -65,8 +68,26 @@ func (r *CardRepositoryGORM) GetPaymentSummary(cardNumber string, month int, yea
 	}
 
 	if err := r.db.Create(&paymentSummary).Error; err != nil {
-		return fmt.Errorf("error inserting payment summary: %v", err)
+		return nil, fmt.Errorf("error inserting payment summary: %v", err)
 	}
 
-	return nil
+	return mapper.ToPaymentSummary(&paymentSummary), nil
+}
+
+func (r *CardRepositoryGORM) GetCardsExpiringInNext30Days(day int, month int, year int) ([]card.Card, error) {
+	startDate := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
+	next30Days := startDate.AddDate(0, 0, 30)
+
+	var paymentSummaryList []entities.PaymentSummaryEntity
+
+	if err := r.db.Preload("Card").Where("firstExpiration BETWEEN ? AND ?", startDate, next30Days).Find(&paymentSummaryList).Error; err != nil {
+		return nil, err
+	}
+
+	var cards []card.Card
+	for _, src := range paymentSummaryList {
+		cards = append(cards, *mapper.ToCard(&src.Card))
+	}
+
+	return cards, nil
 }
