@@ -1,6 +1,7 @@
 package gorm
 
 import (
+	"errors"
 	"log"
 	"time"
 
@@ -48,4 +49,56 @@ func (r *PromotionRepositoryGORM) GetAvailablePromotionsByStoreAndDateRange(cuit
 	}
 
 	return &promotionsFinancing, &promotionsDiscount, nil
+}
+
+// GetMostUsedDiscountPromotion retrieves the most used discount promotion based on its usage in single and monthly payments.
+func (r *PromotionRepositoryGORM) GetMostUsedPromotion() (interface{}, error) {
+	var result entities.PaymentVoucherCount
+
+	query := `
+		SELECT
+			payment_voucher,
+			COUNT(*) AS total_repeticiones
+		FROM
+			(
+			SELECT
+				month.payment_voucher
+			FROM
+				PURCHASES_MONTHLY_PAYMENTS month
+			UNION ALL
+			SELECT
+				single.payment_voucher
+			FROM
+				PURCHASES_SINGLE_PAYMENTS single
+			) as payment_voucher
+		GROUP BY
+			payment_voucher
+		ORDER BY
+			total_repeticiones DESC
+		LIMIT 1;
+		`
+
+	r.db.Raw(query).Scan(&result)
+
+	promotion, err := findPromotionByCode(r.db, result.PaymentVoucher)
+	if err != nil {
+		return nil, err
+	}
+
+	return promotion, nil
+}
+
+func findPromotionByCode(db *gorm.DB, code string) (interface{}, error) {
+	var discountPromo entities.DiscountEntity
+	var financingPromo entities.FinancingEntity
+
+	if err := db.Where("code = ?", code).First(&financingPromo).Error; err == nil {
+		return financingPromo, nil
+	}
+
+	if err := db.Where("code = ?", code).First(&discountPromo).Error; err == nil {
+		return discountPromo, nil
+	}
+
+	return nil, errors.New("promotion not found with the provided code")
 }
