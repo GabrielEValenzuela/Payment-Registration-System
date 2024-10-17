@@ -2,6 +2,7 @@ package gorm
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/promotion"
@@ -66,5 +67,57 @@ func (r *BankRepositoryGORM) ExtendDiscountPromotionValidity(code string, newDat
 	}
 
 	fmt.Printf("Promotion Code %s updated successfully\n", code)
+	return nil
+}
+
+func (r *BankRepositoryGORM) DeleteFinancingPromotion(code string) error {
+	var discount entities.FinancingEntity
+
+	// Search for the DiscountEntity by code
+	if err := r.db.Where("code = ?", code).First(&discount).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			log.Printf("DiscountEntity with code %s not found.", code)
+			return err
+		}
+		log.Printf("Error finding DiscountEntity with code %s: %v", code, err)
+		return err
+	}
+
+	// Update the IsDeleted field to true
+	discount.IsDeleted = true
+
+	// Save changes to the database
+	if err := r.db.Save(&discount).Error; err != nil {
+		log.Printf("Error updating IsDeleted for DiscountEntity with code %s: %v", code, err)
+		return err
+	}
+
+	log.Printf("DiscountEntity with code %s was successfully logically deleted.", code)
+	return nil
+}
+
+func (r *BankRepositoryGORM) DeleteDiscountPromotion(code string) error {
+	var financing entities.DiscountEntity
+
+	// Search for the FinancingEntity by code
+	if err := r.db.Where("code = ?", code).First(&financing).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			log.Printf("FinancingEntity with code %s not found.", code)
+			return err
+		}
+		log.Printf("Error finding FinancingEntity with code %s: %v", code, err)
+		return err
+	}
+
+	// Update the IsDeleted field to true
+	financing.IsDeleted = true
+
+	// Save changes to the database
+	if err := r.db.Save(&financing).Error; err != nil {
+		log.Printf("Error updating IsDeleted for FinancingEntity with code %s: %v", code, err)
+		return err
+	}
+
+	log.Printf("FinancingEntity with code %s was successfully logically deleted.", code)
 	return nil
 }

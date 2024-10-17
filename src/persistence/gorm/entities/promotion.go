@@ -26,6 +26,7 @@ type PromotionEntity struct {
 	BankID            uint       `gorm:"index"`
 	CreatedAt         time.Time  `gorm:"autoCreateTime"`
 	UpdatedAt         time.Time  `gorm:"autoUpdateTime"`
+	IsDeleted         bool       `gorm:"default:false;not null"`
 }
 
 // Discount represents a type of promotion that applies a percentage discount to purchases.
