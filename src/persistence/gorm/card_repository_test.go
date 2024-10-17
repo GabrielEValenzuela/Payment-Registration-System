@@ -6,6 +6,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/card"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/purchase"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/entities"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/mapper"
 	testresource "github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/test_resource"
@@ -56,9 +58,9 @@ func TestGetPaymentSummary(t *testing.T) {
 	}
 
 	assert.Equal(t, paymentSummaryEntity.Code, code)
-	assert.Equal(t, paymentSummaryEntity.TotalPrice, 410.00)
+	assert.Equal(t, paymentSummaryEntity.TotalPrice, 510.00)
 	assert.Equal(t, len(paymentSummaryEntity.Card.PurchaseMonthlyPayments), 1)
-	assert.Equal(t, len(paymentSummaryEntity.Card.PurchaseSinglePayments), 2)
+	assert.Equal(t, len(paymentSummaryEntity.Card.PurchaseSinglePayments), 3)
 
 	paymentSummaryMapper := mapper.ToPaymentSummary(&paymentSummaryEntity)
 
@@ -93,7 +95,7 @@ func TestGetCardsExpiringInNext30Days(t *testing.T) {
 		log.Fatalf("Failed to execute SQL file: %v", err)
 	}
 
-	assert.Equal(t, len(*cards), 2)
+	assert.Equal(t, len(*cards), 4)
 }
 
 func TestGetPurchaseSingle(t *testing.T) {
@@ -152,4 +154,46 @@ func TestGetPurchaseMonthly(t *testing.T) {
 	assert.Equal(t, payment.Purchase.Store, "Store B")
 	assert.Equal(t, payment.Purchase.Amount, 110.00)
 	assert.Equal(t, len(payment.Quota), 4)
+}
+
+func TestGetTop10CardsByPurchases(t *testing.T) {
+	// Database
+	database, err := NewMySQLDB()
+	if err != nil {
+		t.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer CloseDB(database)
+
+	// Insert Data
+	err = testresource.ExecuteSQLFile(database, "./test_resource/insert.sql")
+	if err != nil {
+		log.Fatalf("Failed to execute SQL file: %v", err)
+	}
+
+	cardRepo := NewCardRepository(database)
+
+	cards, err := cardRepo.GetTop10CardsByPurchases()
+	if err != nil {
+		t.Fatalf("Failed to connect to database: %v", err)
+	}
+
+	assert.Equal(t, len(*cards), 10)
+
+	var card *card.Card
+	for _, src := range *cards {
+		if src.Number == "1234567812345678" {
+			card = &src
+		}
+	}
+
+	assert.Equal(t, len(card.PurchaseSinglePayments), 5)
+	assert.Equal(t, len(card.PurchaseMonthlyPayments), 2)
+
+	var purchaseMonthly *purchase.PurchaseMonthlyPayment
+	for _, src := range card.PurchaseMonthlyPayments {
+		if src.Purchase.PaymentVoucher == "PV20241001" {
+			purchaseMonthly = &src
+		}
+	}
+	assert.Equal(t, len(purchaseMonthly.Quota), 3)
 }

@@ -135,7 +135,7 @@ func TestDeleteFinancingPromotion(t *testing.T) {
 	}
 
 	// Test Financing Promotion
-	testCode := "PROMO456"
+	testCode := "PV20241001"
 
 	bankRepo := NewBankRepository(database)
 

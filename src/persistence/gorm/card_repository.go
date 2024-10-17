@@ -2,6 +2,7 @@ package gorm
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/card"
@@ -115,4 +116,31 @@ func (r *CardRepositoryGORM) GetPurchaseMonthly(cuit string, finalAmount float64
 	}
 
 	return mapper.ToPurchaseMonthlyPayments(&paymentEntity), nil
+}
+
+func (r *CardRepositoryGORM) GetTop10CardsByPurchases() (*[]card.Card, error) {
+	var cardEntities []entities.CardEntity
+
+	// Query to find the top 10 cards by number of purchases, with preloads for payments and quotas
+	if err := r.db.Table("CARDS").
+		Select("CARDS.*, (COUNT(PURCHASES_SINGLE_PAYMENTS.id) + COUNT(PURCHASES_MONTHLY_PAYMENTS.id)) as purchase_count").
+		Joins("LEFT JOIN PURCHASES_SINGLE_PAYMENTS ON PURCHASES_SINGLE_PAYMENTS.card_id = CARDS.id").
+		Joins("LEFT JOIN PURCHASES_MONTHLY_PAYMENTS ON PURCHASES_MONTHLY_PAYMENTS.card_id = CARDS.id").
+		Preload("PurchaseSinglePayments").
+		Preload("PurchaseMonthlyPayments.Quotas").
+		Group("CARDS.id").
+		Order("purchase_count DESC").
+		Limit(10).
+		Find(&cardEntities).Error; err != nil {
+		log.Printf("Error retrieving top 10 cards by purchases: %v", err)
+		return nil, err
+	}
+
+	var cards []card.Card
+
+	for _, card := range cardEntities {
+		cards = append(cards, *mapper.ToCard(&card))
+	}
+
+	return &cards, nil
 }
