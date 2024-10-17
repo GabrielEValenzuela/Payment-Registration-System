@@ -5,6 +5,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/bank"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/promotion"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/entities"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/persistence/gorm/mapper"
@@ -120,4 +121,23 @@ func (r *BankRepositoryGORM) DeleteDiscountPromotion(code string) error {
 
 	log.Printf("FinancingEntity with code %s was successfully logically deleted.", code)
 	return nil
+}
+
+func (r *BankRepositoryGORM) GetBankCustomerCounts() ([]bank.BankCustomerCountDTO, error) {
+	var results []bank.BankCustomerCountDTO
+
+	r.db.Raw(`
+		SELECT 
+			b.cuit AS bank_cuit,
+			b.name AS bank_name,
+			COUNT(cb.customer_entity_id) AS customer_count
+		FROM 
+			BANKS b
+		LEFT JOIN 
+			customers_banks cb ON b.id = cb.bank_entity_id
+		GROUP BY 
+			b.id, b.name
+	`).Scan(&results)
+
+	return results, nil
 }
