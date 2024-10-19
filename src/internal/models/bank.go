@@ -1,4 +1,4 @@
-package bank
+package models
 
 // Bank represents a financial institution that holds customers and issues cards.
 type Bank struct {

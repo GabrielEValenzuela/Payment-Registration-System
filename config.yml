@@ -1,0 +1,12 @@
+sql:
+  host: localhost
+  port: 3306
+  max_open_conns: 10
+  max_idle_conns: 10
+  conn_max_lifetime: 5
+
+appp:
+  port: 8080
+  read_timeout: 15
+  write_timeout: 15
+  graceful_shutdown: 15
