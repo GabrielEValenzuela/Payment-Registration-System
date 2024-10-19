@@ -17,7 +17,12 @@ func NewMongoStorage(client *mongo.Client, db *mongo.Database) IStorage {
 	}
 }
 
-func (s *mongoStorage) GetCustomerById(id int) (models.Customer, error) {
+func (snsql *mongoStorage) GetCustomerById(id int) (models.Customer, error) {
 	// Placeholder implementation
 	return models.Customer{}, nil
+}
+
+func (snsql *mongoStorage) GetAllCustomers() ([]models.Customer, error) {
+	// Placeholder implementation
+	return nil, nil
 }

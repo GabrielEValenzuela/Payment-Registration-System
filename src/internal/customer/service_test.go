@@ -18,10 +18,15 @@ func (m *mockRepository) GetCustomerById(id int) (models.Customer, error) {
 	return args.Get(0).(models.Customer), args.Error(1)
 }
 
+func (m *mockRepository) GetAllCustomers() ([]models.Customer, error) {
+	args := m.Called()
+	return args.Get(0).([]models.Customer), args.Error(1)
+}
+
 func TestGetCustomerById_Success(t *testing.T) {
 	// Arrange
 	mockRepo := new(mockRepository)
-	svc := NewService(mockRepo)
+	svc := NewCustomerService(mockRepo)
 
 	expectedCustomer := models.Customer{
 		Dni:          "1",

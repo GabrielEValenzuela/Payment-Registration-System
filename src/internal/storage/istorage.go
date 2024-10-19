@@ -5,5 +5,6 @@ import "github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/m
 type IStorage interface {
 	/* Customer */
 	GetCustomerById(id int) (models.Customer, error)
+	GetAllCustomers() ([]models.Customer, error)
 	/* Bank */
 }

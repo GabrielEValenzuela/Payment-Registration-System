@@ -1,80 +1,134 @@
-package main
-
-// This package is the entry point for the server application.
-
-//
-
-// We need to setup the server to listen on a port and handle requests. We also need to configure the server to use the customer handler.
-// The server will be responsible for handling the requests and responses from the client.
+package server
 
 import (
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/cmd/server/handlers"
-	_ "github.com/GabrielEValenzuela/Payment-Registration-System/src/docs"
+	"context"
+	"database/sql"
+	"fmt"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+	"time"
+
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/cmd/handlers"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/config"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/customer"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/log"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/swagger"
 )
 
-// Server is the main struct for the server application.
 type Server struct {
-	app             *fiber.App
-	customerHandler *handlers.CustomerHandler
+	app   *fiber.App
+	cfg   *config.Config
+	sqlDb *sql.DB
+	// mongoDb *mongo.Client // Uncomment this line when we made the MongoDB connection
+	// Add other fields as needed (e.g., MongoDB client)
 }
 
-func NewServer(customerHandler *handlers.CustomerHandler) *Server {
+func NewServer(cfg *config.Config) *Server {
 	return &Server{
-		app:             fiber.New(),
-		customerHandler: customerHandler,
+		cfg: cfg,
 	}
 }
 
-// ConfigureServer configures the server to listen on a port and handle requests.
-func (srv *Server) ConfigureServer() {
-	// Initialize the server
-	srv.app = fiber.New()
+func (srv *Server) Run() error {
+	// Initialize the database connections
+	if err := srv.initSqlDatabase(); err != nil {
+		return fmt.Errorf("failed to initialize databases: %w", err)
+	}
+	defer srv.sqlDb.Close() // Close the MySQL connection when the server exits, defer ensures this runs even if an error occurs
 
-	// Define the routes for the server
-	srv.ConfigureRoutes()
+	// Initialize the Fiber app
+	srv.initFiber()
+
+	// Start the server in a goroutine
+	go func() {
+		if err := srv.app.Listen(":" + srv.cfg.App.Port); err != nil && err != http.ErrServerClosed {
+			log.Fatalf("Failed to start server: %v", err)
+		}
+	}()
+	log.Infof("Server is running on port %s", srv.cfg.App.Port)
+
+	// Wait for interrupt signal for graceful shutdown
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	<-quit
+	log.Info("Shutting down server...")
+
+	_, cancel := context.WithTimeout(context.Background(), srv.cfg.App.GracefulShutdown*time.Second)
+	defer cancel()
+
+	if err := srv.app.Shutdown(); err != nil {
+		return fmt.Errorf("server forced to shutdown: %w", err)
+	}
+
+	log.Info("Server exited properly")
+	return nil
 }
 
-func (srv *Server) ConfigureRoutes() {
-	// Define the route for the documentation
-	srv.app.Use("/swagger/*", swagger.New(swagger.Config{
-		URL: "/swagger/doc.json",
-	}))
+func (srv *Server) initSqlDatabase() error {
+	// Initialize MySQL connection
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
+		srv.cfg.MySQL.User,
+		srv.cfg.MySQL.Password,
+		srv.cfg.MySQL.Host,
+		srv.cfg.MySQL.Port,
+		srv.cfg.MySQL.Database,
+	)
 
-	// Define the routes for the server
-	sqlRouting := srv.app.Group("/sql")
-	mongoRouting := srv.app.Group("/mongo")
+	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		return fmt.Errorf("failed to open MySQL connection: %w", err)
+	}
 
-	sqlRouting.Get("/customer/:id", srv.customerHandler.GetCustomerById())
-	mongoRouting.Get("/customer/:id", srv.customerHandler.GetCustomerById())
+	db.SetMaxOpenConns(srv.cfg.MySQL.MaxOpenConns)
+	db.SetMaxIdleConns(srv.cfg.MySQL.MaxIdleConns)
+	db.SetConnMaxLifetime(srv.cfg.MySQL.ConnMaxLifetime * time.Minute)
+
+	// Test the connection
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+	if err := db.PingContext(ctx); err != nil {
+		return fmt.Errorf("failed to ping MySQL: %w", err)
+	}
+
+	srv.sqlDb = db
+	return nil
 }
 
-func ConfigureServer() {
-	app := fiber.New()
-
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, client 👋!")
+func (srv *Server) initFiber() {
+	// Create a new Fiber app
+	srv.app = fiber.New(fiber.Config{
+		ReadTimeout:  srv.cfg.App.ReadTimeout * time.Second,
+		WriteTimeout: srv.cfg.App.WriteTimeout * time.Second,
 	})
 
-	app.Get("/swagger/*", swagger.HandlerDefault) // default
+	// Middleware
+	srv.app.Use(logger.New())
 
-	app.Get("/swagger/*", swagger.New(swagger.Config{ // custom
-		URL:         "http://example.com/doc.json",
-		DeepLinking: false,
-		// Expand ("list") or Collapse ("none") tag groups by default
-		DocExpansion: "none",
-		// Prefill OAuth ClientId on Authorize popup
-		OAuth: &swagger.OAuthConfig{
-			AppName:  "OAuth Provider",
-			ClientId: "21bb4edc-05a7-4afc-86f1-2e151e4ba6e2",
-		},
-		// Ability to change OAuth2 redirect uri location
-		OAuth2RedirectUrl: "http://localhost:8080/swagger/oauth2-redirect.html",
-	}))
+	// Routes
+	srv.setupRoutes()
+}
 
-	err := app.Listen(":8080")
-	if err != nil {
-		panic(err)
-	}
+func (srv *Server) setupRoutes() {
+	// Swagger documentation route
+	srv.app.Get("/swagger/*", swagger.HandlerDefault)
+
+	// Initialize repositories, services, and handlers
+	sqlStorage := storage.NewSqlStorage(srv.sqlDb)
+	customerHandlerRelational := handlers.NewCustomerHandler(customer.NewCustomerService(sqlStorage))
+	customerHandlerNonRelational := handlers.NewCustomerHandler(customer.NewCustomerService(sqlStorage))
+
+	// API version group
+	apiGroup := srv.app.Group("/v1")
+
+	// SQL routes
+	sqlGroup := apiGroup.Group("/sql")
+	sqlGroup.Get("/customer/:id", customerHandlerRelational.GetCustomerById())
+
+	mongoGroup := apiGroup.Group("/no-sql")
+	mongoGroup.Get("/customer/:id", customerHandlerNonRelational.GetCustomerById())
 }

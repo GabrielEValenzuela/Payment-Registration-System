@@ -7,6 +7,7 @@ import (
 
 type IRepository interface {
 	GetCustomerById(id int) (models.Customer, error)
+	GetAllCustomers() ([]models.Customer, error)
 }
 
 type repository struct {
@@ -19,6 +20,10 @@ func NewRepository(storage storage.IStorage) IRepository {
 	}
 }
 
-func (r *repository) GetCustomerById(id int) (models.Customer, error) {
-	return r.storage.GetCustomerById(id)
+func (repo *repository) GetCustomerById(id int) (models.Customer, error) {
+	return repo.storage.GetCustomerById(id)
+}
+
+func (repo *repository) GetAllCustomers() ([]models.Customer, error) {
+	return repo.storage.GetAllCustomers()
 }

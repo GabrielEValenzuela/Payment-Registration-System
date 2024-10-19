@@ -9,16 +9,16 @@ import (
 )
 
 type CustomerHandler struct {
-	customerSerivce customer.Service
+	customerService customer.Service
 }
 
 func NewCustomerHandler(customerService customer.Service) *CustomerHandler {
 	return &CustomerHandler{
-		customerSerivce: customerService,
+		customerService: customerService,
 	}
 }
 
-func (h *CustomerHandler) GetCustomerById() fiber.Handler {
+func (custhandler *CustomerHandler) GetCustomerById() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		idParam := c.Params("id")
 		id, err := strconv.Atoi(idParam)
@@ -27,12 +27,24 @@ func (h *CustomerHandler) GetCustomerById() fiber.Handler {
 				"message": "Invalid ID",
 			})
 		}
-		customer, err := h.customerSerivce.GetCustomerById(id)
+		customer, err := custhandler.customerService.GetCustomerById(id)
 		if err != nil {
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 				"message": "Internal Server Error",
 			})
 		}
 		return c.Status(fiber.StatusOK).JSON(customer)
+	}
+}
+
+func (custhandler *CustomerHandler) GetAllCustomers() fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		customers, err := custhandler.customerService.GetAllCustomers()
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"message": "Internal Server Error",
+			})
+		}
+		return c.Status(fiber.StatusOK).JSON(customers)
 	}
 }
