@@ -120,3 +120,91 @@ func TestExtendPromotionValidity(t *testing.T) {
 	assert.Equal(t, promotionDiscount.Code, testDiscountCode)
 	assert.Equal(t, promotionDiscount.ValidityEndDate.Unix(), testDiscountTime.Unix())
 }
+
+func TestDeleteFinancingPromotion(t *testing.T) {
+	database, err := NewMySQLDB()
+	if err != nil {
+		t.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer CloseDB(database)
+
+	// Insert Data
+	err = testresource.ExecuteSQLFile(database, "./test_resource/insert.sql")
+	if err != nil {
+		log.Fatalf("Failed to execute SQL file: %v", err)
+	}
+
+	// Test Financing Promotion
+	testCode := "PV20241001"
+
+	bankRepo := NewBankRepository(database)
+
+	bankRepo.DeleteFinancingPromotion(testCode)
+
+	var promotion entities.FinancingEntity
+	if err := database.Where("code = ?", testCode).First(&promotion).Error; err != nil {
+		panic(fmt.Errorf("could not find promotion with code %s: %v", testCode, err))
+	}
+
+	assert.Equal(t, promotion.IsDeleted, true)
+}
+
+func TestDeleteDiscountPromotion(t *testing.T) {
+	database, err := NewMySQLDB()
+	if err != nil {
+		t.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer CloseDB(database)
+
+	// Insert Data
+	err = testresource.ExecuteSQLFile(database, "./test_resource/insert.sql")
+	if err != nil {
+		log.Fatalf("Failed to execute SQL file: %v", err)
+	}
+
+	// Test Financing Promotion
+	testCode := "SPRINGDEAL2024"
+
+	bankRepo := NewBankRepository(database)
+
+	bankRepo.DeleteDiscountPromotion(testCode)
+
+	var promotion entities.DiscountEntity
+	if err := database.Where("code = ?", testCode).First(&promotion).Error; err != nil {
+		panic(fmt.Errorf("could not find promotion with code %s: %v", testCode, err))
+	}
+
+	assert.Equal(t, promotion.IsDeleted, true)
+}
+
+func TestGetBankCustomerCounts(t *testing.T) {
+	database, err := NewMySQLDB()
+	if err != nil {
+		t.Fatalf("Failed to connect to database: %v", err)
+	}
+	defer CloseDB(database)
+
+	// Insert Data
+	err = testresource.ExecuteSQLFile(database, "./test_resource/insert.sql")
+	if err != nil {
+		log.Fatalf("Failed to execute SQL file: %v", err)
+	}
+
+	bankRepo := NewBankRepository(database)
+
+	result, err := bankRepo.GetBankCustomerCounts()
+	if err != nil {
+		log.Fatalf("Failed to execute SQL file: %v", err)
+	}
+
+	assert.Equal(t, len(result), 4)
+
+	var bank *bank.BankCustomerCountDTO
+	for _, v := range result {
+		if v.BankName == "Santander" {
+			bank = &v
+		}
+	}
+	assert.Equal(t, bank.BankName, "Santander")
+	assert.Equal(t, bank.CustomerCount, 2)
+}

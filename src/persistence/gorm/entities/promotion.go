@@ -26,6 +26,8 @@ type PromotionEntity struct {
 	BankID            uint       `gorm:"index"`
 	CreatedAt         time.Time  `gorm:"autoCreateTime"`
 	UpdatedAt         time.Time  `gorm:"autoUpdateTime"`
+	IsDeleted         bool       `gorm:"default:false;not null"`
+	PurchaseCount     int        `gorm:"-"`
 }
 
 // Discount represents a type of promotion that applies a percentage discount to purchases.
@@ -44,4 +46,9 @@ type FinancingEntity struct {
 	ID              uint    `gorm:"primaryKey;autoIncrement"`
 	NumberOfQuotas  int     `gorm:"not null"`
 	Interest        float64 `gorm:"not null;default:0"`
+}
+
+type PaymentVoucherCount struct {
+	PaymentVoucher    string
+	TotalRepeticiones int
 }

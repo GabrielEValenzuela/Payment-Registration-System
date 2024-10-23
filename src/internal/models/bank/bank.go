@@ -8,3 +8,9 @@ type Bank struct {
 	Telephone    string `json:"telephone"`
 	CustomersIds []int  `json:"customers_ids"`
 }
+
+type BankCustomerCountDTO struct {
+	BankCuit      string `json:"bank_cuit"`
+	BankName      string `json:"bank_name"`
+	CustomerCount int    `json:"customer_count"`
+}

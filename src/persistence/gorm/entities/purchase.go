@@ -2,8 +2,6 @@ package entities
 
 import (
 	"time"
-
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/purchase"
 )
 
 func (PurchaseSinglePaymentEntity) TableName() string {
@@ -15,15 +13,14 @@ func (PurchaseMonthlyPaymentsEntity) TableName() string {
 }
 
 type PurchaseEntity struct {
-	PaymentVoucher string                `gorm:"size:255;not null"`
-	Store          string                `gorm:"size:255;not null"`
-	CuitStore      string                `gorm:"size:20;not null"`
-	Amount         float64               `gorm:"not null"`
-	FinalAmount    float64               `gorm:"not null"`
-	PurchaseType   purchase.PurchaseType `gorm:"type:int;not null"`
-	CreatedAt      time.Time             `gorm:"autoCreateTime"`
-	UpdatedAt      time.Time             `gorm:"autoUpdateTime"`
-	CardID         uint                  `gorm:"index;not null"`
+	PaymentVoucher string    `gorm:"size:255;not null"`
+	Store          string    `gorm:"size:255;not null"`
+	CuitStore      string    `gorm:"size:20;not null"`
+	Amount         float64   `gorm:"not null"`
+	FinalAmount    float64   `gorm:"not null"`
+	CreatedAt      time.Time `gorm:"autoCreateTime"`
+	UpdatedAt      time.Time `gorm:"autoUpdateTime"`
+	CardID         uint      `gorm:"index;not null"`
 }
 
 type PurchaseSinglePaymentEntity struct {

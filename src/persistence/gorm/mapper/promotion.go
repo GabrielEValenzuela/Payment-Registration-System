@@ -51,3 +51,13 @@ func ToFinancingEntity(financing *promotion.Financing, bankId uint) *entities.Fi
 		Interest:        financing.Interest,
 	}
 }
+
+// Mapper from DiscountModel to Discount
+func ToDiscount(discountEntity *entities.DiscountEntity) *promotion.Discount {
+	return &promotion.Discount{
+		Promotion:          *ToPromotion(&discountEntity.PromotionEntity), // Reuse the PromotionModel mapping
+		DiscountPercentage: discountEntity.DiscountPercentage,
+		PriceCap:           discountEntity.DiscountPercentage,
+		OnlyCash:           discountEntity.OnlyCash,
+	}
+}
