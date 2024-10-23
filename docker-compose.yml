@@ -1,1 +1,21 @@
-# Pending to add the Dockerfile
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0         # Use the official MySQL image version 8.0
+    container_name: mysql-db  # Name of the container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword       # Root user's password
+      MYSQL_DATABASE: testdb                  # Name of the database to be created
+      MYSQL_USER: testuser                    # Name of the additional user
+      MYSQL_PASSWORD: testpassword            # Password for the additional user
+    ports:
+      - "3306:3306"           # Expose MySQL port 3306 to the host
+    #volumes:
+    #  - ./data:/var/lib/mysql  # Persist data in the ./data folder
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
