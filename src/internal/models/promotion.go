@@ -1,9 +1,7 @@
-package promotion
+package models
 
 import (
 	"time"
-
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/bank"
 )
 
 // Promotion represents a special offer provided by a bank to customers.
@@ -16,7 +14,7 @@ type Promotion struct {
 	ValidityStartDate time.Time `json:"validity_start_date"`
 	ValidityEndDate   time.Time `json:"validity_end_date"`
 	Comments          string    `json:"comments"`
-	Bank              bank.Bank `json:"bank"`
+	Bank              []int     `json:"bank"`
 }
 
 // Discount represents a type of promotion that applies a percentage discount to purchases.

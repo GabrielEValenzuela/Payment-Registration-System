@@ -1,6 +1,4 @@
-package purchase
-
-import "github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models/quota"
+package models
 
 // Purchase represents a financial transaction made by a customer using a card.
 // It includes details like the store, initial and final amounts, and the type of purchase.
@@ -24,9 +22,9 @@ type PurchaseSinglePayment struct {
 // It includes an interest percentage and the number of installments.
 type PurchaseMonthlyPayments struct {
 	Purchase
-	Interest       float64       `json:"interest"`
-	NumberOfQuotas int           `json:"number_of_quotas"`
-	Quota          []quota.Quota `json:"quota"`
+	Interest       float64 `json:"interest"`
+	NumberOfQuotas int     `json:"number_of_quotas"`
+	Quota          []int   `json:"quota"`
 }
 
 // PurchaseType represents the type of a purchase, either single payment or monthly payments.
