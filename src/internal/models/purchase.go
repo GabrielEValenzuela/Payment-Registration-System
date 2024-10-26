@@ -20,11 +20,11 @@ type PurchaseSinglePayment struct {
 
 // PurchaseMonthlyPayments represents a purchase made in multiple installments.
 // It includes an interest percentage and the number of installments.
-type PurchaseMonthlyPayments struct {
+type PurchaseMonthlyPayment struct {
 	Purchase
 	Interest       float64 `json:"interest"`
 	NumberOfQuotas int     `json:"number_of_quotas"`
-	Quota          []int   `json:"quota"`
+	Quota          []Quota `json:"quota"`
 }
 
 // PurchaseType represents the type of a purchase, either single payment or monthly payments.

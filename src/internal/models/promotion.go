@@ -14,7 +14,7 @@ type Promotion struct {
 	ValidityStartDate time.Time `json:"validity_start_date"`
 	ValidityEndDate   time.Time `json:"validity_end_date"`
 	Comments          string    `json:"comments"`
-	Bank              []int     `json:"bank"`
+	Bank              Bank      `json:"bank"`
 }
 
 // Discount represents a type of promotion that applies a percentage discount to purchases.
