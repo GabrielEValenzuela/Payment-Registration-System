@@ -15,11 +15,14 @@ type AppConfig struct {
 }
 
 type SQLConfig struct {
-	// Configs
+	DSN   string
+	Clean bool
 }
 
 type NoSQLConfig struct {
-	// Configs
+	URI      string
+	Database string
+	Clean    bool
 }
 
 func LoadConfig(configPath string) (*Config, error) {
@@ -30,8 +33,13 @@ func LoadConfig(configPath string) (*Config, error) {
 	viper.SetDefault("app.port", "8080")
 
 	// Set default values for SQL connection
+	viper.SetDefault("sqldb.dsn", "root:password@tcp(localhost:3306)/payment_registration_system?charset=utf8mb4&parseTime=True&loc=Local")
+	viper.SetDefault("sqldb.clean", false)
 
 	// Set default values for NoSQL connection
+	viper.SetDefault("nosqldb.uri", "mongodb://localhost:27017")
+	viper.SetDefault("nosqldb.database", "payment_registration_system")
+	viper.SetDefault("nosqldb.clean", false)
 
 	// Read in environment variables that match
 	viper.AutomaticEnv()

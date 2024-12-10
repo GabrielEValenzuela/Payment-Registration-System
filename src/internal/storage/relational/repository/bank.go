@@ -1,13 +1,14 @@
-package sql
+package relational
 
 import (
 	"fmt"
-	"log"
+	"strings"
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/sql/entities"
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/sql/mapper"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/entities"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"gorm.io/gorm"
 )
 
@@ -15,26 +16,27 @@ type BankRepositoryGORM struct {
 	db *gorm.DB
 }
 
-// NewBankRepository crea una nueva instancia de BankRepository
-func NewBankRepository(db *gorm.DB) *BankRepositoryGORM {
+func NewBankRelationalRepository(db *gorm.DB) storage.IStorage {
 	return &BankRepositoryGORM{db: db}
 }
 
 // Implementación de la interfaz BankRepository
-func (r *BankRepositoryGORM) AddFinancingPromotionToBank(promotionFinancing *models.Financing) error {
-	var bankEntity entities.BankEntity
+func (r *BankRepositoryGORM) AddFinancingPromotionToBank(promotionFinancing models.Financing) error {
+	var bankEntity entities.BankEntitySQL
 
-	if err := r.db.First(&bankEntity, "cuit = ?", promotionFinancing.Bank.Cuit).Error; err != nil {
-		panic(err)
+	cuit := strings.TrimSpace(promotionFinancing.Bank.Cuit)
+	logger.Info("Searching for bank with 'cuit' %s", cuit)
+	if err := r.db.First(&bankEntity, "cuit = ?", cuit).Error; err != nil {
+		return fmt.Errorf("could not find bank with 'cuit' %s: %v", promotionFinancing.Bank.Cuit, err)
 	}
 
 	// Lógica para agregar la promoción al banco
-	return r.db.Create(mapper.ToFinancingEntity(promotionFinancing, bankEntity.ID)).Error
+	return r.db.Create(entities.ToFinancingEntity(&promotionFinancing, bankEntity.ID)).Error
 }
 
 func (r *BankRepositoryGORM) ExtendFinancingPromotionValidity(code string, newDate time.Time) error {
 	// Find the promotion by ID
-	var promotion entities.FinancingEntity
+	var promotion entities.FinancingEntitySQL
 	if err := r.db.First(&promotion, "code = ?", code).Error; err != nil {
 		return fmt.Errorf("could not find promotion with code %s: %v", code, err)
 	}
@@ -53,7 +55,7 @@ func (r *BankRepositoryGORM) ExtendFinancingPromotionValidity(code string, newDa
 
 func (r *BankRepositoryGORM) ExtendDiscountPromotionValidity(code string, newDate time.Time) error {
 	// Find the promotion by ID
-	var promotion entities.DiscountEntity
+	var promotion entities.DiscountEntitySQL
 	if err := r.db.First(&promotion, "code = ?", code).Error; err != nil {
 		return fmt.Errorf("could not find promotion with code %s: %v", code, err)
 	}
@@ -71,15 +73,15 @@ func (r *BankRepositoryGORM) ExtendDiscountPromotionValidity(code string, newDat
 }
 
 func (r *BankRepositoryGORM) DeleteFinancingPromotion(code string) error {
-	var discount entities.FinancingEntity
+	var discount entities.FinancingEntitySQL
 
 	// Search for the DiscountEntity by code
 	if err := r.db.Where("code = ?", code).First(&discount).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			log.Printf("DiscountEntity with code %s not found.", code)
+			logger.Info("DiscountEntity with code %s not found.", code)
 			return err
 		}
-		log.Printf("Error finding DiscountEntity with code %s: %v", code, err)
+		logger.Info("Error finding DiscountEntity with code %s: %v", code, err)
 		return err
 	}
 
@@ -88,24 +90,24 @@ func (r *BankRepositoryGORM) DeleteFinancingPromotion(code string) error {
 
 	// Save changes to the database
 	if err := r.db.Save(&discount).Error; err != nil {
-		log.Printf("Error updating IsDeleted for DiscountEntity with code %s: %v", code, err)
+		logger.Info("Error updating IsDeleted for DiscountEntity with code %s: %v", code, err)
 		return err
 	}
 
-	log.Printf("DiscountEntity with code %s was successfully logically deleted.", code)
+	logger.Info("DiscountEntity with code %s was successfully logically deleted.", code)
 	return nil
 }
 
 func (r *BankRepositoryGORM) DeleteDiscountPromotion(code string) error {
-	var financing entities.DiscountEntity
+	var financing entities.DiscountEntitySQL
 
 	// Search for the FinancingEntity by code
 	if err := r.db.Where("code = ?", code).First(&financing).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			log.Printf("FinancingEntity with code %s not found.", code)
+			logger.Info("FinancingEntity with code %s not found.", code)
 			return err
 		}
-		log.Printf("Error finding FinancingEntity with code %s: %v", code, err)
+		logger.Info("Error finding FinancingEntity with code %s: %v", code, err)
 		return err
 	}
 
@@ -114,11 +116,11 @@ func (r *BankRepositoryGORM) DeleteDiscountPromotion(code string) error {
 
 	// Save changes to the database
 	if err := r.db.Save(&financing).Error; err != nil {
-		log.Printf("Error updating IsDeleted for FinancingEntity with code %s: %v", code, err)
+		logger.Info("Error updating IsDeleted for FinancingEntity with code %s: %v", code, err)
 		return err
 	}
 
-	log.Printf("FinancingEntity with code %s was successfully logically deleted.", code)
+	logger.Info("FinancingEntity with code %s was successfully logically deleted.", code)
 	return nil
 }
 
