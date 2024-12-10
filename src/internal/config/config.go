@@ -5,9 +5,11 @@ import (
 )
 
 type Config struct {
-	App     AppConfig
-	SQLDb   SQLConfig
-	NoSQLDb NoSQLConfig
+	App          AppConfig
+	SQLDb        SQLConfig
+	NoSQLDb      NoSQLConfig
+	IsProduction bool
+	LogPath      string
 }
 
 type AppConfig struct {
@@ -28,6 +30,8 @@ func LoadConfig(configPath string) (*Config, error) {
 
 	// Set default values for application
 	viper.SetDefault("app.port", "8080")
+	viper.SetDefault("app.log_path", "payment_system.log")
+	viper.SetDefault("app.is_production", false)
 
 	// Set default values for SQL connection
 
