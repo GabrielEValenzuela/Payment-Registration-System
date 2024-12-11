@@ -42,7 +42,7 @@ func (r *BankRepositoryMongo) AddFinancingPromotionToBank(promotionFinancing mod
 		"is_deleted":          false,
 		"bank_id":             bank["_id"],
 	}
-	_, err := r.db.Collection("financing_promotions").InsertOne(ctx, promotion)
+	_, err := r.db.Collection("financing").InsertOne(ctx, promotion)
 	if err != nil {
 		logger.Error("Failed to add financing promotion to bank: %v", zap.Error(err))
 		return fmt.Errorf("could not add financing promotion: %w", err)
@@ -92,7 +92,7 @@ func (r *BankRepositoryMongo) DeleteFinancingPromotion(code string) error {
 	ctx := context.Background()
 
 	// Find the promotion by code
-	promotionCollection := r.db.Collection("financing_promotions")
+	promotionCollection := r.db.Collection("financing")
 	var promotion bson.M
 	if err := promotionCollection.FindOne(ctx, bson.M{"code": code}).Decode(&promotion); err != nil {
 		return fmt.Errorf("could not find promotion with code %s: %w", code, err)
@@ -115,7 +115,7 @@ func (r *BankRepositoryMongo) DeleteDiscountPromotion(code string) error {
 	ctx := context.Background()
 
 	// Find the promotion by code
-	promotionCollection := r.db.Collection("discount_promotions")
+	promotionCollection := r.db.Collection("discounts")
 	var promotion bson.M
 	if err := promotionCollection.FindOne(ctx, bson.M{"code": code}).Decode(&promotion); err != nil {
 		return fmt.Errorf("could not find promotion with code %s: %w", code, err)
@@ -140,7 +140,7 @@ func (r *BankRepositoryMongo) ExtendDiscountPromotionValidity(code string, newDa
 	// Update the promotion
 	filter := bson.M{"code": code}
 	update := bson.M{"$set": bson.M{"validity_end_date": newDate}}
-	result, err := r.db.Collection("discount_promotions").UpdateOne(ctx, filter, update)
+	result, err := r.db.Collection("discounts").UpdateOne(ctx, filter, update)
 	if err != nil || result.ModifiedCount == 0 {
 		return fmt.Errorf("could not extend promotion validity: %w", err)
 	}
@@ -157,7 +157,7 @@ func (r *BankRepositoryMongo) ExtendFinancingPromotionValidity(code string, newD
 	// Update the promotion
 	filter := bson.M{"code": code}
 	update := bson.M{"$set": bson.M{"validity_end_date": newDate}}
-	result, err := r.db.Collection("financing_promotions").UpdateOne(ctx, filter, update)
+	result, err := r.db.Collection("financing").UpdateOne(ctx, filter, update)
 	if err != nil || result.ModifiedCount == 0 {
 		return fmt.Errorf("could not extend promotion validity: %w", err)
 	}
@@ -168,35 +168,62 @@ func (r *BankRepositoryMongo) ExtendFinancingPromotionValidity(code string, newD
 
 // GetBankCustomerCounts retrieves the number of customers for each bank.
 func (r *BankRepositoryMongo) GetBankCustomerCounts() ([]models.BankCustomerCountDTO, error) {
-
 	ctx := context.Background()
 
-	customerCollection := r.db.Collection("customers")
+	// Reference the banks collection
+	bankCollection := r.db.Collection("banks")
 	pipeline := []bson.M{
+		// Lookup to join BANKS with CUSTOMERS_BANKS
 		{
 			"$lookup": bson.M{
-				"from":         "banks",
-				"localField":   "bank_id",
-				"foreignField": "_id",
-				"as":           "bank_info",
+				"from":         "customers_banks",
+				"localField":   "_id",     // BANKS _id field
+				"foreignField": "bank_id", // CUSTOMERS_BANKS bank_id field
+				"as":           "customer_relations",
 			},
 		},
+		// Add a field to count the number of customers
 		{
-			"$group": bson.M{
-				"_id":            "$bank_info",
-				"customer_count": bson.M{"$sum": 1},
+			"$addFields": bson.M{
+				"customer_count": bson.M{"$size": "$customer_relations"},
+			},
+		},
+		// Project the desired fields
+		{
+			"$project": bson.M{
+				"_id":            0,
+				"bank_cuit":      "$cuit",
+				"bank_name":      "$name",
+				"customer_count": 1,
 			},
 		},
 	}
 
-	cursor, err := customerCollection.Aggregate(ctx, pipeline)
+	// Execute the aggregation pipeline
+	cursor, err := bankCollection.Aggregate(ctx, pipeline)
 	if err != nil {
 		return nil, fmt.Errorf("could not retrieve customer counts: %w", err)
 	}
 
-	var results []models.BankCustomerCountDTO
-	if err := cursor.All(ctx, &results); err != nil {
+	// Decode the results into a map first to normalize the data
+	var rawResults []bson.M
+	if err := cursor.All(ctx, &rawResults); err != nil {
 		return nil, fmt.Errorf("could not decode results: %w", err)
+	}
+
+	// Convert raw results into DTOs
+	var results []models.BankCustomerCountDTO
+	for _, raw := range rawResults {
+		customerCount, ok := raw["customer_count"].(int32) // MongoDB often stores counts as int32
+		if !ok {
+			return nil, fmt.Errorf("invalid customer_count format")
+		}
+
+		results = append(results, models.BankCustomerCountDTO{
+			BankCuit:      raw["bank_cuit"].(string),
+			BankName:      raw["bank_name"].(string),
+			CustomerCount: int(customerCount),
+		})
 	}
 
 	return results, nil

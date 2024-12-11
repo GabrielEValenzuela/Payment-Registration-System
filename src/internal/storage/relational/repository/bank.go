@@ -131,11 +131,11 @@ func (r *BankRepositoryGORM) GetBankCustomerCounts() ([]models.BankCustomerCount
 		SELECT 
 			b.cuit AS bank_cuit,
 			b.name AS bank_name,
-			COUNT(cb.customer_entity_id) AS customer_count
+			COUNT(cb.customer_entity_sql_id) AS customer_count
 		FROM 
 			BANKS b
 		LEFT JOIN 
-			customers_banks cb ON b.id = cb.bank_entity_id
+			customers_banks cb ON b.id = cb.bank_entity_sql_id
 		GROUP BY 
 			b.id, b.name
 	`).Scan(&results)
