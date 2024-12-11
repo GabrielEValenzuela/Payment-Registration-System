@@ -2,10 +2,11 @@ package main
 
 import (
 	"flag"
+	"fmt"
 
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/cmd/server"
 	_ "github.com/GabrielEValenzuela/Payment-Registration-System/src/docs"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/config"
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 )
 
 // @title Payment Registration System
@@ -19,25 +20,17 @@ import (
 // @host localhost:8080
 // @BasePath /
 func main() {
-	// Initialize the logger
-	logger.InitLogger(false, "log.log")
 
 	// Parse command-line flags
 	configPath := flag.String("config", "config.yaml", "path to the configuration file")
 	flag.Parse()
-
-	// Log the configuration file path being used
-	logger.Info("Using configuration file: %s", *configPath)
-
 	// Load configuration
-	_, err := config.LoadConfig(*configPath)
+	cfg, err := config.LoadConfig(*configPath)
 	if err != nil {
-		logger.Fatal("Failed to load configuration: %v", err)
+		fmt.Errorf("Failed to load configuration: %v", err)
 	}
 
-	// Print log for now
-	logger.Info("Configuration loaded successfully")
-
 	// Create and run the server
-	// srv := server.NewServer(cfg)
+	srv := server.NewServer(cfg)
+	srv.Run()
 }
