@@ -23,9 +23,5 @@ go.work.sum
 
 # env file
 .env
-<<<<<<< HEAD
 venv/
 *.log
-=======
-*.log
->>>>>>> 65eea21 (CL)
