@@ -1,13 +1,12 @@
-package sql
+package relational
 
 import (
 	"errors"
-	"log"
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/sql/entities"
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/sql/mapper"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/entities"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"gorm.io/gorm"
 )
 
@@ -25,27 +24,27 @@ func (r *PromotionRepositoryGORM) GetAvailablePromotionsByStoreAndDateRange(cuit
 	var promotionsFinancing []models.Financing
 
 	// Search for DiscountEntity within the date range and matching CUIT
-	var discounts []entities.DiscountEntity
+	var discounts []entities.DiscountEntitySQL
 	if err := r.db.Where("cuit_store = ? AND is_deleted = ? AND ((validity_start_date >= ? AND validity_end_date <= ?) OR (validity_start_date <= ? AND validity_end_date >= ?))",
 		cuit, false, startDate, endDate, startDate, endDate).Find(&discounts).Error; err != nil {
-		log.Printf("Error finding DiscountEntity with CUIT %s between %v and %v: %v", cuit, startDate, endDate, err)
+		logger.Info("Error finding DiscountEntity with CUIT %s between %v and %v: %v", cuit, startDate, endDate, err)
 		return nil, nil, err
 	}
 
 	// Search for FinancingEntity within the date range and matching CUIT
-	var financings []entities.FinancingEntity
+	var financings []entities.FinancingEntitySQL
 	if err := r.db.Where("cuit_store = ? AND is_deleted = ? AND ((validity_start_date >= ? AND validity_end_date <= ?) OR (validity_start_date <= ? AND validity_end_date >= ?))",
 		cuit, false, startDate, endDate, startDate, endDate).Find(&financings).Error; err != nil {
-		log.Printf("Error finding DiscountEntity with CUIT %s between %v and %v: %v", cuit, startDate, endDate, err)
+		logger.Info("Error finding DiscountEntity with CUIT %s between %v and %v: %v", cuit, startDate, endDate, err)
 		return nil, nil, err
 	}
 
 	// Collect all promotions
 	for _, discount := range discounts {
-		promotionsDiscount = append(promotionsDiscount, *mapper.ToDiscount(&discount))
+		promotionsDiscount = append(promotionsDiscount, *entities.ToDiscount(&discount))
 	}
 	for _, financing := range financings {
-		promotionsFinancing = append(promotionsFinancing, *mapper.ToFinancing(&financing))
+		promotionsFinancing = append(promotionsFinancing, *entities.ToFinancing(&financing))
 	}
 
 	return &promotionsFinancing, &promotionsDiscount, nil
@@ -53,7 +52,7 @@ func (r *PromotionRepositoryGORM) GetAvailablePromotionsByStoreAndDateRange(cuit
 
 // GetMostUsedDiscountPromotion retrieves the most used discount promotion based on its usage in single and monthly payments.
 func (r *PromotionRepositoryGORM) GetMostUsedPromotion() (interface{}, error) {
-	var result entities.PaymentVoucherCount
+	var result entities.PaymentVoucherCountSQL
 
 	query := `
 		SELECT
@@ -89,8 +88,8 @@ func (r *PromotionRepositoryGORM) GetMostUsedPromotion() (interface{}, error) {
 }
 
 func findPromotionByCode(db *gorm.DB, code string) (interface{}, error) {
-	var discountPromo entities.DiscountEntity
-	var financingPromo entities.FinancingEntity
+	var discountPromo entities.DiscountEntitySQL
+	var financingPromo entities.FinancingEntitySQL
 
 	if err := db.Where("code = ?", code).First(&financingPromo).Error; err == nil {
 		return financingPromo, nil
