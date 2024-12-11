@@ -11,5 +11,200 @@ info:
   termsOfService: http://swagger.io/terms/
   title: Payment Registration System
   version: "1.0"
-paths: {}
+paths:
+  /customers/count:
+    get:
+      consumes:
+      - application/json
+      description: Returns the number of customers for each bank in the system.
+      produces:
+      - application/json
+      responses:
+        "500":
+          description: Failed to get bank customer counts
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get the number of customers for each bank
+      tags:
+      - Bank
+  /promotions/discount/{code}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a discount promotion from the bank using the provided promotion
+        code.
+      parameters:
+      - description: Promotion code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Discount promotion deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Promotion not found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to delete discount promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a discount promotion
+      tags:
+      - Bank
+  /promotions/discount/{code}/extend:
+    patch:
+      consumes:
+      - application/json
+      description: Extends the validity of a discount promotion using the provided
+        details in the request body.
+      parameters:
+      - description: Promotion code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Discount promotion validity extended successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Promotion not found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to extend discount promotion validity
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Extend the validity of a discount promotion
+      tags:
+      - Bank
+  /promotions/financing/{code}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a financing promotion from the bank using the provided
+        promotion code.
+      parameters:
+      - description: Promotion code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Financing promotion deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Promotion not found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to delete financing promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a financing promotion
+      tags:
+      - Bank
+  /promotions/financing/{code}/extend:
+    patch:
+      consumes:
+      - application/json
+      description: Extends the validity of a financing promotion using the provided
+        details in the request body.
+      parameters:
+      - description: Promotion code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Financing promotion validity extended successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Promotion not found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to extend financing promotion validity
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Extend the validity of a financing promotion
+      tags:
+      - Bank
+  /v1/sql/promotions/financing:
+    post:
+      consumes:
+      - application/json
+      description: Adds a new financing promotion to the bank using the provided details
+        in the request body.
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Financing promotion added successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to add financing promotion to bank
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add a financing promotion to a bank
+      tags:
+      - Bank
 swagger: "2.0"
