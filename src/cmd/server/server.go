@@ -114,8 +114,8 @@ func (srv *Server) setupRoutes() {
 	})
 
 	// Initialize services, and handlers
-	bankHandlerRelational := handlers.NewBankHandler(bank.NewService(relational_repository.NewBankRelationalRepository(srv.sqlDb)))
-	bankHandlerNonRelational := handlers.NewBankHandler(bank.NewService(non_relational_repository.NewBankNonRelationalRepository(srv.noSqlDb)))
+	bankHandlerRelational := handlers.NewBankHandler(bank.NewBankService(relational_repository.NewBankRelationalRepository(srv.sqlDb)))
+	bankHandlerNonRelational := handlers.NewBankHandler(bank.NewBankService(non_relational_repository.NewBankNonRelationalRepository(srv.noSqlDb)))
 
 	// API version group
 	apiGroup := srv.app.Group("/v1")
