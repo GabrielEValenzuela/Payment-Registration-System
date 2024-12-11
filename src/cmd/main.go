@@ -20,23 +20,23 @@ import (
 // @BasePath /
 func main() {
 	// Initialize the logger
-	log := logger.InitLogger()
+	logger.InitLogger(false, "log.log")
 
 	// Parse command-line flags
 	configPath := flag.String("config", "config.yaml", "path to the configuration file")
 	flag.Parse()
 
 	// Log the configuration file path being used
-	log.Infof("Using configuration file: %s", *configPath)
+	logger.Info("Using configuration file: %s", *configPath)
 
 	// Load configuration
 	_, err := config.LoadConfig(*configPath)
 	if err != nil {
-		log.Fatalf("Failed to load configuration: %v", err)
+		logger.Fatal("Failed to load configuration: %v", err)
 	}
 
 	// Print log for now
-	log.Infof("Configuration loaded successfully")
+	logger.Info("Configuration loaded successfully")
 
 	// Create and run the server
 	// srv := server.NewServer(cfg)
