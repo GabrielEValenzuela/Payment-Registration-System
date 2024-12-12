@@ -54,3 +54,12 @@ func ToQuota(entity *QuotaEntitySQL) *models.Quota {
 		Year:   entity.Year,
 	}
 }
+
+func ToQuotaNonSQL(model *QuotaEntityNonSQL) *models.Quota {
+	return &models.Quota{
+		Number: model.Number,
+		Price:  model.Price,
+		Month:  model.Month,
+		Year:   model.Year,
+	}
+}

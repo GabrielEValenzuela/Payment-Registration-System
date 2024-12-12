@@ -81,6 +81,13 @@ func ToPurchaseSinglePayment(entity *PurchaseSinglePaymentEntitySQL) *models.Pur
 	}
 }
 
+func ToPurchaseSinglePaymentNonSQL(entity *PurchaseSinglePaymentEntityNonSQL) *models.PurchaseSinglePayment {
+	return &models.PurchaseSinglePayment{
+		Purchase:      *toPurchaseNonSQL(&entity.PurchaseEntity),
+		StoreDiscount: entity.StoreDiscount,
+	}
+}
+
 func ToPurchaseSinglePaymentEntity(model *models.PurchaseSinglePayment) *PurchaseSinglePaymentEntitySQL {
 	return &PurchaseSinglePaymentEntitySQL{
 		PurchaseEntity: *ToPurchaseEntity(&model.Purchase),
@@ -96,6 +103,20 @@ func ToPurchaseMonthlyPayments(entity *PurchaseMonthlyPaymentsEntitySQL) *models
 
 	return &models.PurchaseMonthlyPayment{
 		Purchase:       *toPurchase(&entity.PurchaseEntity),
+		NumberOfQuotas: entity.NumberOfQuotas,
+		Interest:       entity.Interest,
+		Quota:          quotas,
+	}
+}
+
+func ToPurchaseMonthlyPaymentsNonSQL(entity *PurchaseMonthlyPaymentsEntityNonSQL) *models.PurchaseMonthlyPayment {
+	var quotas []models.Quota
+	for _, src := range entity.Quotas {
+		quotas = append(quotas, *ToQuotaNonSQL(&src))
+	}
+
+	return &models.PurchaseMonthlyPayment{
+		Purchase:       *toPurchaseNonSQL(&entity.PurchaseEntity),
 		NumberOfQuotas: entity.NumberOfQuotas,
 		Interest:       entity.Interest,
 		Quota:          quotas,
@@ -126,6 +147,16 @@ func ToPurchaseEntity(model *models.Purchase) *PurchaseEntitySQL {
 }
 
 func toPurchase(entity *PurchaseEntitySQL) *models.Purchase {
+	return &models.Purchase{
+		PaymentVoucher: entity.PaymentVoucher,
+		Store:          entity.Store,
+		CuitStore:      entity.CuitStore,
+		Amount:         entity.Amount,
+		FinalAmount:    entity.FinalAmount,
+	}
+}
+
+func toPurchaseNonSQL(entity *PurchaseEntityNonSQL) *models.Purchase {
 	return &models.Purchase{
 		PaymentVoucher: entity.PaymentVoucher,
 		Store:          entity.Store,
