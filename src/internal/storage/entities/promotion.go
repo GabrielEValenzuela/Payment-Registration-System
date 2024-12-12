@@ -121,6 +121,18 @@ func ToPromotion(promotionEntity *PromotionEntitySQL) *models.Promotion {
 	}
 }
 
+func ToPromotionNonSQL(promotionEntity *PromotionEntityNonSQL) *models.Promotion {
+	return &models.Promotion{
+		Code:              promotionEntity.Code,
+		PromotionTitle:    promotionEntity.PromotionTitle,
+		NameStore:         promotionEntity.NameStore,
+		CuitStore:         promotionEntity.CuitStore,
+		ValidityStartDate: promotionEntity.ValidityStartDate,
+		ValidityEndDate:   promotionEntity.ValidityEndDate,
+		Comments:          promotionEntity.Comments,
+	}
+}
+
 // Mapper from Promotion to PromotionModel
 func ToPromotionEntity(promotion *models.Promotion, bankId uint) *PromotionEntitySQL {
 	return &PromotionEntitySQL{
@@ -145,6 +157,14 @@ func ToFinancing(financingEntity *FinancingEntitySQL) *models.Financing {
 	}
 }
 
+func ToFinancingNonSQL(financingEntity *FinancingEntityNonSQL) *models.Financing {
+	return &models.Financing{
+		Promotion:      *ToPromotionNonSQL(&financingEntity.PromotionEntity),
+		NumberOfQuotas: financingEntity.NumberOfQuotas,
+		Interest:       financingEntity.Interest,
+	}
+}
+
 // Mapper from Financing to FinancingModel
 func ToFinancingEntity(financing *models.Financing, bankId uint) *FinancingEntitySQL {
 	return &FinancingEntitySQL{
@@ -160,6 +180,15 @@ func ToDiscount(discountEntity *DiscountEntitySQL) *models.Discount {
 		Promotion:          *ToPromotion(&discountEntity.PromotionEntitySQL), // Reuse the PromotionModel mapping
 		DiscountPercentage: discountEntity.DiscountPercentage,
 		PriceCap:           discountEntity.DiscountPercentage,
+		OnlyCash:           discountEntity.OnlyCash,
+	}
+}
+
+func ToDiscountNonSQL(discountEntity *DiscountEntityNonSQL) *models.Discount {
+	return &models.Discount{
+		Promotion:          *ToPromotionNonSQL(&discountEntity.PromotionEntity),
+		DiscountPercentage: discountEntity.DiscountPercentage,
+		PriceCap:           discountEntity.PriceCap,
 		OnlyCash:           discountEntity.OnlyCash,
 	}
 }
