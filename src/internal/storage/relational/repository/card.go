@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/entities"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"gorm.io/gorm"
@@ -15,7 +16,7 @@ type CardRepositoryGORM struct {
 }
 
 // NewCardRepository crea una nueva instancia de CardRepository
-func NewCardRepository(db *gorm.DB) *CardRepositoryGORM {
+func NewCardRelationalRepository(db *gorm.DB) storage.ICardStorage {
 	return &CardRepositoryGORM{db: db}
 }
 

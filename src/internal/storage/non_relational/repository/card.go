@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/entities"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
@@ -16,7 +17,7 @@ type CardRepositoryMongo struct {
 }
 
 // NewCardRepository creates a new instance of CardRepositoryMongo
-func NewCardRepositoryNonRelational(db *mongo.Database) *CardRepositoryMongo {
+func NewCardNonRelationalRepository(db *mongo.Database) storage.ICardStorage {
 	return &CardRepositoryMongo{db: db}
 }
 

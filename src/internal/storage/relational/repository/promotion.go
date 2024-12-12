@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/entities"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"gorm.io/gorm"
@@ -15,7 +16,7 @@ type PromotionRepositoryGORM struct {
 }
 
 // NewPromotionRepository crea una nueva instancia de PromotionRepository
-func NewPromotionRepository(db *gorm.DB) *PromotionRepositoryGORM {
+func NewPromotionRelationRepository(db *gorm.DB) storage.IPromotionStorage {
 	return &PromotionRepositoryGORM{db: db}
 }
 

@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/entities"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"go.mongodb.org/mongo-driver/v2/bson"
@@ -17,7 +18,7 @@ type PromotionRepositoryMongo struct {
 }
 
 // NewPromotionRepository creates a new instance of PromotionRepositoryMongo
-func NewPromotionRepositoryNonRelational(db *mongo.Database) *PromotionRepositoryMongo {
+func NewPromotionNonRelationalRepository(db *mongo.Database) storage.IPromotionStorage {
 	return &PromotionRepositoryMongo{db: db}
 }
 

@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage"
 	"gorm.io/gorm"
 )
 
@@ -12,7 +13,7 @@ type StoreRepositoryGORM struct {
 }
 
 // NewStoreRepository crea una nueva instancia de StoreRepository
-func NewStoreRepository(db *gorm.DB) *StoreRepositoryGORM {
+func NewStoreRelationalRepository(db *gorm.DB) storage.IStoreStorage {
 	return &StoreRepositoryGORM{db: db}
 }
 

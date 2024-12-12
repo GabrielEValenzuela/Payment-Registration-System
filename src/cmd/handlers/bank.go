@@ -3,18 +3,18 @@ package handlers
 import (
 	"time"
 
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/bank"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/services"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"github.com/gofiber/fiber/v2"
 )
 
 type BankHandler struct {
-	bank bank.BankService
+	bank services.BankService
 }
 
 // NewBankHandler creates a new instance of BankHandler with the provided bank service.
-func NewBankHandler(bank bank.BankService) *BankHandler {
+func NewBankHandler(bank services.BankService) *BankHandler {
 	return &BankHandler{
 		bank: bank,
 	}
