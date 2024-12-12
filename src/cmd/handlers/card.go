@@ -27,7 +27,7 @@ func NewCardHandler(card services.CardService) *CardHandler {
 // @Param cardNumber path string true "Card number"
 // @Param month path int true "Month"
 // @Param year path int true "Year"
-// @Success 200 {object} models.PaymentSummary "Payment summary retrieved successfully"
+// @Success 200 {object} map[string]interface{} "Payment summary retrieved successfully"
 // @Failure 400 {object} map[string]interface{} "Invalid request parameters"
 // @Failure 500 {object} map[string]interface{} "Failed to retrieve payment summary"
 // @Router /v1/cards/summary/{cardNumber}/{month}/{year} [get]
@@ -80,7 +80,7 @@ func (h *CardHandler) GetPaymentSummary() fiber.Handler {
 // @Param day path int true "Day"
 // @Param month path int true "Month"
 // @Param year path int true "Year"
-// @Success 200 {array} models.Card "Cards expiring in the next 30 days"
+// @Success 200 {array} map[string]interface{} "Cards expiring in the next 30 days"
 // @Failure 500 {object} map[string]interface{} "Failed to retrieve expiring cards"
 // @Router /v1/cards/expiring/{day}/{month}/{year} [get]
 func (h *CardHandler) GetCardsExpiringInNext30Days() fiber.Handler {
@@ -139,7 +139,7 @@ func (h *CardHandler) GetCardsExpiringInNext30Days() fiber.Handler {
 // @Param cuit path string true "CUIT"
 // @Param finalAmount path float64 true "Final amount"
 // @Param paymentVoucher path string true "Payment voucher"
-// @Success 200 {object} models.PurchaseMonthlyPayment "Monthly purchase details retrieved successfully"
+// @Success 200 {object} map[string]interface{} "Monthly purchase details retrieved successfully"
 // @Failure 400 {object} map[string]interface{} "Invalid request parameters"
 // @Failure 500 {object} map[string]interface{} "Failed to retrieve monthly purchase details"
 // @Router /v1/cards/purchase/monthly [get]
@@ -182,7 +182,7 @@ func (h *CardHandler) GetPurchaseMonthly() fiber.Handler {
 // @Tags Card
 // @Accept json
 // @Produce json
-// @Success 200 {array} models.Card "Top 10 cards by purchases"
+// @Success 200 {array} map[string]interface{} "Top 10 cards by purchases"
 // @Failure 500 {object} map[string]interface{} "Failed to retrieve top 10 cards"
 // @Router /v1/cards/top [get]
 func (h *CardHandler) GetTop10CardsByPurchases() fiber.Handler {

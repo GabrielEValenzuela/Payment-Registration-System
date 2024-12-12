@@ -27,8 +27,8 @@ func NewPromotionHandler(promotion services.PromotionService) *PromotionHandler 
 // @Param cuit path string true "Store CUIT"
 // @Param startDate path string true "Start date in RFC3339 format"
 // @Param endDate path string true "End date in RFC3339 format"
-// @Success 200 {array} models.Financing "Available financing promotions"
-// @Success 200 {array} models.Discount "Available discount promotions"
+// @Success 200 {array} map[string]interface{} "Available financing promotions"
+// @Success 200 {array} map[string]interface{} "Available discount promotions"
 // @Failure 400 {object} map[string]interface{} "Invalid request parameters"
 // @Failure 500 {object} map[string]interface{} "Failed to retrieve promotions"
 // @Router /v1/promotions/{cuit}/{startDate}/{endDate} [get]
@@ -81,7 +81,7 @@ func (h *PromotionHandler) GetAvailablePromotionsByStoreAndDateRange() fiber.Han
 // @Tags Promotion
 // @Accept json
 // @Produce json
-// @Success 200 {object} models.Promotion "Most used promotion"
+// @Success 200 {object} map[string]interface{} "Most used promotion"
 // @Failure 500 {object} map[string]interface{} "Failed to retrieve the most used promotion"
 // @Router /v1/promotions/most-used [get]
 func (h *PromotionHandler) GetMostUsedPromotion() fiber.Handler {

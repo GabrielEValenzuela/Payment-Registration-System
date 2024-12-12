@@ -26,7 +26,7 @@ func NewStoreHandler(store services.StoreService) *StoreHandler {
 // @Produce json
 // @Param month path int true "Month"
 // @Param year path int true "Year"
-// @Success 200 {object} models.StoreDTO "Store with the highest revenue"
+// @Success 200 {object} map[string]interface{} "Store with the highest revenue"
 // @Failure 400 {object} map[string]interface{} "Invalid request parameters"
 // @Failure 500 {object} map[string]interface{} "Failed to retrieve store information"
 // @Router /v1/stores/highest-revenue/{month}/{year} [get]
