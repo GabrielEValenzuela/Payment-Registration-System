@@ -27,7 +27,7 @@ func main() {
 	// Load configuration
 	cfg, err := config.LoadConfig(*configPath)
 	if err != nil {
-		fmt.Errorf("Failed to load configuration: %v", err)
+		fmt.Printf("Failed to load configuration: %v", err)
 	}
 
 	// Create and run the server
