@@ -1,4 +1,4 @@
-package relational
+package relational_repository
 
 import (
 	"errors"
@@ -64,12 +64,12 @@ func (r *PromotionRepositoryGORM) GetMostUsedPromotion() (interface{}, error) {
 			SELECT
 				month.payment_voucher
 			FROM
-				PURCHASES_MONTHLY_PAYMENTS month
+				PURCHASE_MONTHLY_PAYMENTS month
 			UNION ALL
 			SELECT
 				single.payment_voucher
 			FROM
-				PURCHASES_SINGLE_PAYMENTS single
+				PURCHASE_SINGLE_PAYMENTS single
 			) as payment_voucher
 		GROUP BY
 			payment_voucher

@@ -1,4 +1,4 @@
-package relational
+package relational_repository
 
 import (
 	"fmt"

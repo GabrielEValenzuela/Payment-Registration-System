@@ -6,7 +6,7 @@ services:
     container_name: mysql-db  # Name of the container
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword       # Root user's password
-      MYSQL_DATABASE: testdb                  # Name of the database to be created
+      MYSQL_DATABASE: payment-registration-db # Name of the database to be created
       MYSQL_USER: testuser                    # Name of the additional user
       MYSQL_PASSWORD: testpassword            # Password for the additional user
     ports:

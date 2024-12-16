@@ -1,4 +1,4 @@
-package relational
+package relational_repository
 
 import (
 	"fmt"
@@ -121,9 +121,9 @@ func (r *CardRepositoryGORM) GetTop10CardsByPurchases() (*[]models.Card, error) 
 
 	// Query to find the top 10 cards by number of purchases, with preloads for payments and quotas
 	if err := r.db.Table("CARDS").
-		Select("CARDS.*, (COUNT(PURCHASES_SINGLE_PAYMENTS.id) + COUNT(PURCHASES_MONTHLY_PAYMENTS.id)) as purchase_count").
-		Joins("LEFT JOIN PURCHASES_SINGLE_PAYMENTS ON PURCHASES_SINGLE_PAYMENTS.card_id = CARDS.id").
-		Joins("LEFT JOIN PURCHASES_MONTHLY_PAYMENTS ON PURCHASES_MONTHLY_PAYMENTS.card_id = CARDS.id").
+		Select("CARDS.*, (COUNT(PURCHASE_SINGLE_PAYMENTS.id) + COUNT(PURCHASE_MONTHLY_PAYMENTS.id)) as purchase_count").
+		Joins("LEFT JOIN PURCHASE_SINGLE_PAYMENTS ON PURCHASE_SINGLE_PAYMENTS.card_id = CARDS.id").
+		Joins("LEFT JOIN PURCHASE_MONTHLY_PAYMENTS ON PURCHASE_MONTHLY_PAYMENTS.card_id = CARDS.id").
 		Preload("PurchaseSinglePayments").
 		Preload("PurchaseMonthlyPayments.Quotas").
 		Group("CARDS.id").

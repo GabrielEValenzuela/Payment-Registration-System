@@ -20,9 +20,9 @@ func NewMySQLDB(dsn string, cleanDB bool) (*gorm.DB, error) {
 		gorm_logger.Config{
 			SlowThreshold:             time.Second,        // Slow SQL threshold
 			LogLevel:                  gorm_logger.Silent, // Log level
-			IgnoreRecordNotFoundError: false,               // Ignore ErrRecordNotFound error for logger
-			ParameterizedQueries:      false,               // Don't include params in the SQL log
-			Colorful:                  true,              // Disable color
+			IgnoreRecordNotFoundError: false,              // Ignore ErrRecordNotFound error for logger
+			ParameterizedQueries:      false,              // Don't include params in the SQL log
+			Colorful:                  true,               // Disable color
 		},
 	)
 	// Open a new GORM connection using the MySQL driver
