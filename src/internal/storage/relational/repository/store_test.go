@@ -12,7 +12,7 @@ import (
 func TestGetStoreWithHighestRevenueByMonth(t *testing.T) {
 	logger.InitLogger(false, "")
 
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/PaymentRegistrationDB?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)

@@ -1,9 +1,9 @@
 sqldb:
-  dsn: "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
+  dsn: "testuser:testpassword@tcp(mysql:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
   clean: true
 
 nosqldb:
-  uri: "mongodb://testuser:testpassword@localhost:27017/payment_registration_system?authSource=admin"
+  uri: "mongodb://testuser:testpassword@mongodb:27017/payment_registration_system?authSource=admin"
   database: "payment_registration_system"
   clean: true
 

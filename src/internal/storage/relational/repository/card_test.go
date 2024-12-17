@@ -21,7 +21,7 @@ func TestGetPaymentSummary(t *testing.T) {
 	year := 2024
 
 	// Database
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/PaymentRegistrationDB?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)
@@ -80,7 +80,7 @@ func TestGetCardsExpiringInNext30Days(t *testing.T) {
 	year := 2024
 
 	// Database
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/PaymentRegistrationDB?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)
@@ -111,7 +111,7 @@ func TestGetPurchaseSingle(t *testing.T) {
 	finalAmount := 100.00
 
 	// Database
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/PaymentRegistrationDB?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)
@@ -142,7 +142,7 @@ func TestGetPurchaseMonthly(t *testing.T) {
 	finalAmount := 440.0
 
 	// Database
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/PaymentRegistrationDB?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)
@@ -171,7 +171,7 @@ func TestGetTop10CardsByPurchases(t *testing.T) {
 	logger.InitLogger(false, "")
 
 	// Database
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/PaymentRegistrationDB?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)
