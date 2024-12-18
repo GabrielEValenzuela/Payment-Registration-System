@@ -51,7 +51,7 @@ type PaymentVoucherCountNonSQL struct {
 // Promotion represents a special offer provided by a bank to customers.
 // It applies to specific stores and is valid for a certain period of time.
 type PromotionEntitySQL struct {
-	Code              string        `gorm:"size:255"`
+	Code              string        `gorm:"size:255;unique"`
 	PromotionTitle    string        `gorm:"size:255"`
 	NameStore         string        `gorm:"size:255"`
 	CuitStore         string        `gorm:"size:255"`
@@ -110,26 +110,30 @@ func (PaymentVoucherCountSQL) TableName() string {
 // Mapper from PromotionModel to Promotion
 func ToPromotion(promotionEntity *PromotionEntitySQL) *models.Promotion {
 	return &models.Promotion{
-		Code:              promotionEntity.Code,
-		PromotionTitle:    promotionEntity.PromotionTitle,
-		NameStore:         promotionEntity.NameStore,
-		CuitStore:         promotionEntity.CuitStore,
-		ValidityStartDate: promotionEntity.ValidityStartDate,
-		ValidityEndDate:   promotionEntity.ValidityEndDate,
-		Comments:          promotionEntity.Comments,
-		Bank:              *ToBank(&promotionEntity.Bank), // Use the existing mapper for Bank
+		Code:           promotionEntity.Code,
+		PromotionTitle: promotionEntity.PromotionTitle,
+		NameStore:      promotionEntity.NameStore,
+		CuitStore:      promotionEntity.CuitStore,
+		ValidityStartDate: models.CustomTime{
+			Time: promotionEntity.ValidityStartDate,
+		},
+		ValidityEndDate: models.CustomTime{
+			Time: promotionEntity.ValidityEndDate,
+		},
+		Comments: promotionEntity.Comments,
+		Bank:     *ToBank(&promotionEntity.Bank), // Use the existing mapper for Bank
 	}
 }
 
 func ToPromotionNonSQL(promotionEntity *PromotionEntityNonSQL) *models.Promotion {
 	return &models.Promotion{
-		Code:              promotionEntity.Code,
-		PromotionTitle:    promotionEntity.PromotionTitle,
-		NameStore:         promotionEntity.NameStore,
-		CuitStore:         promotionEntity.CuitStore,
-		ValidityStartDate: promotionEntity.ValidityStartDate,
-		ValidityEndDate:   promotionEntity.ValidityEndDate,
-		Comments:          promotionEntity.Comments,
+		Code:           promotionEntity.Code,
+		PromotionTitle: promotionEntity.PromotionTitle,
+		NameStore:      promotionEntity.NameStore,
+		CuitStore:      promotionEntity.CuitStore,
+		//ValidityStartDate: promotionEntity.ValidityStartDate,
+		//ValidityEndDate:   promotionEntity.ValidityEndDate,
+		Comments: promotionEntity.Comments,
 	}
 }
 
@@ -140,8 +144,8 @@ func ToPromotionEntity(promotion *models.Promotion, bankId uint) *PromotionEntit
 		PromotionTitle:    promotion.PromotionTitle,
 		NameStore:         promotion.NameStore,
 		CuitStore:         promotion.CuitStore,
-		ValidityStartDate: promotion.ValidityStartDate,
-		ValidityEndDate:   promotion.ValidityEndDate,
+		ValidityStartDate: promotion.ValidityStartDate.Time,
+		ValidityEndDate:   promotion.ValidityEndDate.Time,
 		Comments:          promotion.Comments,
 		Bank:              *ToBankEntity(&promotion.Bank), // Use the existing mapper for BankModel
 		BankID:            bankId,                         // Assign the bank's ID

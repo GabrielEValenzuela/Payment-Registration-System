@@ -76,11 +76,14 @@ func ToCard[T any](cardEntity *T) *models.Card {
 	switch v := any(cardEntity).(type) {
 	case *CardEntitySQL:
 		return &models.Card{
-			Number:               v.Number,
-			Ccv:                  v.Ccv,
-			CardholderNameInCard: v.CardholderNameInCard,
-			Since:                v.Since,
-			ExpirationDate:       v.ExpirationDate,
+			Number:                  v.Number,
+			Ccv:                     v.Ccv,
+			CardholderNameInCard:    v.CardholderNameInCard,
+			Since:                   v.Since,
+			ExpirationDate:          v.ExpirationDate,
+			Bank:                    *ToBank(&v.Bank),
+			PurchaseMonthlyPayments: *ConvertPurchaseMonthlyPaymentsList(&v.PurchaseMonthlyPayments),
+			PurchaseSinglePayments:  *ConvertPurchaseSinglePaymentList(&v.PurchaseSinglePayments),
 		}
 	case *CardEntityNonSQL:
 		return &models.Card{

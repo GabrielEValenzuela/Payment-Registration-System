@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -38,23 +39,36 @@ func NewServer(cfg *config.Config) *Server {
 
 func (srv *Server) InitDatabases() {
 	// Initialize the SQL database
-
 	sqlDb, err := relational.NewMySQLDB(srv.cfg.SQLDb.DSN, srv.cfg.SQLDb.Clean)
-
 	if err != nil {
 		logger.Fatal("Failed to initialize MySQL database: %v", err)
 	}
 	srv.sqlDb = sqlDb
 
+	// Check if data initialization is required
+	shouldInitialize, err := relational.ShouldInitializeData(sqlDb)
+	if err != nil {
+		logger.Fatal("Failed to check data initialization status: %v", err)
+	}
+
+	if shouldInitialize {
+		logger.Info("Running data initialization: adding default data to the database.")
+		// For testing purposes, this SQL script is executed to populate the database with sample data.
+		err = relational.ExecuteSQLFile(sqlDb, "./src/internal/storage/relational/insert.sql")
+		if err != nil {
+			log.Fatalf("Failed to execute SQL file: %v", err)
+		}
+	} else {
+		logger.Info("Data initialization script not required.")
+	}
+
 	// Initialize the MongoDB database
 	mongoDb, err := nonrelational.NewMongoDB(srv.cfg.NoSQLDb.URI, srv.cfg.NoSQLDb.Database, srv.cfg.NoSQLDb.Clean)
-
 	if err != nil {
 		logger.Fatal("Failed to initialize MongoDB database: %v", err)
 	}
 
 	srv.noSqlDb = mongoDb
-
 }
 
 func (srv *Server) Run() error {

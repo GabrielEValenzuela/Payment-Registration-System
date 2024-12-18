@@ -10,7 +10,7 @@ import (
 type BankEntityNonSQL struct {
 	ID        primitive.ObjectID     `bson:"_id,omitempty"` // Use ObjectId as the primary key
 	Name      string                 `bson:"name"`
-	Cuit      string                 `bson:"cuit"`
+	Cuit      string                 `bson:"cuit;unique"`
 	Address   string                 `bson:"address"`
 	Telephone string                 `bson:"telephone"`
 	Customers []CustomerEntityNonSQL `bson:"customers,omitempty"`
