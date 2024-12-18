@@ -1,9 +1,13 @@
 version: '3.8'
 
+networks:
+  mynetwork:
+    driver: bridge
+
 services:
-  db:
+  mysql:
     image: mysql:8.0         # Use the official MySQL image version 8.0
-    container_name: mysql-db  # Name of the container
+    container_name: mysql  # Name of the container
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword       # Root user's password
       MYSQL_DATABASE: payment-registration-db # Name of the database to be created
@@ -16,6 +20,42 @@ services:
     networks:
       - mynetwork
 
-networks:
-  mynetwork:
-    driver: bridge
+  mongodb:
+    image: mongo:8.0.3-noble
+    container_name: mongodb
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: testuser       # Root user's username
+      MONGO_INITDB_ROOT_PASSWORD: testpassword   # Root user's password
+      MONGO_INITDB_DATABASE: payment_registration_system # Default database to create
+    ports:
+      - "27017:27017"           # Expose MongoDB port 27017 to the host
+    networks:
+      - mynetwork
+
+  app:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      container_name: go-app
+      depends_on:
+        - mysql
+        - mongodb
+      ports:
+        - "8080:8080"
+      networks:
+        - mynetwork
+      command: ["/wait-for.sh", "./main"]
+
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.tests # Dockerfile for test runner
+    container_name: test-runner
+    depends_on:
+      - mysql
+      - mongodb
+    networks:
+      - mynetwork
+    volumes:
+      - ./reports:/app/reports # Mount reports directory for test coverage

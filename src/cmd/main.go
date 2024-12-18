@@ -22,7 +22,7 @@ import (
 func main() {
 
 	// Parse command-line flags
-	configPath := flag.String("config", "config.yaml", "path to the configuration file")
+	configPath := flag.String("config", "./config.yml", "path to the configuration file")
 	flag.Parse()
 	// Load configuration
 	cfg, err := config.LoadConfig(*configPath)
