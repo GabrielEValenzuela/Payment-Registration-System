@@ -9,16 +9,16 @@ import (
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
 	entities "github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/entities"
 	mysql "github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/relational"
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
 // Test the BankRepository with a real MySQL connection
 func TestAddFinancingPromotionToBank(t *testing.T) {
-	logger.InitLogger(false, "")
+	testutils.InitTestSetup()
 
 	// Use the MySQL connection from mysql.go
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
+	dsn := testutils.DSN
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)
@@ -79,9 +79,10 @@ func TestAddFinancingPromotionToBank(t *testing.T) {
 }
 
 func TestExtendPromotionValidity(t *testing.T) {
-	logger.InitLogger(false, "")
+	testutils.InitTestSetup()
 
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
+	// Use the MySQL connection from mysql.go
+	dsn := testutils.DSN
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)
@@ -126,9 +127,10 @@ func TestExtendPromotionValidity(t *testing.T) {
 }
 
 func TestDeleteFinancingPromotion(t *testing.T) {
-	logger.InitLogger(false, "")
+	testutils.InitTestSetup()
 
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
+	// Use the MySQL connection from mysql.go
+	dsn := testutils.DSN
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)
@@ -157,9 +159,10 @@ func TestDeleteFinancingPromotion(t *testing.T) {
 }
 
 func TestDeleteDiscountPromotion(t *testing.T) {
-	logger.InitLogger(false, "")
+	testutils.InitTestSetup()
 
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
+	// Use the MySQL connection from mysql.go
+	dsn := testutils.DSN
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)
@@ -188,9 +191,10 @@ func TestDeleteDiscountPromotion(t *testing.T) {
 }
 
 func TestGetBankCustomerCounts(t *testing.T) {
-	logger.InitLogger(false, "")
+	testutils.InitTestSetup()
 
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
+	// Use the MySQL connection from mysql.go
+	dsn := testutils.DSN
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)

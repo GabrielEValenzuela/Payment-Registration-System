@@ -5,14 +5,15 @@ import (
 	"testing"
 
 	mysql "github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/relational"
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/testutils"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestGetStoreWithHighestRevenueByMonth(t *testing.T) {
-	logger.InitLogger(false, "")
+	testutils.InitTestSetup()
 
-	dsn := "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
+	// Use the MySQL connection from mysql.go
+	dsn := testutils.DSN
 	database, err := mysql.NewMySQLDB(dsn, true)
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)

@@ -1,0 +1,27 @@
+# Use Go base image
+FROM golang:1.23.2
+
+# Install netcat (nc) for the wait-for.sh script
+RUN apt-get update && apt-get install -y netcat-openbsd && apt-get clean
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the configuration file
+COPY ./config_docker.yml ./config.yml
+
+# Copy project files into the container
+COPY ./src ./src
+COPY go.mod go.mod
+COPY go.sum go.sum
+
+
+# Install dependencies
+RUN go mod download
+
+# Copy the wait-for.sh script
+COPY wait-for.sh /wait-for.sh
+RUN chmod +x /wait-for.sh
+
+# Command to run tests for a specific package and save the output to a text file
+CMD ["/wait-for.sh","sh", "-c", "go test ./src/internal/storage/relational/repository/... -v > /app/reports/test-report.txt && cat /app/reports/test-report.txt"]

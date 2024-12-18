@@ -46,3 +46,16 @@ services:
       networks:
         - mynetwork
       command: ["/wait-for.sh", "./main"]
+
+  test-runner:
+    build:
+      context: .
+      dockerfile: Dockerfile.tests # Dockerfile for test runner
+    container_name: test-runner
+    depends_on:
+      - mysql
+      - mongodb
+    networks:
+      - mynetwork
+    volumes:
+      - ./reports:/app/reports # Mount reports directory for test coverage
