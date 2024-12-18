@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a1a96aea-f953-4c31-8377-97f5c332d0c9",
+		"_postman_id": "6ded18e5-fde1-45f8-86c6-71939cfb7414",
 		"name": "Payment-Registration-System Relational DB",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "35143580"
@@ -421,17 +421,17 @@
 	"variable": [
 		{
 			"key": "discountPromotionCode",
-			"value": "123456",
+			"value": "SUMMERSALE2024",
 			"type": "default"
 		},
 		{
 			"key": "financingPromotionCode",
-			"value": "123456",
+			"value": "PV20241001",
 			"type": "default"
 		},
 		{
 			"key": "month",
-			"value": "",
+			"value": "10",
 			"type": "default"
 		},
 		{
@@ -466,12 +466,12 @@
 		},
 		{
 			"key": "endDate",
-			"value": "2024-11-01",
+			"value": "2024-11-01T00:00:00.00Z",
 			"type": "default"
 		},
 		{
 			"key": "startDate",
-			"value": "2024-10-01",
+			"value": "2024-10-01T00:00:00.00Z",
 			"type": "default"
 		},
 		{
