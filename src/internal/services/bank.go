@@ -1,4 +1,4 @@
-package bank
+package services
 
 import (
 	"time"
@@ -58,8 +58,8 @@ type BankService interface {
 
 // service is a concrete implementation of the BankService interface.
 // It uses a repository (IStorage) to perform data operations.
-type service struct {
-	repo storage.IStorage
+type bankService struct {
+	repo storage.IBankStorage
 }
 
 // NewBankService creates and initializes a new BankService instance.
@@ -67,38 +67,38 @@ type service struct {
 // - repo: An IStorage repository interface for interacting with the data layer.
 // Returns:
 // - BankService: A new instance of the service struct implementing the BankService interface.
-func NewBankService(repo storage.IStorage) BankService {
-	return &service{
+func NewBankService(repo storage.IBankStorage) BankService {
+	return &bankService{
 		repo: repo,
 	}
 }
 
 // AddFinancingPromotionToBank adds a new financing promotion to a specific bank.
-func (s *service) AddFinancingPromotionToBank(promotionFinancing models.Financing) error {
+func (s *bankService) AddFinancingPromotionToBank(promotionFinancing models.Financing) error {
 	return s.repo.AddFinancingPromotionToBank(promotionFinancing)
 }
 
 // ExtendFinancingPromotionValidity extends the validity period of a financing promotion.
-func (s *service) ExtendFinancingPromotionValidity(code string, newDate time.Time) error {
+func (s *bankService) ExtendFinancingPromotionValidity(code string, newDate time.Time) error {
 	return s.repo.ExtendFinancingPromotionValidity(code, newDate)
 }
 
 // ExtendDiscountPromotionValidity extends the validity period of a discount promotion.
-func (s *service) ExtendDiscountPromotionValidity(code string, newDate time.Time) error {
+func (s *bankService) ExtendDiscountPromotionValidity(code string, newDate time.Time) error {
 	return s.repo.ExtendDiscountPromotionValidity(code, newDate)
 }
 
 // DeleteFinancingPromotion logically deletes a financing promotion by marking it as inactive.
-func (s *service) DeleteFinancingPromotion(code string) error {
+func (s *bankService) DeleteFinancingPromotion(code string) error {
 	return s.repo.DeleteFinancingPromotion(code)
 }
 
 // DeleteDiscountPromotion logically deletes a discount promotion by marking it as inactive.
-func (s *service) DeleteDiscountPromotion(code string) error {
+func (s *bankService) DeleteDiscountPromotion(code string) error {
 	return s.repo.DeleteDiscountPromotion(code)
 }
 
 // GetBankCustomerCounts retrieves the count of customers associated with each bank.
-func (s *service) GetBankCustomerCounts() ([]models.BankCustomerCountDTO, error) {
+func (s *bankService) GetBankCustomerCounts() ([]models.BankCustomerCountDTO, error) {
 	return s.repo.GetBankCustomerCounts()
 }

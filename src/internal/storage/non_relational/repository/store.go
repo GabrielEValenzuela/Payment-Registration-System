@@ -14,8 +14,8 @@ type StoreRepositoryMongo struct {
 	db *mongo.Database
 }
 
-// NewStoreRepository creates a new instance of StoreRepositoryMongo
-func NewStoreRepository(db *mongo.Database) *StoreRepositoryMongo {
+// NewStoreNonRelationalRepository creates a new instance of StoreRepositoryMongo
+func NewStoreNonRelationalRepository(db *mongo.Database) *StoreRepositoryMongo {
 	return &StoreRepositoryMongo{db: db}
 }
 

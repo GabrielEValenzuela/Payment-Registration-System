@@ -60,10 +60,6 @@ type PurchaseMonthlyPaymentsEntitySQL struct {
 	Quotas         []QuotaEntitySQL  `gorm:"foreignKey:PurchaseMonthlyPaymentsEntityID"`
 }
 
-func (PurchaseEntitySQL) TableName() string {
-	return "PURCHASES"
-}
-
 func (PurchaseSinglePaymentEntitySQL) TableName() string {
 	return "PURCHASE_SINGLE_PAYMENTS"
 }

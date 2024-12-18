@@ -3,18 +3,18 @@ package handlers
 import (
 	"time"
 
-	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/bank"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/services"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"github.com/gofiber/fiber/v2"
 )
 
 type BankHandler struct {
-	bank bank.BankService
+	bank services.BankService
 }
 
 // NewBankHandler creates a new instance of BankHandler with the provided bank service.
-func NewBankHandler(bank bank.BankService) *BankHandler {
+func NewBankHandler(bank services.BankService) *BankHandler {
 	return &BankHandler{
 		bank: bank,
 	}
@@ -38,11 +38,14 @@ func (h *BankHandler) AddFinancingPromotionToBank() fiber.Handler {
 		// Parse request body to FinancingEntity
 		var promotion models.Financing
 		if err := c.BodyParser(&promotion); err != nil {
-			logger.Warn("Invalid request body")
+			logger.Warn("Invalid request body %s", err)
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 				"error": "Invalid request body",
 			})
 		}
+
+		logger.Info("asdsadsadsasadasddsa %d asdsadsadasda %s", promotion.NumberOfQuotas, promotion.Promotion.Code)
+		logger.Info("dgndsklgnsdklngs %s ", promotion.Promotion.Bank.Cuit)
 
 		// Add promotion to the bank using the service
 		err := h.bank.AddFinancingPromotionToBank(promotion)

@@ -1,4 +1,4 @@
-package relational
+package relational_repository
 
 import (
 	"fmt"
@@ -16,7 +16,7 @@ type BankRepositoryGORM struct {
 	db *gorm.DB
 }
 
-func NewBankRelationalRepository(db *gorm.DB) storage.IStorage {
+func NewBankRelationalRepository(db *gorm.DB) storage.IBankStorage {
 	return &BankRepositoryGORM{db: db}
 }
 

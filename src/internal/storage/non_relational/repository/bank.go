@@ -17,7 +17,7 @@ type BankRepositoryMongo struct {
 	db *mongo.Database
 }
 
-func NewBankNonRelationalRepository(db *mongo.Database) storage.IStorage {
+func NewBankNonRelationalRepository(db *mongo.Database) storage.IBankStorage {
 	return &BankRepositoryMongo{db: db}
 }
 

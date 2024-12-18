@@ -1,0 +1,483 @@
+{
+	"info": {
+		"_postman_id": "a1a96aea-f953-4c31-8377-97f5c332d0c9",
+		"name": "Payment-Registration-System Relational DB",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "35143580"
+	},
+	"item": [
+		{
+			"name": "AddFinancingPromotionToBank",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"code\": \"PROMO789\",\n    \"promotion_title\": \"Summer Sale 2024\",\n    \"name_store\": \"Tech Store\",\n    \"cuit_store\": \"30-12345678-9\",\n    \"validity_start_date\": \"2024-11-16T23:52:28.923402\",\n    \"validity_end_date\": \"2025-01-15T23:52:28.923412\",\n    \"comments\": \"Special financing for summer purchases\",\n    \"bank\": {\n        \"name\": \"Santander\",\n        \"cuit\": \"30-12345678-9\",\n        \"address\": \"123 Main St, Buenos Aires\",\n        \"telephone\": \"+54 11 1234 5678\"\n    },\n    \"number_of_quotas\": 12,\n    \"interest\": 5.5\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/promotions/add-promotion",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"promotions",
+						"add-promotion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBankCustomerCounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/banks/customers/count",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"banks",
+						"customers",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPaymentSummary",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/cards/summary/{{cardNumber}}/{{month}}/{{year}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"cards",
+						"summary",
+						"{{cardNumber}}",
+						"{{month}}",
+						"{{year}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCardsExpiringInNext30Days",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/cards/expiring/{{day}}/{{month}}/{{year}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"cards",
+						"expiring",
+						"{{day}}",
+						"{{month}}",
+						"{{year}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPurchaseMonthly",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/cards/purchase/monthly/{{cuit}}/{{finalAmount}}/{{paymentVoucher}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"cards",
+						"purchase",
+						"monthly",
+						"{{cuit}}",
+						"{{finalAmount}}",
+						"{{paymentVoucher}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTop10CardsByPurchases",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/cards/top",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"cards",
+						"top"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAvailablePromotionsByStoreAndDateRange",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/promotions/{{cuitStore}}/{{startDate}}/{{endDate}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"promotions",
+						"{{cuitStore}}",
+						"{{startDate}}",
+						"{{endDate}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMostUsedPromotion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/promotions/most-used",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"promotions",
+						"most-used"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetStoreWithHighestRevenueByMonth",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/stores/highest-revenue/{{month}}/{{year}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"stores",
+						"highest-revenue",
+						"{{month}}",
+						"{{year}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ExtendFinancingPromotionValidity",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"new_date\" : \"2024-12-16T00:00:00Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/promotions/financing/{{financingPromotionCode}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"promotions",
+						"financing",
+						"{{financingPromotionCode}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ExtendDiscountPromotionValidity",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"new_date\" : \"2024-12-16T00:00:00Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/promotions/discount/{{discountPromotionCode}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"promotions",
+						"discount",
+						"{{discountPromotionCode}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteFinancingPromotion",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/promotions/financing/{{financingPromotionCode}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"promotions",
+						"financing",
+						"{{financingPromotionCode}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteDiscountPromotion",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/v1/sql/promotions/discount/{{discountPromotionCode}}",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"v1",
+						"sql",
+						"promotions",
+						"discount",
+						"{{discountPromotionCode}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "discountPromotionCode",
+			"value": "123456",
+			"type": "default"
+		},
+		{
+			"key": "financingPromotionCode",
+			"value": "123456",
+			"type": "default"
+		},
+		{
+			"key": "month",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "year",
+			"value": "2024",
+			"type": "default"
+		},
+		{
+			"key": "cardNumber",
+			"value": "1234567812345678",
+			"type": "default"
+		},
+		{
+			"key": "day",
+			"value": "16",
+			"type": "default"
+		},
+		{
+			"key": "paymentVoucher",
+			"value": "PV20241101",
+			"type": "default"
+		},
+		{
+			"key": "cuit",
+			"value": "20-98765432-1",
+			"type": "default"
+		},
+		{
+			"key": "finalAmount",
+			"value": "440.0",
+			"type": "default"
+		},
+		{
+			"key": "endDate",
+			"value": "2024-11-01",
+			"type": "default"
+		},
+		{
+			"key": "startDate",
+			"value": "2024-10-01",
+			"type": "default"
+		},
+		{
+			"key": "cuitStore",
+			"value": "20-98765432-1",
+			"type": "default"
+		}
+	]
+}

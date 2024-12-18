@@ -1,10 +1,11 @@
-package relational
+package relational_repository
 
 import (
 	"errors"
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/entities"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"gorm.io/gorm"
@@ -15,7 +16,7 @@ type PromotionRepositoryGORM struct {
 }
 
 // NewPromotionRepository crea una nueva instancia de PromotionRepository
-func NewPromotionRepository(db *gorm.DB) *PromotionRepositoryGORM {
+func NewPromotionRelationRepository(db *gorm.DB) storage.IPromotionStorage {
 	return &PromotionRepositoryGORM{db: db}
 }
 
@@ -63,12 +64,12 @@ func (r *PromotionRepositoryGORM) GetMostUsedPromotion() (interface{}, error) {
 			SELECT
 				month.payment_voucher
 			FROM
-				PURCHASES_MONTHLY_PAYMENTS month
+				PURCHASE_MONTHLY_PAYMENTS month
 			UNION ALL
 			SELECT
 				single.payment_voucher
 			FROM
-				PURCHASES_SINGLE_PAYMENTS single
+				PURCHASE_SINGLE_PAYMENTS single
 			) as payment_voucher
 		GROUP BY
 			payment_voucher

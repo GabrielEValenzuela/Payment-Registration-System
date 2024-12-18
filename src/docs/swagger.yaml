@@ -180,6 +180,221 @@ paths:
       summary: Extend the validity of a financing promotion
       tags:
       - Bank
+  /v1/cards/expiring/{day}/{month}/{year}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the cards that will expire in the next 30 days based
+        on the current day, month, and year.
+      parameters:
+      - description: Day
+        in: path
+        name: day
+        required: true
+        type: integer
+      - description: Month
+        in: path
+        name: month
+        required: true
+        type: integer
+      - description: Year
+        in: path
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Cards expiring in the next 30 days
+          schema:
+            items:
+              additionalProperties: true
+              type: object
+            type: array
+        "500":
+          description: Failed to retrieve expiring cards
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get cards expiring in the next 30 days
+      tags:
+      - Card
+  /v1/cards/purchase/monthly:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the monthly purchase details for the specified card based
+        on CUIT and payment voucher.
+      parameters:
+      - description: CUIT
+        in: path
+        name: cuit
+        required: true
+        type: string
+      - description: Final amount
+        in: path
+        name: finalAmount
+        required: true
+        type: number
+      - description: Payment voucher
+        in: path
+        name: paymentVoucher
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Monthly purchase details retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request parameters
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve monthly purchase details
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get monthly purchase details for a card
+      tags:
+      - Card
+  /v1/cards/summary/{cardNumber}/{month}/{year}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the payment summary for the specified card number, month,
+        and year.
+      parameters:
+      - description: Card number
+        in: path
+        name: cardNumber
+        required: true
+        type: string
+      - description: Month
+        in: path
+        name: month
+        required: true
+        type: integer
+      - description: Year
+        in: path
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Payment summary retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request parameters
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve payment summary
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get the payment summary for a card
+      tags:
+      - Card
+  /v1/cards/top:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the top 10 cards by purchases.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Top 10 cards by purchases
+          schema:
+            items:
+              additionalProperties: true
+              type: object
+            type: array
+        "500":
+          description: Failed to retrieve top 10 cards
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get top 10 cards by purchases
+      tags:
+      - Card
+  /v1/promotions/{cuit}/{startDate}/{endDate}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves available financing and discount promotions for a specific
+        store within a date range.
+      parameters:
+      - description: Store CUIT
+        in: path
+        name: cuit
+        required: true
+        type: string
+      - description: Start date in RFC3339 format
+        in: path
+        name: startDate
+        required: true
+        type: string
+      - description: End date in RFC3339 format
+        in: path
+        name: endDate
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Available discount promotions
+          schema:
+            items:
+              additionalProperties: true
+              type: object
+            type: array
+        "400":
+          description: Invalid request parameters
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve promotions
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get available promotions by store and date range
+      tags:
+      - Promotion
+  /v1/promotions/most-used:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the most used promotion in the system.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Most used promotion
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve the most used promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get the most used promotion
+      tags:
+      - Promotion
   /v1/sql/promotions/financing:
     post:
       consumes:
@@ -207,4 +422,42 @@ paths:
       summary: Add a financing promotion to a bank
       tags:
       - Bank
+  /v1/stores/highest-revenue/{month}/{year}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the store with the highest revenue for a specific month
+        and year.
+      parameters:
+      - description: Month
+        in: path
+        name: month
+        required: true
+        type: integer
+      - description: Year
+        in: path
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Store with the highest revenue
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request parameters
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve store information
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get the store with the highest revenue by month
+      tags:
+      - Store
 swagger: "2.0"
