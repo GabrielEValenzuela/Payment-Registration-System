@@ -572,3 +572,66 @@ func TestCardGetTop10CardsByPurchases(t *testing.T) {
 	assert.Equal(t, int64(purchaseMonthlyMongo.FinalAmount), int64(float64(len(purchaseMonthlyMongo.Quota))*purchaseMonthlyMongo.Quota[0].Price))
 
 }
+
+// ---------------------------------------------------
+// --------------  PROMOTION TESTS -------------------
+// ---------------------------------------------------
+
+func TestPromotionGetAvailablePromotionsByStoreAndDateRange(t *testing.T) {
+	// Test Financing Promotion
+	testStore := "30-12345678-9"
+	startDate := time.Date(2024, time.Month(10), 1, 0, 0, 0, 0, time.UTC)
+	endDate := startDate.AddDate(0, 1, 0)
+
+	promotionRepo := relational_repository.NewPromotionRelationRepository(SQLDatabase)
+
+	financingPromotions, discountPromotions, err := promotionRepo.GetAvailablePromotionsByStoreAndDateRange(testStore, startDate, endDate)
+
+	if err != nil {
+		panic(err)
+	}
+
+	assert.Equal(t, 1, len(*discountPromotions))
+	assert.Equal(t, 1, len(*financingPromotions))
+
+	// ------ NoSQL (MongoDB) ------
+	noSQLPromotionRepo := non_relational_repository.NewPromotionNonRelationalRepository(NoSQLDatabase)
+	financingPromotionsMongo, discountPromotionsMongo, err := noSQLPromotionRepo.GetAvailablePromotionsByStoreAndDateRange(testStore, startDate, endDate)
+
+	assert.NoError(t, err, "Error fetching available promotions by store and date range from MongoDB")
+
+	assert.Equal(t, 1, len(*discountPromotionsMongo))
+	assert.Equal(t, 1, len(*financingPromotionsMongo))
+}
+
+func TestPromotionGetMostUsedPromotion(t *testing.T) {
+	// Test Financing Promotion
+	promotionRepo := relational_repository.NewPromotionRelationRepository(SQLDatabase)
+
+	mostUsed, err := promotionRepo.GetMostUsedPromotion()
+	assert.NoError(t, err, "Error fetching most used promotion from MySQL")
+
+	switch p := mostUsed.(type) {
+	case entities.DiscountEntitySQL:
+		log.Fatalf("Error")
+	case entities.FinancingEntitySQL:
+		assert.Equal(t, p.PromotionEntitySQL.Code, "PV20241001")
+	default:
+		log.Fatalf("Error")
+	}
+
+	// ------ NoSQL (MongoDB) ------
+	noSQLPromotionRepo := non_relational_repository.NewPromotionNonRelationalRepository(NoSQLDatabase)
+	mostUsedMongo, err := noSQLPromotionRepo.GetMostUsedPromotion()
+
+	assert.NoError(t, err, "Error fetching most used promotion from MongoDB")
+
+	switch p := mostUsedMongo.(type) {
+	case entities.DiscountEntityNonSQL:
+		assert.Equal(t, p.PromotionEntity.Code, "WINTERSALE2024")
+	case entities.FinancingEntityNonSQL:
+		log.Fatal("This should not be a financing promotion")
+	default:
+		log.Fatalf("This should have been a discount promotion or a financing promotion")
+	}
+}
