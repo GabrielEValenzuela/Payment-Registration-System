@@ -635,3 +635,26 @@ func TestPromotionGetMostUsedPromotion(t *testing.T) {
 		log.Fatalf("This should have been a discount promotion or a financing promotion")
 	}
 }
+
+// ---------------------------------------------------
+// --------------  STORE TESTS -----------------------
+// ---------------------------------------------------
+
+func TestStoreGetStoreWithHighestRevenueByMonth(t *testing.T) {
+	storeRepo := relational_repository.NewStoreRelationalRepository(SQLDatabase)
+
+	result, err := storeRepo.GetStoreWithHighestRevenueByMonth(10, 2024)
+	assert.NoError(t, err, "Error fetching store with highest revenue by month from MySQL")
+
+	assert.Equal(t, result.Cuit, "30-15066778-9")
+	assert.Equal(t, result.Name, "Store O")
+
+	// ------ NoSQL (MongoDB) ------
+	noSQLStoreRepo := non_relational_repository.NewStoreNonRelationalRepository(NoSQLDatabase)
+	resultMongo, err := noSQLStoreRepo.GetStoreWithHighestRevenueByMonth(10, 2024)
+
+	assert.NoError(t, err, "Error fetching store with highest revenue by month from MongoDB")
+
+	assert.Equal(t, resultMongo.Cuit, "30-12345678-9")
+	assert.Equal(t, resultMongo.Name, "Store A")
+}
