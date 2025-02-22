@@ -4,21 +4,21 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 type CustomerEntityNonSQL struct {
-	ID           primitive.ObjectID   `bson:"_id,omitempty"`        // MongoDB primary key
-	CompleteName string               `bson:"complete_name"`        // Full name of the customer
-	Dni          string               `bson:"dni"`                  // Unique identifier
-	Cuit         string               `bson:"cuit"`                 // Unique identifier
-	Address      string               `bson:"address,omitempty"`    // Optional address
-	Telephone    string               `bson:"telephone,omitempty"`  // Optional telephone
-	EntryDate    time.Time            `bson:"entry_date"`           // Date of customer entry
-	Banks        []primitive.ObjectID `bson:"banks,omitempty"`      // References to related banks (IDs)
-	Cards        []primitive.ObjectID `bson:"cards,omitempty"`      // References to related cards (IDs)
-	CreatedAt    time.Time            `bson:"created_at,omitempty"` // Creation timestamp
-	UpdatedAt    time.Time            `bson:"updated_at,omitempty"` // Update timestamp
+	ID           bson.ObjectID   `bson:"_id,omitempty"`        // MongoDB primary key
+	CompleteName string          `bson:"complete_name"`        // Full name of the customer
+	Dni          string          `bson:"dni"`                  // Unique identifier
+	Cuit         string          `bson:"cuit"`                 // Unique identifier
+	Address      string          `bson:"address,omitempty"`    // Optional address
+	Telephone    string          `bson:"telephone,omitempty"`  // Optional telephone
+	EntryDate    time.Time       `bson:"entry_date"`           // Date of customer entry
+	Banks        []bson.ObjectID `bson:"banks,omitempty"`      // References to related banks (IDs)
+	Cards        []bson.ObjectID `bson:"cards,omitempty"`      // References to related cards (IDs)
+	CreatedAt    time.Time       `bson:"created_at,omitempty"` // Creation timestamp
+	UpdatedAt    time.Time       `bson:"updated_at,omitempty"` // Update timestamp
 }
 
 // Bank represents a financial institution that holds customers and issues cards.

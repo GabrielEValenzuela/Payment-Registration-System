@@ -4,22 +4,22 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 // PaymentSummaryEntity represents a summary of payments associated with a card.
 type PaymentSummaryEntityNonSQL struct {
-	ID                  primitive.ObjectID `bson:"_id,omitempty"`        // MongoDB primary key
-	Code                string             `bson:"code"`                 // Unique code for the payment summary
-	Month               int                `bson:"month"`                // Payment month
-	Year                int                `bson:"year"`                 // Payment year
-	FirstExpiration     time.Time          `bson:"first_expiration"`     // First expiration date
-	SecondExpiration    time.Time          `bson:"second_expiration"`    // Second expiration date
-	SurchargePercentage float64            `bson:"surcharge_percentage"` // Surcharge percentage
-	TotalPrice          float64            `bson:"total_price"`          // Total price
-	CardID              primitive.ObjectID `bson:"card_id,omitempty"`    // Reference to the associated card
-	CreatedAt           time.Time          `bson:"created_at,omitempty"` // Creation timestamp
-	UpdatedAt           time.Time          `bson:"updated_at,omitempty"` // Update timestamp
+	ID                  bson.ObjectID `bson:"_id,omitempty"`         // MongoDB primary key
+	Code                string        `bson:"code"`                  // Unique code for the payment summary
+	Month               int           `bson:"month"`                 // Payment month
+	Year                int           `bson:"year"`                  // Payment year
+	FirstExpiration     time.Time     `bson:"first_expiration"`      // First expiration date
+	SecondExpiration    time.Time     `bson:"second_expiration"`     // Second expiration date
+	SurchargePercentage float64       `bson:"surcharge_percentage"`  // Surcharge percentage
+	TotalPrice          float64       `bson:"total_price"`           // Total price
+	CardNumber          string        `bson:"card_number,omitempty"` // Reference to the associated card
+	CreatedAt           time.Time     `bson:"created_at,omitempty"`  // Creation timestamp
+	UpdatedAt           time.Time     `bson:"updated_at,omitempty"`  // Update timestamp
 }
 
 type PaymentSummaryEntitySQL struct {

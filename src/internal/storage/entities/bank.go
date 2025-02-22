@@ -17,55 +17,21 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
-/*
- * BankEntityNonSQL
- * ----------------
- * Represents a financial institution that holds customers and issues cards.
- * The entity is implemented using MongoDB.
- * The entity has a one-to-many relationship with the Customer entity.
- *
- * Fields:
- * - ID (primitive.ObjectID): Unique identifier for the bank
- * - Name (string): Name of the bank
- * - Cuit (string): Unique tax identification code for the bank
- * - Address (string): Physical address of the bank
- * - Telephone (string): Contact number for the bank
- * - Customers ([]CustomerEntityNonSQL): List of associated customers
- * - CreatedAt (time.Time): Timestamp of creation
- * - UpdatedAt (time.Time): Timestamp of last update
- */
 type BankEntityNonSQL struct {
-	ID        primitive.ObjectID     `bson:"_id,omitempty"` // Use ObjectId as the primary key
-	Name      string                 `bson:"name"`
-	Cuit      string                 `bson:"cuit;unique"`
-	Address   string                 `bson:"address"`
-	Telephone string                 `bson:"telephone"`
-	Customers []CustomerEntityNonSQL `bson:"customers,omitempty"`
-	CreatedAt time.Time              `bson:"created_at,omitempty"`
-	UpdatedAt time.Time              `bson:"updated_at,omitempty"`
+	ID        bson.ObjectID   `bson:"_id,omitempty"` // 🔥 Ensure `_id` exists
+	Name      string          `bson:"name"`
+	Cuit      string          `bson:"cuit"`
+	Address   string          `bson:"address"`
+	Telephone string          `bson:"telephone"`
+	Customers []bson.ObjectID `bson:"customers,omitempty"`
+	CreatedAt time.Time       `bson:"created_at,omitempty"`
+	UpdatedAt time.Time       `bson:"updated_at,omitempty"`
 }
 
-/*
-* BankEntitySQL
-* -------------
-*
-* Represents a financial institution that holds customers and issues cards.
-* The entity is implemented using GORM.
-* The entity has a many-to-many relationship with the Customer entity.
-*
-* Fields:
-* - ID (uint): Unique identifier for the bank
-* - Name (string): Name of the bank
-* - Cuit (string): Unique tax identification code for the bank
-* - Address (string): Physical address of the bank
-* - Telephone (string): Contact number for the bank
-* - Customers ([]CustomerEntitySQL): List of associated customers
-* - CreatedAt (time.Time): Timestamp of creation
-* - UpdatedAt (time.Time): Timestamp of last update
- */
+// Bank represents a financial institution that holds customers and issues cards.
 type BankEntitySQL struct {
 	ID        uint                `gorm:"primaryKey;autoIncrement"`
 	Name      string              `gorm:"size:255"`
@@ -101,6 +67,16 @@ func ToBank(bankModel *BankEntitySQL) *models.Bank {
 		Cuit:      bankModel.Cuit,
 		Address:   bankModel.Address,
 		Telephone: bankModel.Telephone,
+		//CustomersIds : []
+	}
+}
+
+// BankModel NoSQL case overload
+func ToBankNonSQL(bank *BankEntityNonSQL) *models.Bank {
+	return &models.Bank{
+		Cuit:      bank.Cuit,
+		Address:   bank.Address,
+		Telephone: bank.Telephone,
 		//CustomersIds : []
 	}
 }
