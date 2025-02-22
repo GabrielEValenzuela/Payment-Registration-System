@@ -1,3 +1,12 @@
+/*
+ * Payment Registration System - Promotion Handlers
+ * ------------------------------------------------
+ * This file defines the HTTP handlers for managing financing and discount promotions.
+ *
+ * Created: Oct. 19, 2024
+ * License: GNU General Public License v3.0
+ */
+
 package handlers
 
 import (

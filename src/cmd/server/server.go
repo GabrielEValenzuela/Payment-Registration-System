@@ -1,3 +1,16 @@
+/*
+ * Payment Registration System - Server Configuration
+ * --------------------------------------------------
+ * This file defines the core server logic, including:
+ * - Database initialization (SQL & NoSQL)
+ * - Fiber-based HTTP server setup
+ * - Route configuration for API endpoints
+ * - Graceful shutdown handling
+ *
+ * Created: Dec. 11, 2024
+ * License: GNU General Public License v3.0
+ */
+
 package server
 
 import (
@@ -19,11 +32,20 @@ import (
 	relational_repository "github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/relational/repository"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/swagger"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 	"gorm.io/gorm"
 )
 
+/*
+ * Server
+ * --------------------------------------------------
+ * Represents the main application server, including:
+ * - Fiber HTTP server
+ * - Configuration settings
+ * - SQL (MySQL) and NoSQL (MongoDB) database connections
+ */
 type Server struct {
 	app     *fiber.App
 	cfg     *config.Config
@@ -31,12 +53,29 @@ type Server struct {
 	noSqlDb *mongo.Database
 }
 
+/*
+ * NewServer
+ * --------------------------------------------------
+ * Creates a new server instance with the provided configuration.
+ *
+ * Params:
+ * - cfg (*config.Config): Configuration instance containing app settings.
+ *
+ * Returns:
+ * - *Server: A new server instance.
+ */
 func NewServer(cfg *config.Config) *Server {
 	return &Server{
 		cfg: cfg,
 	}
 }
 
+/*
+ * InitDatabases
+ * --------------------------------------------------
+ * Initializes both SQL (MySQL) and NoSQL (MongoDB) databases.
+ * Also runs data initialization if required.
+ */
 func (srv *Server) InitDatabases() {
 	// Initialize the SQL database
 	sqlDb, err := relational.NewMySQLDB(srv.cfg.SQLDb.DSN, srv.cfg.SQLDb.Clean)
@@ -53,7 +92,6 @@ func (srv *Server) InitDatabases() {
 
 	if shouldInitialize {
 		logger.Info("Running data initialization: adding default data to the database.")
-		// For testing purposes, this SQL script is executed to populate the database with sample data.
 		err = relational.ExecuteSQLFile(sqlDb, "./src/internal/storage/relational/insert.sql")
 		if err != nil {
 			log.Fatalf("Failed to execute SQL file: %v", err)
@@ -71,18 +109,20 @@ func (srv *Server) InitDatabases() {
 	srv.noSqlDb = mongoDb
 }
 
+/*
+ * Run
+ * --------------------------------------------------
+ * Starts the Fiber HTTP server, initializes databases, and handles graceful shutdown.
+ *
+ * Returns:
+ * - error: If server shutdown fails.
+ */
 func (srv *Server) Run() error {
-
-	// Init Logger
 	logger.InitLogger(srv.cfg.IsProduction, srv.cfg.LogPath)
-
-	// Init databases
 	srv.InitDatabases()
-
-	// Initialize the Fiber app
 	srv.initFiber()
 
-	// Start the server in a goroutine
+	// Start the server asynchronously
 	go func() {
 		if err := srv.app.Listen(":" + srv.cfg.App.Port); err != nil && err != http.ErrServerClosed {
 			logger.Fatal("Failed to start server: %v", err)
@@ -90,7 +130,7 @@ func (srv *Server) Run() error {
 	}()
 	logger.Info("Server is running on port %s", srv.cfg.App.Port)
 
-	// Wait for interrupt signal for graceful shutdown
+	// Wait for interrupt signal to gracefully shut down the server
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 	<-quit
@@ -104,30 +144,44 @@ func (srv *Server) Run() error {
 	}
 
 	logger.Info("Server exited properly")
-	logger.Sync() // Flush the logs, ensuring that all logs are written to the file before exit application
+	logger.Sync() // Ensure all logs are flushed before exiting
 	return nil
 }
 
+/*
+ * initFiber
+ * --------------------------------------------------
+ * Initializes the Fiber app with default configurations and routes.
+ */
 func (srv *Server) initFiber() {
-	// Create a new Fiber app
 	srv.app = fiber.New(fiber.Config{
 		ReadTimeout:  15 * time.Second,
 		WriteTimeout: 15 * time.Second,
+		ErrorHandler: srv.errorHandler, // Set global error handler
 	})
 
-	// Routes
+	// Apply rate limiting middleware
+	srv.app.Use(limiter.New(limiter.Config{
+		Max:        100,             // Allow 100 requests per window
+		Expiration: 1 * time.Minute, // Reset every minute
+	}))
+
 	srv.setupRoutes()
 }
 
+/*
+ * setupRoutes
+ * --------------------------------------------------
+ * Configures API routes for both SQL and NoSQL services.
+ */
 func (srv *Server) setupRoutes() {
-	// Swagger documentation route
 	srv.app.Get("/swagger/*", swagger.HandlerDefault)
 
 	srv.app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Welcome to the Payment Registration System!")
 	})
 
-	// Initialize services, and handlers
+	// Initialize handlers
 	bankHandlerRelational := handlers.NewBankHandler(services.NewBankService(relational_repository.NewBankRelationalRepository(srv.sqlDb)))
 	bankHandlerNonRelational := handlers.NewBankHandler(services.NewBankService(non_relational_repository.NewBankNonRelationalRepository(srv.noSqlDb)))
 
@@ -140,48 +194,54 @@ func (srv *Server) setupRoutes() {
 	storeHandlerRelation := handlers.NewStoreHandler(services.NewStoreService(relational_repository.NewStoreRelationalRepository(srv.sqlDb)))
 	storeHandlerNonRelation := handlers.NewStoreHandler(services.NewStoreService(non_relational_repository.NewStoreNonRelationalRepository(srv.noSqlDb)))
 
-	// API version group
+	// API groups
 	apiGroup := srv.app.Group("/v1")
-
-	// SQL routes group
 	sqlGroup := apiGroup.Group("/sql")
-	// NoSQL routes group
 	mongoGroup := apiGroup.Group("/no-sql")
 
-	// -- Bank Routes --
+	// Bank Routes
 	sqlGroup.Post("/promotions/add-promotion", bankHandlerRelational.AddFinancingPromotionToBank())
 	sqlGroup.Patch("/promotions/financing/:code", bankHandlerRelational.ExtendFinancingPromotionValidity())
 	sqlGroup.Delete("/promotions/financing/:code", bankHandlerRelational.DeleteFinancingPromotion())
-	sqlGroup.Patch("/promotions/discount/:code", bankHandlerRelational.ExtendDiscountPromotionValidity())
-	sqlGroup.Delete("/promotions/discount/:code", bankHandlerRelational.DeleteDiscountPromotion())
-	sqlGroup.Get("/banks/customers/count", bankHandlerRelational.GetBankCustomerCounts())
 
 	mongoGroup.Post("/promotions/add-promotion", bankHandlerNonRelational.AddFinancingPromotionToBank())
 	mongoGroup.Patch("/promotions/financing/:code", bankHandlerNonRelational.ExtendFinancingPromotionValidity())
 	mongoGroup.Delete("/promotions/financing/:code", bankHandlerNonRelational.DeleteFinancingPromotion())
-	mongoGroup.Patch("/promotions/discount/:code", bankHandlerNonRelational.ExtendDiscountPromotionValidity())
-	mongoGroup.Delete("/promotions/discount/:code", bankHandlerNonRelational.DeleteDiscountPromotion())
-	mongoGroup.Get("/banks/customers/count", bankHandlerNonRelational.GetBankCustomerCounts())
 
-	// -- Card Routes --
-	sqlGroup.Get("/cards/summary/:cardNumber/:month/:year", cardHandlerRelational.GetPaymentSummary())
-	sqlGroup.Get("/cards/expiring/:day/:month/:year", cardHandlerRelational.GetCardsExpiringInNext30Days())
-	sqlGroup.Get("/cards/purchase/monthly/:cuit/:finalAmount/:paymentVoucher", cardHandlerRelational.GetPurchaseMonthly())
+	// Card Routes
 	sqlGroup.Get("/cards/top", cardHandlerRelational.GetTop10CardsByPurchases())
-
-	mongoGroup.Get("/cards/summary/:cardNumber/:month/:year", cardHandlerNonRelational.GetPaymentSummary())
-	mongoGroup.Get("/cards/expiring/:day/:month/:year", cardHandlerNonRelational.GetCardsExpiringInNext30Days())
-	mongoGroup.Get("/cards/purchase/monthly/:cuit/:finalAmount/:paymentVoucher", cardHandlerNonRelational.GetPurchaseMonthly())
 	mongoGroup.Get("/cards/top", cardHandlerNonRelational.GetTop10CardsByPurchases())
 
-	// -- Promotion Routes --
-	sqlGroup.Get("/promotions/:cuit/:startDate/:endDate", promotionHandlerRelation.GetAvailablePromotionsByStoreAndDateRange())
+	// Promotion Routes
 	sqlGroup.Get("/promotions/most-used", promotionHandlerRelation.GetMostUsedPromotion())
-
-	mongoGroup.Get("/promotions/:cuit/:startDate/:endDate", promotionHandlerNonRelation.GetAvailablePromotionsByStoreAndDateRange())
 	mongoGroup.Get("/promotions/most-used", promotionHandlerNonRelation.GetMostUsedPromotion())
 
-	// -- Store Routes --
+	// Store Routes
 	sqlGroup.Get("/stores/highest-revenue/:month/:year", storeHandlerRelation.GetStoreWithHighestRevenueByMonth())
 	mongoGroup.Get("/stores/highest-revenue/:month/:year", storeHandlerNonRelation.GetStoreWithHighestRevenueByMonth())
+}
+
+/*
+ * errorHandler
+ * --------------------------------------------------
+ * Handles errors returned by the API handlers.
+ */
+func (srv *Server) errorHandler(ctx *fiber.Ctx, err error) error {
+	// Default HTTP status
+	code := fiber.StatusInternalServerError
+
+	// Fiber error type handling
+	if e, ok := err.(*fiber.Error); ok {
+		code = e.Code
+	}
+
+	// Log the error (ensure logger is configured)
+	logger.Error("API Error: %v", err)
+
+	// Return JSON error response
+	return ctx.Status(code).JSON(fiber.Map{
+		"error":   err.Error(),
+		"code":    code,
+		"message": "An error occurred while processing the request",
+	})
 }

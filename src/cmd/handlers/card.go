@@ -1,3 +1,12 @@
+/*
+ * Payment Registration System - Card Handlers
+ * -------------------------------------------
+ * This file defines the HTTP handlers for managing credit and debit card operations.
+ *
+ * Created: Oct. 19, 2024
+ * License: GNU General Public License v3.0
+ */
+
 package handlers
 
 import (
