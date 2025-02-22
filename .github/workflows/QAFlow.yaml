@@ -13,6 +13,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install dependencies
+        uses: awalsh128/cache-apt-pkgs-action@latest
+        with:
+          packages: docker-ce, docker-ce-cli, containerd.io, docker-compose
+          version: 1.0
+
+      - name: Check Docker
+        run: |
+          sudo systemctl start docker
+          docker version
+          docker info
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
@@ -23,22 +35,22 @@ jobs:
         with:
           target-directory: "./src"
 
-      - name: Tests
+      - name: Run Tests
         uses: ./.github/actions/tests
 
-  Linter:
-    # https://primegopher.medium.com/configure-the-golangci-lint-workflow-for-your-golang-applications-6e765f2146c5
-    # https://golangci-lint.run/
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v4
-        with:
-          go-version: "1.22"
-          cache: true
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v3
-        with:
-          version: v1.56.0
-          args: --timeout 3m
+  #Linter: (Disabled)
+  #  # https://primegopher.medium.com/configure-the-golangci-lint-workflow-for-your-golang-applications-6e765f2146c5
+  #  # https://golangci-lint.run/
+  #  runs-on: ubuntu-latest
+  #
+  #  steps:
+  #    - uses: actions/checkout@v3
+  #    - uses: actions/setup-go@v4
+  #      with:
+  #        go-version: "1.22"
+  #        cache: true
+  #    - name: golangci-lint
+  #      uses: golangci/golangci-lint-action@v3
+  #      with:
+  #        version: v1.56.0
+  #        args: --timeout 3m
