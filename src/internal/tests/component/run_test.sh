@@ -58,9 +58,13 @@ setup_mongodb() {
         });
     "
     echo "Loading data..."
-    for file in data/non_relational_data/*.json; do
+    for file in data/non_relational/*.json; do
         if [ -f "$file" ]; then
-            collection_name=$(basename "$file" .json)
+            collection_name=$(basename "$file" .json) # Extract filename without .json extension
+            echo "Importing $file into $collection_name collection in MongoDB..."
+
+            docker cp "$file" test_mongodb:/data/"$(basename "$file")"
+
             docker exec test_mongodb mongoimport --uri "mongodb://testuser:testpassword@localhost:27017/payment_registration_system?authSource=admin" \
                 --collection "$collection_name" --file "/data/$collection_name.json" --jsonArray
             echo "Imported $collection_name into MongoDB. Using the following command:"
@@ -117,7 +121,7 @@ run_go_test() {
 main() {
     check_docker
     run_docker_compose
-    wait_for 20
+    wait_for 10
     setup_mongodb
     # setup_mysql For now, we handle the MySQL setup in Go tests
     wait_for 10

@@ -25,15 +25,15 @@
     },
     "purchase": {
       "payment_voucher": "PV-667167",
-      "store": "Store 5nTE",
-      "cuit_store": "30-47745054-0",
+      "store": "Store 'Mega Store'",
+      "cuit_store": "30-12345678-9",
       "amount": 919,
       "final_amount": 919,
       "created_at": {
-        "$date": "2025-02-16T22:33:17.039424283-03:00"
+        "$date": "2024-10-19T01:00:00Z"
       },
       "updated_at": {
-        "$date": "2025-02-16T22:33:17.039424312-03:00"
+        "$date": "2024-10-19T01:00:00Z"
       },
       "card_number": "7446548631079191"
     },

@@ -270,4 +270,3 @@ func (r *BankRepositoryMongo) GetBankCustomerCounts() ([]models.BankCustomerCoun
 
 	return results, nil
 }
-gi

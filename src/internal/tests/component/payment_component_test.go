@@ -656,5 +656,5 @@ func TestStoreGetStoreWithHighestRevenueByMonth(t *testing.T) {
 	assert.NoError(t, err, "Error fetching store with highest revenue by month from MongoDB")
 
 	assert.Equal(t, resultMongo.Cuit, "30-12345678-9")
-	assert.Equal(t, resultMongo.Name, "Store A")
+	assert.Equal(t, resultMongo.Name, "Store 'Mega Store'")
 }
