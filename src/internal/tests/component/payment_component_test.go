@@ -377,3 +377,198 @@ func TestBankGetBankCustomerCounts(t *testing.T) {
 
 	assert.Equal(t, bankMongo.BankName, "Santander")
 }
+
+// ---------------------------------------------------
+// ---------------     CARD TESTS --------------------
+// ---------------------------------------------------
+func TestCardGetPaymentSummary(t *testing.T) {
+	cardNumber := "1234567812345678"
+	month := 10
+	year := 2024
+
+	// ------ SQL (MySQL) ------
+	cardRepo := relational_repository.NewCardRelationalRepository(SQLDatabase)
+
+	paymentSummary, err := cardRepo.GetPaymentSummary(cardNumber, month, year)
+	assert.NoError(t, err, "Error fetching payment summary from MySQL")
+
+	// ✅ Generate expected code format
+	expectedCode := fmt.Sprintf("SUMMARY-%d-%d", year, month)
+
+	// ✅ Define start & end date for the query
+	startDate := time.Date(year, time.Month(month), 1, 0, 0, 0, 0, time.UTC)
+	endDate := startDate.AddDate(0, 1, 0) // One month later
+
+	// ✅ Fetch from MySQL to validate correctness
+	var paymentSummaryEntity entities.PaymentSummaryEntitySQL
+	if err := SQLDatabase.
+		Joins("JOIN CARDS ON CARDS.id = PAYMENT_SUMMARIES.card_id").
+		Preload("Card").
+		Preload("Card.PurchaseSinglePayments", "created_at >= ? AND created_at < ?", startDate, endDate).
+		Preload("Card.PurchaseMonthlyPayments", "created_at >= ? AND created_at < ?", startDate, endDate).
+		Where("number = ?", cardNumber).
+		Where("code = ?", expectedCode).First(&paymentSummaryEntity).Error; err != nil {
+		panic(fmt.Errorf("could not find promotion with code %s: %v", expectedCode, err))
+	}
+
+	assert.Equal(t, paymentSummaryEntity.Code, expectedCode)
+	assert.Equal(t, paymentSummaryEntity.TotalPrice, 510.00)
+	assert.Equal(t, len(paymentSummaryEntity.Card.PurchaseMonthlyPayments), 1)
+	assert.Equal(t, len(paymentSummaryEntity.Card.PurchaseSinglePayments), 3)
+
+	paymentSummaryMapper := entities.ToPaymentSummary(&paymentSummaryEntity)
+
+	assert.Equal(t, paymentSummaryMapper.Code, paymentSummary.Code)
+	assert.Equal(t, paymentSummaryMapper.TotalPrice, paymentSummary.TotalPrice)
+	assert.Equal(t, len(paymentSummaryMapper.Card.PurchaseMonthlyPayments), len(paymentSummary.Card.PurchaseMonthlyPayments))
+	assert.Equal(t, len(paymentSummaryMapper.Card.PurchaseSinglePayments), len(paymentSummary.Card.PurchaseSinglePayments))
+
+	// ------ NoSQL (MongoDB) ------
+	noSQLCardRepo := non_relational_repository.NewCardNonRelationalRepository(NoSQLDatabase)
+	paymentSummaryMongo, err := noSQLCardRepo.GetPaymentSummary(cardNumber, month, year)
+
+	assert.NoError(t, err, "Error fetching payment summary from MongoDB")
+
+	assert.Equal(t, paymentSummaryMongo.Code, expectedCode)
+	assert.Equal(t, 420.0, paymentSummaryMongo.TotalPrice)
+	assert.Equal(t, 1, len(paymentSummaryMongo.SinglePayments))
+	assert.Equal(t, 1, len(paymentSummaryMongo.MonthlyPayments))
+
+}
+
+func TestCardGetCardsExpiringInNext30Days(t *testing.T) {
+	day := 16
+	month := 10
+	year := 2024
+
+	cardRepo := relational_repository.NewCardRelationalRepository(SQLDatabase)
+
+	cards, err := cardRepo.GetCardsExpiringInNext30Days(day, month, year)
+	assert.NoError(t, err, "Error fetching cards expiring in the next 30 days from MySQL")
+
+	assert.Equal(t, 4, len(*cards))
+
+	// ------ NoSQL (MongoDB) ------
+	noSQLCardRepo := non_relational_repository.NewCardNonRelationalRepository(NoSQLDatabase)
+	cardsMongo, err := noSQLCardRepo.GetCardsExpiringInNext30Days(day, month, year)
+
+	assert.NoError(t, err, "Error fetching cards expiring in the next 30 days from MongoDB")
+
+	assert.Equal(t, 2, len(*cardsMongo))
+}
+
+func TestCardGetPurchaseSingle(t *testing.T) {
+	paymentVoucher := "PV20241001"
+	cuit := "30-12345678-9"
+	finalAmount := 100.00
+
+	cardRepo := relational_repository.NewCardRelationalRepository(SQLDatabase)
+
+	payment, err := cardRepo.GetPurchaseSingle(cuit, finalAmount, paymentVoucher)
+	assert.NoError(t, err, "Error fetching purchase single from MySQL")
+
+	assert.Equal(t, payment.Purchase.Store, "Store A")
+
+	// ------ NoSQL (MongoDB) ------
+	finalAmount = 90
+	noSQLCardRepo := non_relational_repository.NewCardNonRelationalRepository(NoSQLDatabase)
+	paymentMongo, err := noSQLCardRepo.GetPurchaseSingle(cuit, finalAmount, paymentVoucher)
+
+	assert.NoError(t, err, "Error fetching purchase single from MongoDB")
+
+	assert.Equal(t, paymentMongo.Store, "Store A")
+}
+
+func TestCardGetPurchaseMonthly(t *testing.T) {
+	paymentVoucher := "PV20241101"
+	cuit := "20-98765432-1"
+	finalAmount := 440.0
+
+	cardRepo := relational_repository.NewCardRelationalRepository(SQLDatabase)
+
+	payment, err := cardRepo.GetPurchaseMonthly(cuit, finalAmount, paymentVoucher)
+	assert.NoError(t, err, "Error fetching purchase monthly from MySQL")
+
+	assert.Equal(t, payment.Purchase.Store, "Store B")
+	assert.Equal(t, payment.Purchase.Amount, 110.00)
+	assert.Equal(t, len(payment.Quota), 4)
+
+	// ------ NoSQL (MongoDB) ------
+	paymentVoucher = "PV20241001"
+	cuit = "30-12345678-9"
+	finalAmount = 330.00
+
+	noSQLCardRepo := non_relational_repository.NewCardNonRelationalRepository(NoSQLDatabase)
+	paymentMongo, err := noSQLCardRepo.GetPurchaseMonthly(cuit, finalAmount, paymentVoucher)
+
+	assert.NoError(t, err, "Error fetching purchase single from MongoDB")
+
+	assert.Equal(t, paymentMongo.Store, "Store A")
+	assert.Equal(t, paymentMongo.Amount, 300.00)
+	assert.Equal(t, len(paymentMongo.Quota), 3)
+	assert.Equal(t, paymentMongo.Quota[0].Price, 110.00)
+}
+func TestCardGetTop10CardsByPurchases(t *testing.T) {
+
+	cardRepo := relational_repository.NewCardRelationalRepository(SQLDatabase)
+
+	cards, err := cardRepo.GetTop10CardsByPurchases()
+	if err != nil {
+		t.Fatalf("Failed to connect to database: %v", err)
+	}
+
+	assert.Equal(t, len(*cards), 10)
+
+	var card *models.Card
+	for _, src := range *cards {
+		if src.Number == "1234567812345678" {
+			card = &src
+		}
+	}
+
+	assert.Equal(t, len(card.PurchaseSinglePayments), 5)
+	assert.Equal(t, len(card.PurchaseMonthlyPayments), 2)
+
+	var purchaseMonthly *models.PurchaseMonthlyPayment
+	for _, src := range card.PurchaseMonthlyPayments {
+		if src.Purchase.PaymentVoucher == "PV20241001" {
+			purchaseMonthly = &src
+		}
+	}
+	assert.Equal(t, len(purchaseMonthly.Quota), 3)
+
+	// ------ NoSQL (MongoDB) ------
+	noSQLCardRepo := non_relational_repository.NewCardNonRelationalRepository(NoSQLDatabase)
+	cardsMongo, err := noSQLCardRepo.GetTop10CardsByPurchases()
+
+	assert.NoError(t, err, "Error fetching top 10 cards by purchases from MongoDB")
+
+	assert.Equal(t, 10, len(*cardsMongo))
+
+	var cardMongo *models.Card
+	for _, src := range *cardsMongo {
+		if src.Number == "7446548631079191" {
+			cardMongo = &src
+			fmt.Printf("Found card: %s belong to %s\n", cardMongo.Number, cardMongo.CardholderNameInCard)
+			break
+		}
+	}
+
+	assert.Equal(t, len(cardMongo.PurchaseSinglePayments), 2)
+	assert.Equal(t, len(cardMongo.PurchaseMonthlyPayments), 2)
+
+	var purchaseMonthlyMongo *models.PurchaseMonthlyPayment
+	for _, src := range cardMongo.PurchaseMonthlyPayments {
+		if src.Purchase.PaymentVoucher == "PV-M581450" {
+			fmt.Printf("Found purchase monthly: %s\n", src.Purchase.PaymentVoucher)
+			purchaseMonthlyMongo = &src
+
+		}
+	}
+
+	assert.Equal(t, 12, len(purchaseMonthlyMongo.Quota))
+	assert.Equal(t, float64(4), purchaseMonthlyMongo.Interest)
+	assert.Equal(t, 53.3, purchaseMonthlyMongo.Quota[0].Price)
+	assert.Equal(t, int64(purchaseMonthlyMongo.FinalAmount), int64(float64(len(purchaseMonthlyMongo.Quota))*purchaseMonthlyMongo.Quota[0].Price))
+
+}

@@ -1,0 +1,1217 @@
+[
+  {
+    "_id": {
+      "$oid": "679ffecb3a2e6d27c4d12345"
+    },
+    "purchase": {
+      "payment_voucher": "PV20241001",
+      "store": "Store A",
+      "cuit_store": "30-12345678-9",
+      "amount": 300.00,
+      "final_amount": 330.00,
+      "created_at": {
+        "$date": "2024-10-14T01:00:00Z"
+      },
+      "updated_at": {
+        "$date": "2024-10-14T01:00:00Z"
+      },
+      "card_number": "1234567812345678"
+    },
+    "interest": 10.0,
+    "number_of_quotas": 3,
+    "quotas": [
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea1"
+        },
+        "number": 1,
+        "price": 110.00,
+        "month": "10",
+        "year": "2024",
+        "purchase_monthly_id": {
+          "$oid": "679ffecb3a2e6d27c4d12345"
+        },
+        "created_at": {
+          "$date": "2024-10-14T01:00:00Z"
+        },
+        "updated_at": {
+          "$date": "2024-10-14T01:00:00Z"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea2"
+        },
+        "number": 2,
+        "price": 110.00,
+        "month": "11",
+        "year": "2024",
+        "purchase_monthly_id": {
+          "$oid": "679ffecb3a2e6d27c4d12345"
+        },
+        "created_at": {
+          "$date": "2024-10-14T01:00:00Z"
+        },
+        "updated_at": {
+          "$date": "2024-10-14T01:00:00Z"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea3"
+        },
+        "number": 3,
+        "price": 110.00,
+        "month": "12",
+        "year": "2024",
+        "purchase_monthly_id": {
+          "$oid": "679ffecb3a2e6d27c4d12345"
+        },
+        "created_at": {
+          "$date": "2024-10-14T01:00:00Z"
+        },
+        "updated_at": {
+          "$date": "2024-10-14T01:00:00Z"
+        }
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "67b3e864ee9d3bb9e04b4ea7"
+    },
+    "purchase": {
+      "payment_voucher": "PV-M159585",
+      "store": "Store xBsz",
+      "cuit_store": "30-74999152-3",
+      "amount": 823.96,
+      "final_amount": 936.32,
+      "created_at": {
+        "$date": "2025-02-17T22:54:44.910314881-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-17T22:54:44.910314941-03:00"
+      },
+      "card_number": "7446548631079191"
+    },
+    "interest": 12,
+    "number_of_quotas": 8,
+    "quotas": [
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea8"
+        },
+        "number": 1,
+        "price": 117.04,
+        "month": "02",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea7"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910298859-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910298917-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea9"
+        },
+        "number": 2,
+        "price": 117.04,
+        "month": "03",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea7"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910299916-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.91029997-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eaa"
+        },
+        "number": 3,
+        "price": 117.04,
+        "month": "04",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea7"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910304205-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.91030426-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eab"
+        },
+        "number": 4,
+        "price": 117.04,
+        "month": "05",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea7"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910308537-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910308586-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eac"
+        },
+        "number": 5,
+        "price": 117.04,
+        "month": "06",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea7"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910309163-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910309211-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ead"
+        },
+        "number": 6,
+        "price": 117.04,
+        "month": "07",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea7"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910311722-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910311771-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eae"
+        },
+        "number": 7,
+        "price": 117.04,
+        "month": "08",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea7"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910312345-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910312394-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eaf"
+        },
+        "number": 8,
+        "price": 117.04,
+        "month": "09",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ea7"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910312959-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910313009-03:00"
+        }
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "67b3e864ee9d3bb9e04b4eb1"
+    },
+    "purchase": {
+      "payment_voucher": "PV-M581450",
+      "store": "Store CZmE",
+      "cuit_store": "30-15781659-9",
+      "amount": 614.02,
+      "final_amount": 639.6,
+      "created_at": {
+        "$date": "2025-02-17T22:54:44.910328472-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-17T22:54:44.910328522-03:00"
+      },
+      "card_number": "7446548631079191"
+    },
+    "interest": 4,
+    "number_of_quotas": 12,
+    "quotas": [
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb2"
+        },
+        "number": 1,
+        "price": 53.3,
+        "month": "02",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910317607-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910317656-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb3"
+        },
+        "number": 2,
+        "price": 53.3,
+        "month": "03",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910318345-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910318396-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb4"
+        },
+        "number": 3,
+        "price": 53.3,
+        "month": "04",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910319138-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910319189-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb5"
+        },
+        "number": 4,
+        "price": 53.3,
+        "month": "05",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910319885-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910319937-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb6"
+        },
+        "number": 5,
+        "price": 53.3,
+        "month": "06",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910320499-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910320549-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb7"
+        },
+        "number": 6,
+        "price": 53.3,
+        "month": "07",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910321317-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910321366-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb8"
+        },
+        "number": 7,
+        "price": 53.3,
+        "month": "08",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910321919-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910321968-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb9"
+        },
+        "number": 8,
+        "price": 53.3,
+        "month": "09",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910322528-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910322577-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eba"
+        },
+        "number": 9,
+        "price": 53.3,
+        "month": "10",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910323118-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910323167-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ebb"
+        },
+        "number": 10,
+        "price": 53.3,
+        "month": "11",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.91032585-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.9103259-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ebc"
+        },
+        "number": 11,
+        "price": 53.3,
+        "month": "12",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910326461-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.91032651-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ebd"
+        },
+        "number": 12,
+        "price": 53.3,
+        "month": "01",
+        "year": "2026",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eb1"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910327167-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910327216-03:00"
+        }
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "67b3e864ee9d3bb9e04b4ebf"
+    },
+    "purchase": {
+      "payment_voucher": "PV-M839418",
+      "store": "Store IVMn",
+      "cuit_store": "30-42049030-0",
+      "amount": 690.27,
+      "final_amount": 726.6,
+      "created_at": {
+        "$date": "2025-02-17T22:54:44.910338696-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-17T22:54:44.910338745-03:00"
+      },
+      "card_number": "5707461529459899"
+    },
+    "interest": 5,
+    "number_of_quotas": 3,
+    "quotas": [
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec0"
+        },
+        "number": 1,
+        "price": 242.2,
+        "month": "02",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ebe"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910335781-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910335829-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec1"
+        },
+        "number": 2,
+        "price": 242.2,
+        "month": "03",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ebe"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.91033647-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910336519-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec2"
+        },
+        "number": 3,
+        "price": 242.2,
+        "month": "04",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ebe"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910337203-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910337252-03:00"
+        }
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "67b3e864ee9d3bb9e04b4ec4"
+    },
+    "purchase": {
+      "payment_voucher": "PV-M849463",
+      "store": "Store Il9o",
+      "cuit_store": "30-38655960-0",
+      "amount": 652.6,
+      "final_amount": 694.26,
+      "created_at": {
+        "$date": "2025-02-17T22:54:44.91034779-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-17T22:54:44.91034784-03:00"
+      },
+      "card_number": "5099987733537250"
+    },
+    "interest": 6,
+    "number_of_quotas": 9,
+    "quotas": [
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec5"
+        },
+        "number": 1,
+        "price": 77.14,
+        "month": "02",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec3"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910341035-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910341083-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec6"
+        },
+        "number": 2,
+        "price": 77.14,
+        "month": "03",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec3"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910341737-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910341787-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec7"
+        },
+        "number": 3,
+        "price": 77.14,
+        "month": "04",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec3"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910342403-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910342451-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec8"
+        },
+        "number": 4,
+        "price": 77.14,
+        "month": "05",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec3"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910343132-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910343181-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec9"
+        },
+        "number": 5,
+        "price": 77.14,
+        "month": "06",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec3"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.91034374-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910343789-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eca"
+        },
+        "number": 6,
+        "price": 77.14,
+        "month": "07",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec3"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910344529-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910344579-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ecb"
+        },
+        "number": 7,
+        "price": 77.14,
+        "month": "08",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec3"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.91034512-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.91034517-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ecc"
+        },
+        "number": 8,
+        "price": 77.14,
+        "month": "09",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec3"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910345739-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910345787-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ecd"
+        },
+        "number": 9,
+        "price": 77.14,
+        "month": "10",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ec3"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910346327-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910346376-03:00"
+        }
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "67b3e864ee9d3bb9e04b4ecf"
+    },
+    "purchase": {
+      "payment_voucher": "PV-M644511",
+      "store": "Store 5bO7",
+      "cuit_store": "30-57227459-6",
+      "amount": 672.19,
+      "final_amount": 763.85,
+      "created_at": {
+        "$date": "2025-02-17T22:54:44.910355616-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-17T22:54:44.910355666-03:00"
+      },
+      "card_number": "1715940695610933"
+    },
+    "interest": 12,
+    "number_of_quotas": 5,
+    "quotas": [
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed0"
+        },
+        "number": 1,
+        "price": 152.77,
+        "month": "02",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ece"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910350001-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.91035005-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed1"
+        },
+        "number": 2,
+        "price": 152.77,
+        "month": "03",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ece"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910350717-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910350766-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed2"
+        },
+        "number": 3,
+        "price": 152.77,
+        "month": "04",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ece"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910351406-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910351455-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed3"
+        },
+        "number": 4,
+        "price": 152.77,
+        "month": "05",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ece"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910352116-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910352165-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed4"
+        },
+        "number": 5,
+        "price": 152.77,
+        "month": "06",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ece"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910352707-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910352757-03:00"
+        }
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "67b3e864ee9d3bb9e04b4ed6"
+    },
+    "purchase": {
+      "payment_voucher": "PV-M892487",
+      "store": "Store q5cp",
+      "cuit_store": "30-90612656-0",
+      "amount": 674.68,
+      "final_amount": 725.46,
+      "created_at": {
+        "$date": "2025-02-17T22:54:44.910362647-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-17T22:54:44.910362696-03:00"
+      },
+      "card_number": "9428217037808245"
+    },
+    "interest": 7,
+    "number_of_quotas": 3,
+    "quotas": [
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed7"
+        },
+        "number": 1,
+        "price": 241.82,
+        "month": "02",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed6"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910359991-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910360041-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed8"
+        },
+        "number": 2,
+        "price": 241.82,
+        "month": "03",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed6"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910360695-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910360745-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed9"
+        },
+        "number": 3,
+        "price": 241.82,
+        "month": "04",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ed6"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.91036139-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910361439-03:00"
+        }
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "67b3e864ee9d3bb9e04b4edb"
+    },
+    "purchase": {
+      "payment_voucher": "PV-M234491",
+      "store": "Store qf3P",
+      "cuit_store": "30-96451533-5",
+      "amount": 607.13,
+      "final_amount": 689.92,
+      "created_at": {
+        "$date": "2025-02-17T22:54:44.910366141-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-17T22:54:44.910366191-03:00"
+      },
+      "card_number": "6069190578599429"
+    },
+    "interest": 12,
+    "number_of_quotas": 1,
+    "quotas": [
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4edc"
+        },
+        "number": 1,
+        "price": 689.92,
+        "month": "02",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4edb"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910364904-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910364955-03:00"
+        }
+      }
+    ]
+  },
+  {
+    "_id": {
+      "$oid": "67b3e864ee9d3bb9e04b4ede"
+    },
+    "purchase": {
+      "payment_voucher": "PV-M497798",
+      "store": "Store xKmY",
+      "cuit_store": "30-44977668-9",
+      "amount": 490.1,
+      "final_amount": 544.56,
+      "created_at": {
+        "$date": "2025-02-17T22:54:44.910384238-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-17T22:54:44.91038429-03:00"
+      },
+      "card_number": "6091766815000176"
+    },
+    "interest": 10,
+    "number_of_quotas": 12,
+    "quotas": [
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4edf"
+        },
+        "number": 1,
+        "price": 45.38,
+        "month": "02",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910374053-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910374102-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ee0"
+        },
+        "number": 2,
+        "price": 45.38,
+        "month": "03",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910374773-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910374822-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ee1"
+        },
+        "number": 3,
+        "price": 45.38,
+        "month": "04",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910375446-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910375495-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ee2"
+        },
+        "number": 4,
+        "price": 45.38,
+        "month": "05",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910376157-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910376207-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ee3"
+        },
+        "number": 5,
+        "price": 45.38,
+        "month": "06",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910376781-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.91037683-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ee4"
+        },
+        "number": 6,
+        "price": 45.38,
+        "month": "07",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910377559-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910377609-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ee5"
+        },
+        "number": 7,
+        "price": 45.38,
+        "month": "08",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910378173-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910378223-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ee6"
+        },
+        "number": 8,
+        "price": 45.38,
+        "month": "09",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910378811-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910378861-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ee7"
+        },
+        "number": 9,
+        "price": 45.38,
+        "month": "10",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910379435-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910379485-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ee8"
+        },
+        "number": 10,
+        "price": 45.38,
+        "month": "11",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910381747-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910381797-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ee9"
+        },
+        "number": 11,
+        "price": 45.38,
+        "month": "12",
+        "year": "2025",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910382367-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910382415-03:00"
+        }
+      },
+      {
+        "_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4eea"
+        },
+        "number": 12,
+        "price": 45.38,
+        "month": "01",
+        "year": "2026",
+        "purchase_monthly_id": {
+          "$oid": "67b3e864ee9d3bb9e04b4ede"
+        },
+        "created_at": {
+          "$date": "2025-02-17T22:54:44.910383008-03:00"
+        },
+        "updated_at": {
+          "$date": "2025-02-17T22:54:44.910383057-03:00"
+        }
+      }
+    ]
+  }
+]

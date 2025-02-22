@@ -6,7 +6,7 @@
  *
  * Created: Dec. 10, 2024
  * License: GNU General Public License v3.0
-*/
+ */
 
 package nonrelational
 
@@ -24,13 +24,6 @@ import (
 	"go.uber.org/zap"
 )
 
-const (
-	BANK_COLLECTION      = "banks"
-	FINANCING_COLLECTION = "financings"
-	PROMOTION_COLLECTION = "promotions"
-	DISCOUNT_COLLECTION  = "discounts"
-)
-
 type BankRepositoryMongo struct {
 	db *mongo.Database
 }
@@ -43,7 +36,7 @@ func NewBankNonRelationalRepository(db *mongo.Database) storage.IBankStorage {
 func (r *BankRepositoryMongo) AddFinancingPromotionToBank(promotionFinancing models.Financing) error {
 	ctx := context.Background()
 
-	bankCollection := r.db.Collection(BANK_COLLECTION)
+	bankCollection := r.db.Collection("banks")
 	var bank entities.BankEntityNonSQL
 	if err := bankCollection.FindOne(ctx, bson.M{"cuit": promotionFinancing.Promotion.Bank.Cuit}).Decode(&bank); err != nil {
 		return fmt.Errorf("could not find bank with 'cuit' %s: %w", promotionFinancing.Promotion.Bank.Cuit, err)
@@ -70,7 +63,7 @@ func (r *BankRepositoryMongo) AddFinancingPromotionToBank(promotionFinancing mod
 		UpdatedAt:      time.Now(),
 	}
 
-	_, err := r.db.Collection(FINANCING_COLLECTION).InsertOne(ctx, financingEntity)
+	_, err := r.db.Collection("financings").InsertOne(ctx, financingEntity)
 	if err != nil {
 		logger.Error("Failed to add financing promotion %v", err)
 		return fmt.Errorf("could not add financing promotion: %w", err)
@@ -91,7 +84,7 @@ func (r *BankRepositoryMongo) ExtendPromotionValidity(code string, newDate time.
 	// Update the promotion
 	filter := bson.M{"code": code}
 	update := bson.M{"$set": bson.M{"validity_end_date": newDate}}
-	result, err := r.db.Collection(DISCOUNT_COLLECTION).UpdateOne(ctx, filter, update)
+	result, err := r.db.Collection("promotions").UpdateOne(ctx, filter, update)
 	if err != nil {
 		logger.Error("Failed to update promotion %s: %v", code, err)
 		return err
@@ -115,7 +108,7 @@ func (r *BankRepositoryMongo) DeletePromotion(code string) error {
 	// Mark the promotion as deleted
 	filter := bson.M{"promotion_entity.code": code}
 	update := bson.M{"$set": bson.M{"is_deleted": true}}
-	result, err := r.db.Collection(DISCOUNT_COLLECTION).UpdateOne(ctx, filter, update)
+	result, err := r.db.Collection("promotions").UpdateOne(ctx, filter, update)
 	if err != nil || result.ModifiedCount == 0 {
 		return fmt.Errorf("could not delete promotion: %w", err)
 	}
@@ -130,7 +123,7 @@ func (r *BankRepositoryMongo) DeleteFinancingPromotion(code string) error {
 	ctx := context.Background()
 
 	// Find the promotion by code
-	promotionCollection := r.db.Collection(FINANCING_COLLECTION)
+	promotionCollection := r.db.Collection("financings")
 	var promotion bson.M
 	if err := promotionCollection.FindOne(ctx, bson.M{"promotion_entity.code": code}).Decode(&promotion); err != nil {
 		return fmt.Errorf("could not find promotion with code %s: %w", code, err)
@@ -153,7 +146,7 @@ func (r *BankRepositoryMongo) DeleteDiscountPromotion(code string) error {
 	ctx := context.Background()
 
 	// Find the promotion by code
-	promotionCollection := r.db.Collection(DISCOUNT_COLLECTION)
+	promotionCollection := r.db.Collection("discounts")
 	var promotion bson.M
 	if err := promotionCollection.FindOne(ctx, bson.M{"promotion_entity.code": code}).Decode(&promotion); err != nil {
 		return fmt.Errorf("could not find promotion with code %s: %w", code, err)
@@ -177,7 +170,7 @@ func (r *BankRepositoryMongo) ExtendDiscountPromotionValidity(code string, newDa
 	// Update the promotion
 	filter := bson.M{"code": code}
 	update := bson.M{"$set": bson.M{"validity_end_date": newDate}}
-	result, err := r.db.Collection(DISCOUNT_COLLECTION).UpdateOne(ctx, filter, update)
+	result, err := r.db.Collection("discounts").UpdateOne(ctx, filter, update)
 	if err != nil {
 		return fmt.Errorf("failed to update promotion %s: %w", code, err)
 	}
@@ -199,7 +192,7 @@ func (r *BankRepositoryMongo) ExtendFinancingPromotionValidity(code string, newD
 	// Update the promotion
 	filter := bson.M{"promotion_entity.code": code}
 	update := bson.M{"$set": bson.M{"validity_end_date": newDate}}
-	result, err := r.db.Collection(FINANCING_COLLECTION).UpdateOne(ctx, filter, update)
+	result, err := r.db.Collection("financings").UpdateOne(ctx, filter, update)
 	if err != nil {
 		logger.Error("Failed to update promotion %s: %v", code, err)
 		return err
@@ -220,7 +213,7 @@ func (r *BankRepositoryMongo) GetBankCustomerCounts() ([]models.BankCustomerCoun
 	ctx := context.Background()
 
 	// Reference the banks collection
-	bankCollection := r.db.Collection(BANK_COLLECTION)
+	bankCollection := r.db.Collection("banks")
 	pipeline := []bson.M{
 		// Lookup to join BANKS with CUSTOMERS_BANKS
 		{
@@ -277,3 +270,4 @@ func (r *BankRepositoryMongo) GetBankCustomerCounts() ([]models.BankCustomerCoun
 
 	return results, nil
 }
+gi

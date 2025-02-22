@@ -16,7 +16,6 @@ data/
 │   ├── financings.json
 │   ├── purchase_monthly_payments.json
 │   ├── purchase_single_payments.json
-│   ├── gen.go   # Go script to generate random test data
 │
 ├── mysql/   # SQL scripts for relational database (MySQL)
 │   ├── database.sql   # Schema and initial data
@@ -36,7 +35,6 @@ bash run_tests.sh
 
 - **MongoDB Data**: Stored in JSON format, designed to be used with `mongoimport`.
 - **MySQL Data**: The `database.sql` file includes schema definitions and sample data.
-- **Go Data Generator**: `gen.go` creates randomized test data for MongoDB. It could be easy to modify for other purposes.
 
 ---
 
@@ -44,7 +42,7 @@ bash run_tests.sh
 
 For testing, ensure that both MySQL and MongoDB services are running before executing any imports. If you encounter issues, check for:
 
-- Connection settings in your `.env` file.
+- Connection settings.
 - Proper container names in the commands.
 - Permissions to access the files inside the containers.
 

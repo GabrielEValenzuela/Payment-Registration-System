@@ -1,0 +1,162 @@
+[
+  {
+    "id": {
+      "$oid": "67b291dd1048b71798ccda50"
+    },
+    "purchase": {
+      "payment_voucher": "PV20241001",
+      "store": "Store A",
+      "cuit_store": "30-12345678-9",
+      "amount": 100.00,
+      "final_amount": 90.00,
+      "created_at": {
+        "$date": "2024-10-14T01:00:00Z"
+      },
+      "updated_at": {
+        "$date": "2024-10-14T01:00:00Z"
+      },
+      "card_number": "1234567812345678"
+    },
+    "store_discount": 10
+  },
+  {
+    "id": {
+      "$oid": "67b291dd1048b71798ccda54"
+    },
+    "purchase": {
+      "payment_voucher": "PV-667167",
+      "store": "Store 5nTE",
+      "cuit_store": "30-47745054-0",
+      "amount": 919,
+      "final_amount": 919,
+      "created_at": {
+        "$date": "2025-02-16T22:33:17.039424283-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-16T22:33:17.039424312-03:00"
+      },
+      "card_number": "7446548631079191"
+    },
+    "store_discount": 0
+  },
+  {
+    "id": {
+      "$oid": "67b291dd1048b71798ccda57"
+    },
+    "purchase": {
+      "payment_voucher": "PV-773364",
+      "store": "Store zzF7",
+      "cuit_store": "30-58296190-2",
+      "amount": 133,
+      "final_amount": 113.05,
+      "created_at": {
+        "$date": "2025-02-16T22:33:17.039426862-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-16T22:33:17.039426891-03:00"
+      },
+      "card_number": "7446548631079191"
+    },
+    "store_discount": 15
+  },
+  {
+    "id": {
+      "$oid": "67b291dd1048b71798ccda5a"
+    },
+    "purchase": {
+      "payment_voucher": "PV-249838",
+      "store": "Store L4OU",
+      "cuit_store": "30-07848308-2",
+      "amount": 303,
+      "final_amount": 266.64,
+      "created_at": {
+        "$date": "2025-02-16T22:33:17.039429083-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-16T22:33:17.039429113-03:00"
+      },
+      "card_number": "4145145477400504"
+    },
+    "store_discount": 22
+  },
+  {
+    "id": {
+      "$oid": "67b291dd1048b71798ccda60"
+    },
+    "purchase": {
+      "payment_voucher": "PV-208348",
+      "store": "Store UP7s",
+      "cuit_store": "30-55698883-6",
+      "amount": 333,
+      "final_amount": 239.76,
+      "created_at": {
+        "$date": "2025-02-16T22:33:17.039432665-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-16T22:33:17.039432695-03:00"
+      },
+      "card_number": "1749323524953524"
+    },
+    "store_discount": 28
+  },
+  {
+    "id": {
+      "$oid": "67b291dd1048b71798ccda6b"
+    },
+    "purchase": {
+      "payment_voucher": "WINTERSALE2024",
+      "store": "Store Exsb",
+      "cuit_store": "30-40604664-8",
+      "amount": 260,
+      "final_amount": 218.4,
+      "created_at": {
+        "$date": "2025-02-16T22:33:17.039438839-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-16T22:33:17.039438869-03:00"
+      },
+      "card_number": "8486749523959390"
+    },
+    "store_discount": 16
+  },
+  {
+    "id": {
+      "$oid": "67b291dd1048b71798ccda71"
+    },
+    "purchase": {
+      "payment_voucher": "WINTERSALE2024",
+      "store": "Store NhPq",
+      "cuit_store": "30-53091249-7",
+      "amount": 996,
+      "final_amount": 756.96,
+      "created_at": {
+        "$date": "2025-02-16T22:33:17.039442631-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-16T22:33:17.039442659-03:00"
+      },
+      "card_number": "8980421056149185"
+    },
+    "store_discount": 24
+  },
+  {
+    "id": {
+      "$oid": "67b291dd1048b71798ccda78"
+    },
+    "purchase": {
+      "payment_voucher": "WINTERSALE2024",
+      "store": "Store rzGs",
+      "cuit_store": "30-75981851-1",
+      "amount": 580,
+      "final_amount": 440.8,
+      "created_at": {
+        "$date": "2025-02-16T22:33:17.039447982-03:00"
+      },
+      "updated_at": {
+        "$date": "2025-02-16T22:33:17.039448011-03:00"
+      },
+      "card_number": "5069850170260438"
+    },
+    "store_discount": 24
+  }
+]
