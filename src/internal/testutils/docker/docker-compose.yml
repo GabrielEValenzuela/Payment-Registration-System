@@ -67,7 +67,7 @@ services:
   # MongoDB database
   # ---------------------------
   mongodb:
-    image: mongo:8.0.5-rc2
+    image: mongo:8.0.3-noble
     container_name: mongodb
     restart: always
     environment:
