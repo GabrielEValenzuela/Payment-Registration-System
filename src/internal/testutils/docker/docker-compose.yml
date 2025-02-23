@@ -1,61 +1,96 @@
-version: '3.8'
-
-networks:
-  mynetwork:
-    driver: bridge
+version: "3.8"
 
 services:
-  mysql:
-    image: mysql:8.0         # Use the official MySQL image version 8.0
-    container_name: mysql  # Name of the container
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword       # Root user's password
-      MYSQL_DATABASE: payment-registration-db # Name of the database to be created
-      MYSQL_USER: testuser                    # Name of the additional user
-      MYSQL_PASSWORD: testpassword            # Password for the additional user
-    ports:
-      - "3306:3306"           # Expose MySQL port 3306 to the host
-    #volumes:
-    #  - ./data:/var/lib/mysql  # Persist data in the ./data folder
-    networks:
-      - mynetwork
-
-  mongodb:
-    image: mongo:8.0.3-noble
-    container_name: mongodb
+  # ---------------------------
+  # Go application service
+  # ---------------------------
+  go-app:
+    image: go-app:latest
+    container_name: go-app
     restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: testuser       # Root user's username
-      MONGO_INITDB_ROOT_PASSWORD: testpassword   # Root user's password
-      MONGO_INITDB_DATABASE: payment_registration_system # Default database to create
-    ports:
-      - "27017:27017"           # Expose MongoDB port 27017 to the host
-    networks:
-      - mynetwork
-
-  app:
-      build:
-        context: .
-        dockerfile: Dockerfile
-      container_name: go-app
-      depends_on:
-        - mysql
-        - mongodb
-      ports:
-        - "8080:8080"
-      networks:
-        - mynetwork
-      command: ["/wait-for.sh", "./main"]
-
-  test-runner:
-    build:
-      context: .
-      dockerfile: Dockerfile.tests # Dockerfile for test runner
-    container_name: test-runner
     depends_on:
       - mysql
       - mongodb
+    labels:
+      # Enable Traefik for this service
+      - "traefik.enable=true"
+      # Route by host: go-app.localhost
+      - "traefik.http.routers.go-app.rule=Host(`go-app.localhost`)"
+      # Use the "web" entrypoint on Traefik (:80)
+      - "traefik.http.routers.go-app.entrypoints=web"
+      # Let Traefik know the service port is 9000 inside the container
+      - "traefik.http.services.go-app.loadbalancer.server.port=9000"
     networks:
-      - mynetwork
+      - goapp_network
+
+  # ---------------------------
+  # Traefik reverse proxy
+  # ---------------------------
+  traefik:
+    image: traefik:latest
+    container_name: traefik
+    restart: always
+    command:
+      - "--api.dashboard=true" # Traefik admin dashboard
+      - "--api.insecure=true" # Insecure dashboard (for dev/test only!)
+      - "--providers.docker=true" # Enable Docker as a provider
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80" # Listen on port 80 for HTTP
+    ports:
+      - "80:80" # Forward host's 80 to Traefik
+      - "8080:8080" # Traefik Dashboard
     volumes:
-      - ./reports:/app/reports # Mount reports directory for test coverage
+      # Allow Traefik to listen to Docker events and detect new containers
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - goapp_network
+
+  # ---------------------------
+  # MySQL database
+  # ---------------------------
+  mysql:
+    image: mysql:8.1.0 # Adjust MySQL version as needed
+    container_name: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=payment_registration_system
+      - MYSQL_USER=app-user
+      - MYSQL_PASSWORD=app-pwd
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./src/init-scripts/my-sql.sh:/docker-entrypoint-initdb.d/init.sh
+    networks:
+      - goapp_network
+
+  # ---------------------------
+  # MongoDB database
+  # ---------------------------
+  mongodb:
+    image: mongo:8.0.5-rc2
+    container_name: mongodb
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=mongo_user
+      - MONGO_INITDB_ROOT_PASSWORD=mongo_password
+      - MONGO_INITDB_DATABASE=payment_registration_system
+    command: ["mongod", "--auth"]
+    volumes:
+      - mongodb_data:/data/db
+      - ./src/init-scripts/mongo.js:/docker-entrypoint-initdb.d/mongo.js
+    networks:
+      - goapp_network
+
+# ---------------------------
+# Volumes
+# ---------------------------
+volumes:
+  mysql_data:
+  mongodb_data:
+
+# ---------------------------
+# Network
+# ---------------------------
+networks:
+  goapp_network:
+    driver: bridge
