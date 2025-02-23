@@ -9,16 +9,14 @@
  */
 package models
 
-/*
- * StoreDTO
- * ----------------------------------------
- * Represents a data transfer object (DTO) for a store, containing the store's name and tax identification code.
- *
- * Fields:
- * - Name (string): The name of the store.
- * - Cuit (string): The unique tax identification code for the store.
- */
+// StoreDTO represents a store with its basic details.
+//
+//	@Summary		StoreDTO model
+//	@Description	Contains essential information about a store, including its name and tax identification code (CUIT).
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type StoreDTO struct {
-	Name string `json:"name"`
-	Cuit string `json:"cuit"`
+	Name string `json:"name" example:"Tech Store"`    // Store name
+	Cuit string `json:"cuit" example:"30-98765432-1"` // Store tax identification code (CUIT)
 }

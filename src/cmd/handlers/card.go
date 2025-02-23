@@ -28,18 +28,21 @@ func NewCardHandler(card services.CardService) *CardHandler {
 	}
 }
 
-// @Summary Get the payment summary for a card
-// @Description Retrieves the payment summary for the specified card number, month, and year.
-// @Tags Card
-// @Accept json
-// @Produce json
-// @Param cardNumber path string true "Card number"
-// @Param month path int true "Month"
-// @Param year path int true "Year"
-// @Success 200 {object} map[string]interface{} "Payment summary retrieved successfully"
-// @Failure 400 {object} map[string]interface{} "Invalid request parameters"
-// @Failure 500 {object} map[string]interface{} "Failed to retrieve payment summary"
-// @Router /v1/cards/summary/{cardNumber}/{month}/{year} [get]
+// GetPaymentSummary retrieves the payment summary for a specific card and period.
+//
+//	@Summary		Get payment summary
+//	@Description	Retrieves the payment summary for a given card number, month, and year.
+//	@Tags			Card
+//	@Accept			json
+//	@Produce		json
+//	@Param			cardNumber	path		string					true	"Card Number"
+//	@Param			month		path		int						true	"Month (1-12)"
+//	@Param			year		path		int						true	"Year (e.g., 2025)"
+//	@Success		200			{object}	map[string]interface{}	"Payment summary retrieved successfully"
+//	@Failure		400			{object}	map[string]interface{}	"Invalid month or year parameter"
+//	@Failure		500			{object}	map[string]interface{}	"Failed to retrieve payment summary"
+//	@Router			/sql/cards/payment-summary/{cardNumber}/{month}/{year} [get]
+//	@Router			/no-sql/cards/payment-summary/{cardNumber}/{month}/{year} [get]
 func (h *CardHandler) GetPaymentSummary() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		// Log request
@@ -75,23 +78,33 @@ func (h *CardHandler) GetPaymentSummary() fiber.Handler {
 			})
 		}
 
-		// Return success response
 		logger.Info("Payment summary retrieved successfully")
-		return c.JSON(paymentSummary)
+
+		if paymentSummary == nil {
+			return c.JSON(fiber.Map{
+				"message": "Oops! Apparently, there are no data to show at the moment.",
+			})
+		} else {
+			return c.JSON(paymentSummary)
+		}
 	}
 }
 
-// @Summary Get cards expiring in the next 30 days
-// @Description Retrieves the cards that will expire in the next 30 days based on the current day, month, and year.
-// @Tags Card
-// @Accept json
-// @Produce json
-// @Param day path int true "Day"
-// @Param month path int true "Month"
-// @Param year path int true "Year"
-// @Success 200 {array} map[string]interface{} "Cards expiring in the next 30 days"
-// @Failure 500 {object} map[string]interface{} "Failed to retrieve expiring cards"
-// @Router /v1/cards/expiring/{day}/{month}/{year} [get]
+// GetCardsExpiringInNext30Days retrieves cards expiring within the next 30 days.
+//
+//	@Summary		Get cards expiring in the next 30 days
+//	@Description	Retrieves a list of cards that will expire within the next 30 days from the given date.
+//	@Tags			Card
+//	@Accept			json
+//	@Produce		json
+//	@Param			day		path		int						true	"Day (1-31)"
+//	@Param			month	path		int						true	"Month (1-12)"
+//	@Param			year	path		int						true	"Year (e.g., 2025)"
+//	@Success		200		{object}	map[string]interface{}	"List of cards expiring in the next 30 days"
+//	@Failure		400		{object}	map[string]interface{}	"Invalid day, month, or year parameter"
+//	@Failure		500		{object}	map[string]interface{}	"Failed to retrieve expiring cards"
+//	@Router			/sql/cards/expiring-next-30-days/{day}/{month}/{year} [get]
+//	@Router			/no-sql/cards/expiring-next-30-days/{day}/{month}/{year} [get]
 func (h *CardHandler) GetCardsExpiringInNext30Days() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		// Log request
@@ -134,24 +147,33 @@ func (h *CardHandler) GetCardsExpiringInNext30Days() fiber.Handler {
 			})
 		}
 
-		// Return success response
 		logger.Info("Cards expiring in the next 30 days retrieved successfully")
-		return c.JSON(cards)
+
+		if cards == nil {
+			return c.JSON(fiber.Map{
+				"message": "Oops! Apparently, there are no data to show at the moment.",
+			})
+		} else {
+			return c.JSON(cards)
+		}
 	}
 }
 
-// @Summary Get monthly purchase details for a card
-// @Description Retrieves the monthly purchase details for the specified card based on CUIT and payment voucher.
-// @Tags Card
-// @Accept json
-// @Produce json
-// @Param cuit path string true "CUIT"
-// @Param finalAmount path float64 true "Final amount"
-// @Param paymentVoucher path string true "Payment voucher"
-// @Success 200 {object} map[string]interface{} "Monthly purchase details retrieved successfully"
-// @Failure 400 {object} map[string]interface{} "Invalid request parameters"
-// @Failure 500 {object} map[string]interface{} "Failed to retrieve monthly purchase details"
-// @Router /v1/cards/purchase/monthly [get]
+// GetPurchaseMonthly retrieves the monthly purchase details.
+//
+//	@Summary		Get monthly purchase details
+//	@Description	Retrieves the purchase details for a given CUIT, final amount, and payment voucher.
+//	@Tags			Card
+//	@Accept			json
+//	@Produce		json
+//	@Param			cuit			path		string					true	"CUIT (Unique Tax Identification Code)"
+//	@Param			finalAmount		path		float64					true	"Final purchase amount"
+//	@Param			paymentVoucher	path		string					true	"Payment voucher identifier"
+//	@Success		200				{object}	map[string]interface{}	"Monthly purchase details retrieved successfully"
+//	@Failure		400				{object}	map[string]interface{}	"Invalid finalAmount parameter"
+//	@Failure		500				{object}	map[string]interface{}	"Failed to retrieve monthly purchase details"
+//	@Router			/sql/cards/purchase-monthly/{cuit}/{finalAmount}/{paymentVoucher} [get]
+//	@Router			/no-sql/cards/purchase-monthly/{cuit}/{finalAmount}/{paymentVoucher} [get]
 func (h *CardHandler) GetPurchaseMonthly() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		// Log request
@@ -180,20 +202,29 @@ func (h *CardHandler) GetPurchaseMonthly() fiber.Handler {
 			})
 		}
 
-		// Return success response
 		logger.Info("Monthly purchase details retrieved successfully")
-		return c.JSON(purchase)
+
+		if purchase == nil {
+			return c.JSON(fiber.Map{
+				"message": "Oops! Apparently, there are no data to show at the moment.",
+			})
+		} else {
+			return c.JSON(purchase)
+		}
 	}
 }
 
-// @Summary Get top 10 cards by purchases
-// @Description Retrieves the top 10 cards by purchases.
-// @Tags Card
-// @Accept json
-// @Produce json
-// @Success 200 {array} map[string]interface{} "Top 10 cards by purchases"
-// @Failure 500 {object} map[string]interface{} "Failed to retrieve top 10 cards"
-// @Router /v1/cards/top [get]
+// GetTop10CardsByPurchases retrieves the top 10 cards ranked by purchase volume.
+//
+//	@Summary		Get top 10 cards by purchases
+//	@Description	Retrieves the top 10 cards with the highest purchase volume.
+//	@Tags			Card
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	map[string]interface{}	"Top 10 cards by purchases retrieved successfully"
+//	@Failure		500	{object}	map[string]interface{}	"Failed to retrieve top 10 cards"
+//	@Router			/sql/cards/top [get]
+//	@Router			/no-sql/cards/top [get]
 func (h *CardHandler) GetTop10CardsByPurchases() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		// Log request
@@ -208,8 +239,14 @@ func (h *CardHandler) GetTop10CardsByPurchases() fiber.Handler {
 			})
 		}
 
-		// Return success response
 		logger.Info("Top 10 cards by purchases retrieved successfully")
-		return c.JSON(cards)
+
+		if cards == nil {
+			return c.JSON(fiber.Map{
+				"message": "Oops! Apparently, there are no data to show at the moment.",
+			})
+		} else {
+			return c.JSON(cards)
+		}
 	}
 }

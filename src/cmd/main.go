@@ -19,16 +19,16 @@ import (
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/config"
 )
 
-// @title Payment Registration System API
-// @version 1.0
-// @description This API manages payment registration and processing for the Database Management Course at UNLP.
-// @termsOfService http://swagger.io/terms/
-// @contact.name API Support
-// @contact.email https://github.com/GabrielEValenzuela/Payment-Registration-System
-// @license.name GNU General Public License v3.0
-// @license.url http://www.apache.org/licenses/MIT.html
-// @host localhost:8080
-// @BasePath /
+// @title			Payment Registration System API
+// @version		1.0
+// @description	This API manages payment registration and processing for the Database Management Course at UNLP.
+// @termsOfService	http://swagger.io/terms/
+// @contact.name	@marventu94, @GabrielEValenzuela
+// @contact.email	https://github.com/GabrielEValenzuela/Payment-Registration-System
+// @license.name	GNU General Public License v3.0
+// @license.url	https://www.gnu.org/licenses/gpl-3.0.html
+// @host			go-app.localhost
+// @BasePath		/v1
 func main() {
 
 	// Parse command-line flags
@@ -38,7 +38,8 @@ func main() {
 	// Load configuration
 	cfg, err := config.LoadConfig(*configPath)
 	if err != nil {
-		log.Fatalf("❌ Failed to load configuration: %v", err)
+		log.Fatal("❌ Failed to load configuration: ", err)
+		// We considered as error, but we use the default configuration
 	}
 
 	// Create and run the server

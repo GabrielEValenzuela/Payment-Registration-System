@@ -14,31 +14,22 @@ import (
 	"time"
 )
 
-/* PurchaseMonthlyPayment
- * ----------------------------------------
- * Represents a monthly installment payment made with a card.
- *
- * Fields:
- * - Code (string): The unique identifier of the payment.
- * - Month (int): The month of the payment.
- * - Year (int): The year of the payment.
- * - FirstExpiration (time.Time): The first due date for the payment.
- * - SecondExpiration (time.Time): The second due date for the payment.
- * - SurchargePercentage (float64): The percentage of surcharge for late payments.
- * - TotalPrice (float64): The total price of the payment.
- * - MonthlyPayments([]PurchaseMonthlyPayment): List of monthly installment payments linked to this card.
- * - SinglePayments([]PurchaseSinglePayment): List of single-payment purchases made with this card.
- * - Card (Card): The card associated with this payment.
- */
+// PaymentSummary represents a summary of payments for a specific period.
+//
+//	@Summary		Payment summary model
+//	@Description	Contains details about a payment summary, including expiration dates, surcharge percentage, total price, and payment breakdown.
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type PaymentSummary struct {
-	Code                string                   `json:"code"`
-	Month               int                      `json:"month"`
-	Year                int                      `json:"year"`
-	FirstExpiration     time.Time                `json:"first_expiration"`
-	SecondExpiration    time.Time                `json:"second_expiration"`
-	SurchargePercentage float64                  `json:"surcharge_percentage"`
-	TotalPrice          float64                  `json:"total_price"`
-	MonthlyPayments     []PurchaseMonthlyPayment `json:"monthly_payments"`
-	SinglePayments      []PurchaseSinglePayment  `json:"single_payments"`
-	Card                Card                     `json:"card"`
+	Code                string                   `json:"code" example:"PAY-202502"`                        // Unique code identifying the payment summary
+	Month               int                      `json:"month" example:"2"`                                // Month of the payment summary
+	Year                int                      `json:"year" example:"2025"`                              // Year of the payment summary
+	FirstExpiration     time.Time                `json:"first_expiration" example:"2025-02-10T00:00:00Z"`  // First expiration date
+	SecondExpiration    time.Time                `json:"second_expiration" example:"2025-02-20T00:00:00Z"` // Second expiration date
+	SurchargePercentage float64                  `json:"surcharge_percentage" example:"5.0"`               // Surcharge percentage applied after first expiration
+	TotalPrice          float64                  `json:"total_price" example:"1500.75"`                    // Total price to be paid
+	MonthlyPayments     []PurchaseMonthlyPayment `json:"monthly_payments"`                                 // List of monthly installment payments
+	SinglePayments      []PurchaseSinglePayment  `json:"single_payments"`                                  // List of single-payment transactions
+	Card                Card                     `json:"card"`                                             // Card used for the payment
 }

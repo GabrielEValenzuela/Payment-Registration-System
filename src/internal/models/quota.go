@@ -9,20 +9,16 @@
  */
 package models
 
-/*
- * Quota
- * ----------------------------------------
- * Represents an installment for a purchase that is being paid in monthly payments.
- *
- * Fields:
- * - Number (int): The installment number.
- * - Price (float64): The price of the installment.
- * - Month (string): The month of the installment.
- * - Year (string): The year of the installment.
- */
+// Quota represents an individual installment in a monthly payment plan.
+//
+//	@Summary		Quota model
+//	@Description	Contains details about a single installment, including its number, price, and associated month and year.
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type Quota struct {
-	Number int     `json:"number"`
-	Price  float64 `json:"price"`
-	Month  string  `json:"month"`
-	Year   string  `json:"year"`
+	Number int     `json:"number" example:"1"`       // Installment number
+	Price  float64 `json:"price" example:"125.50"`   // Price of the installment
+	Month  string  `json:"month" example:"February"` // Month when the installment is due
+	Year   string  `json:"year" example:"2025"`      // Year when the installment is due
 }

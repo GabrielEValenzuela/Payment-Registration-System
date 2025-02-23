@@ -13,27 +13,20 @@ import (
 	"time"
 )
 
-/* Customer
- * ----------------------------------------
- * Represents a customer who is a client of one or more banks.
- *
- * Fields:
- * - CompleteName (string): The full name of the customer.
- * - Dni (string): The national identification number of the customer.
- * - Cuit (string): The unique tax identification code for the customer.
- * - Address (string): The physical address of the customer.
- * - Telephone (string): The contact number for the customer.
- * - EntryDate (time.Time): The date when the customer was registered.
- * - BanksIds ([]int): A list of bank IDs associated with the customer.
- * - Cards ([]int): A list of card IDs associated with the customer.
- */
+// Customer represents an individual who holds bank accounts and cards.
+//
+//	@Summary		Customer model
+//	@Description	Contains personal details of a customer, including identification information, contact details, associated banks, and linked cards.
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type Customer struct {
-	CompleteName string    `json:"complete_name" validate:"required"`
-	Dni          string    `json:"dni" validate:"required"`
-	Cuit         string    `json:"cuit" validate:"required"`
-	Address      string    `json:"address" validate:"required"`
-	Telephone    string    `json:"telephone" validate:"required"`
-	EntryDate    time.Time `json:"entry_date" validate:"required"`
-	BanksIds     []int     `json:"banks_ids" validate:"dive,required"`
-	Cards        []int     `json:"cards" validate:"dive,required"`
+	CompleteName string    `json:"complete_name" example:"John Doe"`          // Full name of the customer
+	Dni          string    `json:"dni" example:"12345678"`                    // National identification number (DNI)
+	Cuit         string    `json:"cuit" example:"20-12345678-9"`              // Unique tax identification code (CUIT)
+	Address      string    `json:"address" example:"456 Oak St, City"`        // Customer's residential address
+	Telephone    string    `json:"telephone" example:"+54 11 9876-5432"`      // Contact number
+	EntryDate    time.Time `json:"entry_date" example:"2022-03-15T00:00:00Z"` // Date the customer was registered
+	BanksIds     []int     `json:"banks_ids"`                                 // List of bank IDs the customer is associated with
+	Cards        []int     `json:"cards"`                                     // List of card IDs linked to the customer
 }

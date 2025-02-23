@@ -28,17 +28,20 @@ func NewStoreHandler(store services.StoreService) *StoreHandler {
 	}
 }
 
-// @Summary Get the store with the highest revenue by month
-// @Description Retrieves the store with the highest revenue for a specific month and year.
-// @Tags Store
-// @Accept json
-// @Produce json
-// @Param month path int true "Month"
-// @Param year path int true "Year"
-// @Success 200 {object} map[string]interface{} "Store with the highest revenue"
-// @Failure 400 {object} map[string]interface{} "Invalid request parameters"
-// @Failure 500 {object} map[string]interface{} "Failed to retrieve store information"
-// @Router /v1/stores/highest-revenue/{month}/{year} [get]
+// GetStoreWithHighestRevenueByMonth retrieves the store with the highest revenue for a given month and year.
+//
+//	@Summary		Get store with highest revenue by month
+//	@Description	Retrieves the store that generated the highest revenue in a specified month and year.
+//	@Tags			Store
+//	@Accept			json
+//	@Produce		json
+//	@Param			month	path		int						true	"Month (1-12)"
+//	@Param			year	path		int						true	"Year (e.g., 2025)"
+//	@Success		200		{object}	map[string]interface{}	"Store with highest revenue retrieved successfully"
+//	@Failure		400		{object}	map[string]interface{}	"Invalid month or year parameter"
+//	@Failure		500		{object}	map[string]interface{}	"Failed to retrieve store with highest revenue"
+//	@Router			/sql/stores/highest-revenue/{month}/{year} [get]
+//	@Router			/no-sql/stores/highest-revenue/{month}/{year} [get]
 func (h *StoreHandler) GetStoreWithHighestRevenueByMonth() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		// Log request
@@ -73,8 +76,14 @@ func (h *StoreHandler) GetStoreWithHighestRevenueByMonth() fiber.Handler {
 			})
 		}
 
-		// Return success response
 		logger.Info("Store with highest revenue retrieved successfully")
-		return c.JSON(store)
+
+		if store.Cuit == "" {
+			return c.JSON(fiber.Map{
+				"message": "Oops! Apparently, there are no data to show at the moment.",
+			})
+		} else {
+			return c.JSON(store)
+		}
 	}
 }
