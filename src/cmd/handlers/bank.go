@@ -1,3 +1,13 @@
+/*
+ * Payment Registration System - Bank Handlers
+ * -------------------------------------------
+ *
+ * This file defines the HTTP handlers for bank-related operations in the system.
+ *
+ * Created: Dec. 11, 2024
+ * License: GNU General Public License v3.0
+ */
+
 package handlers
 
 import (
@@ -29,34 +39,30 @@ func NewBankHandler(bank services.BankService) *BankHandler {
 // @Failure 400 {object} map[string]interface{} "Invalid request body"
 // @Failure 500 {object} map[string]interface{} "Failed to add financing promotion to bank"
 // @Router /v1/sql/promotions/financing [post]
+// @Router /v1/no-sql/promotions/financing [post]
 func (h *BankHandler) AddFinancingPromotionToBank() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
 		// Log request
 		logger.Info("AddFinancingPromotionToBank request from IP: %s", c.IP())
 
-		// Parse request body to FinancingEntity
 		var promotion models.Financing
 		if err := c.BodyParser(&promotion); err != nil {
-			logger.Warn("Invalid request body %s", err)
+			logger.Warn("Invalid request body: %v", err)
 			return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
-				"error": "Invalid request body",
+				"error":   "Invalid request body",
+				"message": err.Error(),
 			})
 		}
 
-		logger.Info("asdsadsadsasadasddsa %d asdsadsadasda %s", promotion.NumberOfQuotas, promotion.Promotion.Code)
-		logger.Info("dgndsklgnsdklngs %s ", promotion.Promotion.Bank.Cuit)
-
-		// Add promotion to the bank using the service
-		err := h.bank.AddFinancingPromotionToBank(promotion)
-		if err != nil {
-			logger.Error("Failed to add financing promotion to bank: %v", err)
+		if err := h.bank.AddFinancingPromotionToBank(promotion); err != nil {
+			logger.Error("Failed to add financing promotion: %v", err)
 			return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
-				"error": err.Error(),
+				"error":   "Failed to add promotion",
+				"message": err.Error(),
 			})
 		}
 
-		// Return success response
 		logger.Info("Financing promotion added successfully")
 		return c.Status(fiber.StatusCreated).JSON(fiber.Map{
 			"message": "Financing promotion added successfully",
@@ -76,13 +82,12 @@ func (h *BankHandler) AddFinancingPromotionToBank() fiber.Handler {
 // @Failure 404 {object} map[string]interface{} "Promotion not found"
 // @Failure 500 {object} map[string]interface{} "Failed to extend financing promotion validity"
 // @Router /promotions/financing/{code}/extend [patch]
+// @Router /promotions/financing/{code}/extend [patch]
 func (h *BankHandler) ExtendFinancingPromotionValidity() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
-		// Log request
 		logger.Info("ExtendFinancingPromotionValidity request from IP: %s", c.IP())
 
-		// Get promotion code from the path
 		code := c.Params("code")
 		if code == "" {
 			logger.Warn("Promotion code is missing in the request")
@@ -91,7 +96,6 @@ func (h *BankHandler) ExtendFinancingPromotionValidity() fiber.Handler {
 			})
 		}
 
-		// Parse request body to get the new date
 		var requestBody struct {
 			NewDate string `json:"new_date"`
 		}
@@ -103,7 +107,6 @@ func (h *BankHandler) ExtendFinancingPromotionValidity() fiber.Handler {
 			})
 		}
 
-		// Parse the provided date string into a time.Time object
 		newDate, err := time.Parse(time.RFC3339, requestBody.NewDate)
 		if err != nil {
 			logger.Warn("Invalid date format")
@@ -112,7 +115,6 @@ func (h *BankHandler) ExtendFinancingPromotionValidity() fiber.Handler {
 			})
 		}
 
-		// Call the service to extend the promotion validity
 		err = h.bank.ExtendFinancingPromotionValidity(code, newDate)
 		if err != nil {
 			logger.Error("Failed to extend financing promotion validity %s due %s", code, err)
@@ -121,7 +123,6 @@ func (h *BankHandler) ExtendFinancingPromotionValidity() fiber.Handler {
 			})
 		}
 
-		// Return success response
 		logger.Info("Financing promotion validity extended successfully %s", code)
 		return c.JSON(fiber.Map{
 			"message":  "Financing promotion validity extended successfully",
@@ -142,13 +143,12 @@ func (h *BankHandler) ExtendFinancingPromotionValidity() fiber.Handler {
 // @Failure 404 {object} map[string]interface{} "Promotion not found"
 // @Failure 500 {object} map[string]interface{} "Failed to extend discount promotion validity"
 // @Router /promotions/discount/{code}/extend [patch]
+// @Router /promotions/discount/{code}/extend [patch]
 func (h *BankHandler) ExtendDiscountPromotionValidity() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
-		// Log request
 		logger.Info("ExtendDiscountPromotionValidity request from IP: %s", c.IP())
 
-		// Get promotion code from the path
 		code := c.Params("code")
 		if code == "" {
 			logger.Warn("Promotion code is missing in the request")
@@ -157,7 +157,6 @@ func (h *BankHandler) ExtendDiscountPromotionValidity() fiber.Handler {
 			})
 		}
 
-		// Parse request body to get the new date
 		var requestBody struct {
 			NewDate string `json:"new_date"`
 		}
@@ -169,7 +168,6 @@ func (h *BankHandler) ExtendDiscountPromotionValidity() fiber.Handler {
 			})
 		}
 
-		// Parse the provided date string into a time.Time object
 		newDate, err := time.Parse(time.RFC3339, requestBody.NewDate)
 		if err != nil {
 			logger.Warn("Invalid date format")
@@ -178,7 +176,6 @@ func (h *BankHandler) ExtendDiscountPromotionValidity() fiber.Handler {
 			})
 		}
 
-		// Call the service to extend the promotion validity
 		err = h.bank.ExtendDiscountPromotionValidity(code, newDate)
 		if err != nil {
 			logger.Error("Failed to extend discount promotion validity %s due %s", code, err)
@@ -187,7 +184,6 @@ func (h *BankHandler) ExtendDiscountPromotionValidity() fiber.Handler {
 			})
 		}
 
-		// Return success response
 		logger.Info("Discount promotion validity extended successfully %s", code)
 		return c.JSON(fiber.Map{
 			"message":  "Discount promotion validity extended successfully",
@@ -211,10 +207,8 @@ func (h *BankHandler) ExtendDiscountPromotionValidity() fiber.Handler {
 func (h *BankHandler) DeleteFinancingPromotion() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
-		// Log request
 		logger.Info("DeleteFinancingPromotion request from IP: %s", c.IP())
 
-		// Get promotion code from the path
 		code := c.Params("code")
 		if code == "" {
 			logger.Warn("Promotion code is missing in the request")
@@ -223,7 +217,6 @@ func (h *BankHandler) DeleteFinancingPromotion() fiber.Handler {
 			})
 		}
 
-		// Call the service to delete the promotion
 		err := h.bank.DeleteFinancingPromotion(code)
 		if err != nil {
 			logger.Error("Failed to delete financing promotion %s due %s", code, err)
@@ -232,7 +225,6 @@ func (h *BankHandler) DeleteFinancingPromotion() fiber.Handler {
 			})
 		}
 
-		// Return success response
 		logger.Info("Financing promotion deleted successfully %s", code)
 		return c.JSON(fiber.Map{
 			"message": "Financing promotion deleted successfully",
@@ -255,10 +247,8 @@ func (h *BankHandler) DeleteFinancingPromotion() fiber.Handler {
 func (h *BankHandler) DeleteDiscountPromotion() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
-		// Log request
 		logger.Info("DeleteDiscountPromotion request from IP: %s", c.IP())
 
-		// Get promotion code from the path
 		code := c.Params("code")
 		if code == "" {
 			logger.Warn("Promotion code is missing in the request")
@@ -295,10 +285,8 @@ func (h *BankHandler) DeleteDiscountPromotion() fiber.Handler {
 func (h *BankHandler) GetBankCustomerCounts() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
-		// Log request
 		logger.Info("GetBankCustomerCounts request from IP: %s", c.IP())
 
-		// Call the service to get the customer counts
 		customerCounts, err := h.bank.GetBankCustomerCounts()
 		if err != nil {
 			logger.Error("Failed to get bank customer counts: %v", err)
@@ -307,7 +295,6 @@ func (h *BankHandler) GetBankCustomerCounts() fiber.Handler {
 			})
 		}
 
-		// Return success response
 		logger.Info("Bank customer counts retrieved successfully")
 		return c.JSON(customerCounts)
 	}

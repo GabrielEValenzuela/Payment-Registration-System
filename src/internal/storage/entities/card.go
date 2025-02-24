@@ -4,23 +4,30 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 // CardEntity represents a credit or debit card issued by a bank.
 type CardEntityNonSQL struct {
-	ID                      primitive.ObjectID                    `bson:"_id,omitempty"` // MongoDB primary key
+	ID                      bson.ObjectID                         `bson:"_id,omitempty"` // MongoDB primary key
 	Number                  string                                `bson:"number"`        // Card number (16 digits)
 	Ccv                     string                                `bson:"ccv"`           // Card verification code (3 digits)
 	CardholderNameInCard    string                                `bson:"cardholder_name_in_card"`
 	Since                   time.Time                             `bson:"since"` // When the card was issued
 	ExpirationDate          time.Time                             `bson:"expiration_date"`
-	BankID                  primitive.ObjectID                    `bson:"bank_id,omitempty"`     // Reference to the bank (if using references)
-	CustomerID              primitive.ObjectID                    `bson:"customer_id,omitempty"` // Reference to the customer
+	BankCuit                string                                `bson:"bank_cuit,omitempty"`     // Reference to the bank (if using references)
+	CustomerCuit            string                                `bson:"customer_cuit,omitempty"` // Reference to the customer
 	PurchaseSinglePayments  []PurchaseSinglePaymentEntityNonSQL   `bson:"purchase_single_payments,omitempty"`
 	PurchaseMonthlyPayments []PurchaseMonthlyPaymentsEntityNonSQL `bson:"purchase_monthly_payments,omitempty"`
 	CreatedAt               time.Time                             `bson:"created_at,omitempty"` // Creation timestamp
 	UpdatedAt               time.Time                             `bson:"updated_at,omitempty"` // Update timestamp
+}
+
+type PaymentSummaryResult struct {
+	Card                    CardEntityNonSQL `bson:",inline"`
+	PurchaseSinglePayments  []bson.Raw       `bson:"purchase_single_payments"`
+	PurchaseMonthlyPayments []bson.Raw       `bson:"purchase_monthly_payments"`
+	TotalAmount             float64          `bson:"total_amount"`
 }
 
 type CardEntitySQL struct {
@@ -87,11 +94,13 @@ func ToCard[T any](cardEntity *T) *models.Card {
 		}
 	case *CardEntityNonSQL:
 		return &models.Card{
-			Number:               v.Number,
-			Ccv:                  v.Ccv,
-			CardholderNameInCard: v.CardholderNameInCard,
-			Since:                v.Since,
-			ExpirationDate:       v.ExpirationDate,
+			Number:                  v.Number,
+			Ccv:                     v.Ccv,
+			CardholderNameInCard:    v.CardholderNameInCard,
+			Since:                   v.Since,
+			ExpirationDate:          v.ExpirationDate,
+			PurchaseMonthlyPayments: *ConvertPurchaseMonthlyPaymentListMongo(&v.PurchaseMonthlyPayments),
+			PurchaseSinglePayments:  *ConvertPurchaseSinglePaymentListMongo(&v.PurchaseSinglePayments),
 		}
 	}
 	return nil

@@ -112,7 +112,11 @@ func benchmarkMySQL(maxInserts int) {
 	for rows.Next() {
 		var id int
 		var value string
-		rows.Scan(&id, &value)
+		err := rows.Scan(&id, &value)
+		if err != nil {
+			log.Fatal("Error scanning row: ",
+				err)
+		}
 	}
 	readDuration := time.Since(start)
 
@@ -146,7 +150,11 @@ func benchmarkMongoDB(maxInserts int) {
 	collection := client.Database(mongoDatabase).Collection(mongoCollection)
 
 	// Clean up the collection before the test
-	collection.Drop(context.TODO())
+	err = collection.Drop(context.TODO())
+
+	if err != nil {
+		log.Fatalf("Error dropping collection: %v", err)
+	}
 
 	// Write benchmark: Insert documents
 	start := time.Now()

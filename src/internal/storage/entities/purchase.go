@@ -4,32 +4,32 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 // PurchaseEntity represents the base details of a purchase.
 type PurchaseEntityNonSQL struct {
-	PaymentVoucher string             `bson:"payment_voucher"`      // Payment voucher code
-	Store          string             `bson:"store"`                // Store name
-	CuitStore      string             `bson:"cuit_store"`           // Store CUIT
-	Amount         float64            `bson:"amount"`               // Purchase amount
-	FinalAmount    float64            `bson:"final_amount"`         // Final amount after adjustments
-	CreatedAt      time.Time          `bson:"created_at,omitempty"` // Creation timestamp
-	UpdatedAt      time.Time          `bson:"updated_at,omitempty"` // Update timestamp
-	CardID         primitive.ObjectID `bson:"card_id,omitempty"`    // Reference to the associated card
+	PaymentVoucher string    `bson:"payment_voucher"`       // Payment voucher code
+	Store          string    `bson:"store"`                 // Store name
+	CuitStore      string    `bson:"cuit_store"`            // Store CUIT
+	Amount         float64   `bson:"amount"`                // Purchase amount
+	FinalAmount    float64   `bson:"final_amount"`          // Final amount after adjustments
+	CreatedAt      time.Time `bson:"created_at,omitempty"`  // Creation timestamp
+	UpdatedAt      time.Time `bson:"updated_at,omitempty"`  // Update timestamp
+	CardNumber     string    `bson:"card_number,omitempty"` // Reference to the associated card
 }
 
 // PurchaseSinglePaymentEntity represents a single-payment purchase.
 type PurchaseSinglePaymentEntityNonSQL struct {
-	ID             primitive.ObjectID   `bson:"_id,omitempty"`   // MongoDB primary key
-	PurchaseEntity PurchaseEntityNonSQL `bson:"purchase_entity"` // Embedded base purchase details
-	StoreDiscount  float64              `bson:"store_discount"`  // Discount applied by the store
+	ID             bson.ObjectID        `bson:"_id,omitempty"`  // MongoDB primary key
+	PurchaseEntity PurchaseEntityNonSQL `bson:"purchase"`       // Embedded base purchase details
+	StoreDiscount  float64              `bson:"store_discount"` // Discount applied by the store
 }
 
 // PurchaseMonthlyPaymentsEntity represents a monthly installment purchase.
 type PurchaseMonthlyPaymentsEntityNonSQL struct {
-	ID             primitive.ObjectID   `bson:"_id,omitempty"`    // MongoDB primary key
-	PurchaseEntity PurchaseEntityNonSQL `bson:"purchase_entity"`  // Embedded base purchase details
+	ID             bson.ObjectID        `bson:"_id,omitempty"`    // MongoDB primary key
+	PurchaseEntity PurchaseEntityNonSQL `bson:"purchase"`         // Embedded base purchase details
 	Interest       float64              `bson:"interest"`         // Interest rate for the installments
 	NumberOfQuotas int                  `bson:"number_of_quotas"` // Number of monthly quotas
 	Quotas         []QuotaEntityNonSQL  `bson:"quotas,omitempty"` // Embedded list of quotas
@@ -58,6 +58,19 @@ type PurchaseMonthlyPaymentsEntitySQL struct {
 	Interest       float64           `gorm:"not null"`
 	NumberOfQuotas int               `gorm:"not null"`
 	Quotas         []QuotaEntitySQL  `gorm:"foreignKey:PurchaseMonthlyPaymentsEntityID"`
+}
+
+type PaymentSummaryNoSQL struct {
+	Number          string                                `bson:"number"`
+	CCV             string                                `bson:"ccv"`
+	CardholderName  string                                `bson:"cardholder_name_in_card"`
+	BankCuit        string                                `bson:"bank_cuit"`
+	CustomerCuit    string                                `bson:"customer_cuit"`
+	CreatedAt       time.Time                             `bson:"created_at"`
+	UpdatedAt       time.Time                             `bson:"updated_at"`
+	SinglePayments  []PurchaseSinglePaymentEntityNonSQL   `bson:"single_payments"`
+	MonthlyPayments []PurchaseMonthlyPaymentsEntityNonSQL `bson:"monthly_payments"`
+	TotalPrice      float64                               `bson:"total_price"`
 }
 
 func (PurchaseSinglePaymentEntitySQL) TableName() string {
@@ -174,6 +187,22 @@ func ConvertPurchaseSinglePaymentList(paymentEntityList *[]PurchaseSinglePayment
 	var payments []models.PurchaseSinglePayment
 	for _, v := range *paymentEntityList {
 		payments = append(payments, *ToPurchaseSinglePayment(&v))
+	}
+	return &payments
+}
+
+func ConvertPurchaseSinglePaymentListMongo(paymentEntityList *[]PurchaseSinglePaymentEntityNonSQL) *[]models.PurchaseSinglePayment {
+	var payments []models.PurchaseSinglePayment
+	for _, v := range *paymentEntityList {
+		payments = append(payments, *ToPurchaseSinglePaymentNonSQL(&v))
+	}
+	return &payments
+}
+
+func ConvertPurchaseMonthlyPaymentListMongo(paymentEntityList *[]PurchaseMonthlyPaymentsEntityNonSQL) *[]models.PurchaseMonthlyPayment {
+	var payments []models.PurchaseMonthlyPayment
+	for _, v := range *paymentEntityList {
+		payments = append(payments, *ToPurchaseMonthlyPaymentsNonSQL(&v))
 	}
 	return &payments
 }

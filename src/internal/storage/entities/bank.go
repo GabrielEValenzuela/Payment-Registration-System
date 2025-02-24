@@ -1,21 +1,34 @@
+/*
+ * Payment Registration System - Bank Entity (SQL and NoSQL)
+ * ---------------------------------------------------------
+ *
+ * Description: Bank entity represents a financial institution that holds customers and issues cards.
+ * The entity is implemented in two ways: SQL and NoSQL.
+ * The SQL implementation uses GORM and the NoSQL implementation uses MongoDB.
+ * The entity has a one-to-many relationship with the Customer entity.
+ *
+ * Created: Dec. 11, 2024
+ * License: GNU General Public License v3.0
+ */
+
 package entities
 
 import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
 type BankEntityNonSQL struct {
-	ID        primitive.ObjectID     `bson:"_id,omitempty"` // Use ObjectId as the primary key
-	Name      string                 `bson:"name"`
-	Cuit      string                 `bson:"cuit;unique"`
-	Address   string                 `bson:"address"`
-	Telephone string                 `bson:"telephone"`
-	Customers []CustomerEntityNonSQL `bson:"customers,omitempty"`
-	CreatedAt time.Time              `bson:"created_at,omitempty"`
-	UpdatedAt time.Time              `bson:"updated_at,omitempty"`
+	ID        bson.ObjectID   `bson:"_id,omitempty"` // 🔥 Ensure `_id` exists
+	Name      string          `bson:"name"`
+	Cuit      string          `bson:"cuit"`
+	Address   string          `bson:"address"`
+	Telephone string          `bson:"telephone"`
+	Customers []bson.ObjectID `bson:"customers,omitempty"`
+	CreatedAt time.Time       `bson:"created_at,omitempty"`
+	UpdatedAt time.Time       `bson:"updated_at,omitempty"`
 }
 
 // Bank represents a financial institution that holds customers and issues cards.
@@ -54,6 +67,16 @@ func ToBank(bankModel *BankEntitySQL) *models.Bank {
 		Cuit:      bankModel.Cuit,
 		Address:   bankModel.Address,
 		Telephone: bankModel.Telephone,
+		//CustomersIds : []
+	}
+}
+
+// BankModel NoSQL case overload
+func ToBankNonSQL(bank *BankEntityNonSQL) *models.Bank {
+	return &models.Bank{
+		Cuit:      bank.Cuit,
+		Address:   bank.Address,
+		Telephone: bank.Telephone,
 		//CustomersIds : []
 	}
 }

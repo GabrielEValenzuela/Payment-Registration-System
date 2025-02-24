@@ -1,0 +1,952 @@
+[
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9e8"
+    },
+    "complete_name": "Eve Johnson",
+    "dni": "32586417",
+    "cuit": "20-59895562-6",
+    "address": "Third St 985",
+    "telephone": "+54 9 11 68323059",
+    "entry_date": "2025-02-16T22:33:17.039203447-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039230693-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039230729-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9ea"
+    },
+    "complete_name": "Alice Moore",
+    "dni": "18770717",
+    "cuit": "20-66122595-4",
+    "address": "Ninth Av 911",
+    "telephone": "+54 9 11 12172269",
+    "entry_date": "2021-02-16T22:33:17.039236016-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039236119-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039236148-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9ec"
+    },
+    "complete_name": "Charlie Jones",
+    "dni": "62708943",
+    "cuit": "20-28773147-6",
+    "address": "Third St 781",
+    "telephone": "+54 9 11 34874625",
+    "entry_date": "2023-02-16T22:33:17.039240046-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039240132-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039240162-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9ee"
+    },
+    "complete_name": "David Davis",
+    "dni": "31960999",
+    "cuit": "20-40794352-7",
+    "address": "Second Av 927",
+    "telephone": "+54 9 11 78268731",
+    "entry_date": "2021-02-16T22:33:17.039243967-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039244051-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039244081-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9f0"
+    },
+    "complete_name": "Charlie Moore",
+    "dni": "15538927",
+    "cuit": "20-25714396-8",
+    "address": "Eighth St 293",
+    "telephone": "+54 9 11 78522076",
+    "entry_date": "2022-02-16T22:33:17.039247325-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039247409-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039247439-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9f2"
+    },
+    "complete_name": "Charlie Jones",
+    "dni": "06542181",
+    "cuit": "20-27268536-0",
+    "address": "First Av 389",
+    "telephone": "+54 9 11 92900337",
+    "entry_date": "2025-02-16T22:33:17.039251253-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039251338-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039251369-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9f4"
+    },
+    "complete_name": "Alice Johnson",
+    "dni": "98236397",
+    "cuit": "20-62405778-8",
+    "address": "Fifth Av 347",
+    "telephone": "+54 9 11 50494962",
+    "entry_date": "2025-02-16T22:33:17.03925457-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039254653-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039254683-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9f6"
+    },
+    "complete_name": "Emily Taylor",
+    "dni": "04335605",
+    "cuit": "20-65318821-4",
+    "address": "Fourth Av 410",
+    "telephone": "+54 9 11 72864636",
+    "entry_date": "2022-02-16T22:33:17.039257911-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039257995-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039258024-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9f8"
+    },
+    "complete_name": "David Williams",
+    "dni": "70297690",
+    "cuit": "20-14838998-9",
+    "address": "Third St 393",
+    "telephone": "+54 9 11 79804380",
+    "entry_date": "2022-02-16T22:33:17.039261231-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039261318-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039261347-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9fa"
+    },
+    "complete_name": "David Davis",
+    "dni": "49500284",
+    "cuit": "20-21293644-9",
+    "address": "Eighth St 138",
+    "telephone": "+54 9 11 14873520",
+    "entry_date": "2023-02-16T22:33:17.039269625-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039269732-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039269762-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9fd"
+    },
+    "complete_name": "Jane Moore",
+    "dni": "06333621",
+    "cuit": "20-54826167-9",
+    "address": "Seventh Av 91",
+    "telephone": "+54 9 11 2518614",
+    "entry_date": "2025-02-16T22:33:17.039273997-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039274083-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039274113-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9ff"
+    },
+    "complete_name": "John Jones",
+    "dni": "42773119",
+    "cuit": "20-51385348-2",
+    "address": "Fourth Av 333",
+    "telephone": "+54 9 11 86650173",
+    "entry_date": "2023-02-16T22:33:17.039277362-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039277448-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039277476-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda01"
+    },
+    "complete_name": "Frank Taylor",
+    "dni": "38678553",
+    "cuit": "20-71256253-5",
+    "address": "Fifth Av 442",
+    "telephone": "+54 9 11 2525773",
+    "entry_date": "2025-02-16T22:33:17.039280738-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039280823-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039280853-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda03"
+    },
+    "complete_name": "David Wilson",
+    "dni": "51931879",
+    "cuit": "20-14999728-4",
+    "address": "First Av 537",
+    "telephone": "+54 9 11 19863330",
+    "entry_date": "2022-02-16T22:33:17.03928399-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039284074-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039284103-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda05"
+    },
+    "complete_name": "Frank Jones",
+    "dni": "90351308",
+    "cuit": "20-51292315-6",
+    "address": "Fifth Av 532",
+    "telephone": "+54 9 11 11090790",
+    "entry_date": "2021-02-16T22:33:17.039287198-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039287283-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039287313-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda07"
+    },
+    "complete_name": "John Johnson",
+    "dni": "57794333",
+    "cuit": "20-26048629-0",
+    "address": "Ninth Av 958",
+    "telephone": "+54 9 11 1090636",
+    "entry_date": "2022-02-16T22:33:17.039290569-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039290654-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039290683-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda09"
+    },
+    "complete_name": "Alice Smith",
+    "dni": "65238509",
+    "cuit": "20-03631662-7",
+    "address": "Fifth Av 589",
+    "telephone": "+54 9 11 13898377",
+    "entry_date": "2025-02-16T22:33:17.039293881-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039293968-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039293997-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda0b"
+    },
+    "complete_name": "Alice Taylor",
+    "dni": "12061816",
+    "cuit": "20-75783187-1",
+    "address": "Seventh Av 724",
+    "telephone": "+54 9 11 38819905",
+    "entry_date": "2025-02-16T22:33:17.039297157-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039297241-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.03929727-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda0d"
+    },
+    "complete_name": "John Taylor",
+    "dni": "56660204",
+    "cuit": "20-32896342-2",
+    "address": "Sixth St 554",
+    "telephone": "+54 9 11 98347247",
+    "entry_date": "2024-02-16T22:33:17.039303843-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039303946-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039303979-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda0f"
+    },
+    "complete_name": "Alice Smith",
+    "dni": "51252096",
+    "cuit": "20-29376279-3",
+    "address": "Main St 229",
+    "telephone": "+54 9 11 84501401",
+    "entry_date": "2022-02-16T22:33:17.039308383-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.03930847-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039308499-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda12"
+    },
+    "complete_name": "Eve Wilson",
+    "dni": "44426581",
+    "cuit": "20-76632463-4",
+    "address": "Fifth Av 385",
+    "telephone": "+54 9 11 1478129",
+    "entry_date": "2023-02-16T22:33:17.039312582-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039312666-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039312695-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda14"
+    },
+    "complete_name": "Alice Brown",
+    "dni": "93011131",
+    "cuit": "20-89482136-8",
+    "address": "Third St 404",
+    "telephone": "+54 9 11 60298023",
+    "entry_date": "2023-02-16T22:33:17.039315845-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039315929-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039315959-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda16"
+    },
+    "complete_name": "Frank Smith",
+    "dni": "35708958",
+    "cuit": "20-40323879-8",
+    "address": "Main St 599",
+    "telephone": "+54 9 11 69610582",
+    "entry_date": "2025-02-16T22:33:17.039319115-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039319198-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039319228-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda18"
+    },
+    "complete_name": "Eve Taylor",
+    "dni": "20922418",
+    "cuit": "20-18159621-7",
+    "address": "Third St 50",
+    "telephone": "+54 9 11 94290179",
+    "entry_date": "2021-02-16T22:33:17.039322377-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039322461-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039322489-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda1a"
+    },
+    "complete_name": "Frank Miller",
+    "dni": "23358132",
+    "cuit": "20-16471621-5",
+    "address": "Main St 108",
+    "telephone": "+54 9 11 64191862",
+    "entry_date": "2025-02-16T22:33:17.039325704-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039325788-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039325818-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda1c"
+    },
+    "complete_name": "Alice Williams",
+    "dni": "20554665",
+    "cuit": "20-86112481-8",
+    "address": "Seventh Av 187",
+    "telephone": "+54 9 11 24308820",
+    "entry_date": "2022-02-16T22:33:17.039329021-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039329105-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039329134-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda1e"
+    },
+    "complete_name": "Eve Williams",
+    "dni": "86253243",
+    "cuit": "20-92742231-3",
+    "address": "Ninth Av 734",
+    "telephone": "+54 9 11 82555325",
+    "entry_date": "2021-02-16T22:33:17.039333801-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039333884-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039333914-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda20"
+    },
+    "complete_name": "David Williams",
+    "dni": "39822127",
+    "cuit": "20-93514621-1",
+    "address": "First Av 588",
+    "telephone": "+54 9 11 75630335",
+    "entry_date": "2025-02-16T22:33:17.039337027-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039337112-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039337142-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda22"
+    },
+    "complete_name": "Grace Taylor",
+    "dni": "95166815",
+    "cuit": "20-89245401-7",
+    "address": "Main St 540",
+    "telephone": "+54 9 11 58218853",
+    "entry_date": "2025-02-16T22:33:17.039340332-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039340418-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039340446-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda24"
+    },
+    "complete_name": "Bob Moore",
+    "dni": "85749745",
+    "cuit": "20-90494631-1",
+    "address": "Second Av 375",
+    "telephone": "+54 9 11 54613304",
+    "entry_date": "2021-02-16T22:33:17.039343644-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039343727-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039343757-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda27"
+    },
+    "complete_name": "Jane Smith",
+    "dni": "64211799",
+    "cuit": "20-34464982-7",
+    "address": "Seventh Av 731",
+    "telephone": "+54 9 11 49817854",
+    "entry_date": "2022-02-16T22:33:17.039347875-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039347959-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.03934799-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda29"
+    },
+    "complete_name": "Alice Williams",
+    "dni": "49441939",
+    "cuit": "20-90770936-3",
+    "address": "First Av 143",
+    "telephone": "+54 9 11 47074735",
+    "entry_date": "2025-02-16T22:33:17.039351156-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.03935124-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039351269-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda2b"
+    },
+    "complete_name": "Grace Taylor",
+    "dni": "27172448",
+    "cuit": "20-11439530-5",
+    "address": "Second Av 100",
+    "telephone": "+54 9 11 88402075",
+    "entry_date": "2023-02-16T22:33:17.039354439-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039354522-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039354551-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda2d"
+    },
+    "complete_name": "Emily Jones",
+    "dni": "88842754",
+    "cuit": "20-06754790-4",
+    "address": "First Av 104",
+    "telephone": "+54 9 11 46593862",
+    "entry_date": "2022-02-16T22:33:17.039357761-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039357846-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039357874-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda2f"
+    },
+    "complete_name": "John Moore",
+    "dni": "06725139",
+    "cuit": "20-72485806-4",
+    "address": "Third St 129",
+    "telephone": "+54 9 11 85343344",
+    "entry_date": "2022-02-16T22:33:17.039361023-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039361108-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039361137-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda31"
+    },
+    "complete_name": "Eve Williams",
+    "dni": "11607013",
+    "cuit": "20-82358411-2",
+    "address": "Sixth St 5",
+    "telephone": "+54 9 11 18344528",
+    "entry_date": "2024-02-16T22:33:17.039364942-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039365037-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039365066-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda33"
+    },
+    "complete_name": "Frank Wilson",
+    "dni": "01606846",
+    "cuit": "20-57283775-4",
+    "address": "First Av 564",
+    "telephone": "+54 9 11 61424274",
+    "entry_date": "2023-02-16T22:33:17.039368302-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039368386-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039368415-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda35"
+    },
+    "complete_name": "Frank Moore",
+    "dni": "25855859",
+    "cuit": "20-68302685-5",
+    "address": "Sixth St 623",
+    "telephone": "+54 9 11 32206616",
+    "entry_date": "2023-02-16T22:33:17.039371586-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039371671-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.0393717-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda37"
+    },
+    "complete_name": "Alice Smith",
+    "dni": "13002500",
+    "cuit": "20-97441590-4",
+    "address": "Eighth St 600",
+    "telephone": "+54 9 11 75872481",
+    "entry_date": "2024-02-16T22:33:17.039378739-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039378834-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039378863-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda39"
+    },
+    "complete_name": "Jane Miller",
+    "dni": "19391612",
+    "cuit": "20-48442517-7",
+    "address": "Second Av 453",
+    "telephone": "+54 9 11 36292617",
+    "entry_date": "2022-02-16T22:33:17.03938196-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039382125-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039382155-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda3c"
+    },
+    "complete_name": "Emily Williams",
+    "dni": "59295741",
+    "cuit": "20-65560904-7",
+    "address": "Fifth Av 691",
+    "telephone": "+54 9 11 44579479",
+    "entry_date": "2025-02-16T22:33:17.039386131-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039386217-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039386246-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda3e"
+    },
+    "complete_name": "Frank Taylor",
+    "dni": "79411047",
+    "cuit": "20-81085837-2",
+    "address": "Ninth Av 120",
+    "telephone": "+54 9 11 3599014",
+    "entry_date": "2024-02-16T22:33:17.039389335-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039389424-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039389454-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda40"
+    },
+    "complete_name": "Alice Taylor",
+    "dni": "18472540",
+    "cuit": "20-76625508-8",
+    "address": "Fourth Av 507",
+    "telephone": "+54 9 11 74109591",
+    "entry_date": "2023-02-16T22:33:17.039392588-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039392672-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039392702-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda42"
+    },
+    "complete_name": "Jane Wilson",
+    "dni": "53274076",
+    "cuit": "20-84457373-8",
+    "address": "Third St 105",
+    "telephone": "+54 9 11 74976761",
+    "entry_date": "2024-02-16T22:33:17.039395839-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039395929-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039395957-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda44"
+    },
+    "complete_name": "Frank Smith",
+    "dni": "49984279",
+    "cuit": "20-53337819-4",
+    "address": "Main St 753",
+    "telephone": "+54 9 11 84009639",
+    "entry_date": "2021-02-16T22:33:17.039399152-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039399236-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039399266-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda46"
+    },
+    "complete_name": "Bob Jones",
+    "dni": "86307397",
+    "cuit": "20-37325761-1",
+    "address": "Second Av 988",
+    "telephone": "+54 9 11 37699978",
+    "entry_date": "2021-02-16T22:33:17.039402429-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039402515-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039402544-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda48"
+    },
+    "complete_name": "Alice Johnson",
+    "dni": "98831024",
+    "cuit": "20-24602924-4",
+    "address": "Third St 442",
+    "telephone": "+54 9 11 14027306",
+    "entry_date": "2024-02-16T22:33:17.039405716-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039405807-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039405837-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda4a"
+    },
+    "complete_name": "Eve Davis",
+    "dni": "90039564",
+    "cuit": "20-50478341-8",
+    "address": "Third St 659",
+    "telephone": "+54 9 11 95121118",
+    "entry_date": "2023-02-16T22:33:17.039409005-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.03940909-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039409119-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda4c"
+    },
+    "complete_name": "Frank Williams",
+    "dni": "93875876",
+    "cuit": "20-27894492-1",
+    "address": "Third St 287",
+    "telephone": "+54 9 11 85324616",
+    "entry_date": "2022-02-16T22:33:17.039412294-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039412378-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039412408-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda4e"
+    },
+    "complete_name": "Jane Jones",
+    "dni": "77973937",
+    "cuit": "20-45579756-0",
+    "address": "Fourth Av 33",
+    "telephone": "+54 9 11 25395228",
+    "entry_date": "2021-02-16T22:33:17.039415593-03:00",
+    "banks": null,
+    "cards": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039415677-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039415707-03:00"
+    }
+  }
+]

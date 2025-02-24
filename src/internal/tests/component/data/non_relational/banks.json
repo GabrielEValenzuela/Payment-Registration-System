@@ -1,0 +1,82 @@
+[
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9e7"
+    },
+    "name": "Santander",
+    "cuit": "30-12345678-9",
+    "address": "Second Av 317",
+    "telephone": "+54 11 1234 5678",
+    "customers": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039201888-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039201933-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccd9fc"
+    },
+    "name": "Wells Fargo",
+    "cuit": "30-74188375-9",
+    "address": "Seventh Av 12",
+    "telephone": "+54 9 11 51989464",
+    "customers": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039272982-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039273011-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda11"
+    },
+    "name": "Citi",
+    "cuit": "30-34565005-1",
+    "address": "Fifth Av 83",
+    "telephone": "+54 9 11 55526218",
+    "customers": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039311659-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039311688-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda26"
+    },
+    "name": "HSBC",
+    "cuit": "30-53426236-0",
+    "address": "Seventh Av 257",
+    "telephone": "+54 9 11 28407343",
+    "customers": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039346885-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039346914-03:00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "67b291dd1048b71798ccda3b"
+    },
+    "name": "Bank of America",
+    "cuit": "30-00108494-4",
+    "address": "Fifth Av 528",
+    "telephone": "+54 9 11 36962518",
+    "customers": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.03938507-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.0393851-03:00"
+    }
+  }
+]

@@ -4,52 +4,50 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
-// PromotionEntity represents a special offer provided by a bank to customers.
-// It applies to specific stores and is valid for a certain period of time.
+// ------------------ NoSQL Entities ------------------
+
+// PromotionEntityNonSQL represents a special offer in NoSQL (MongoDB)
 type PromotionEntityNonSQL struct {
-	Code              string             `bson:"code"`                     // Unique code for the promotion
-	PromotionTitle    string             `bson:"promotion_title"`          // Title of the promotion
-	NameStore         string             `bson:"name_store"`               // Store name
-	CuitStore         string             `bson:"cuit_store"`               // Store CUIT
-	ValidityStartDate time.Time          `bson:"validity_start_date"`      // Start date of validity
-	ValidityEndDate   time.Time          `bson:"validity_end_date"`        // End date of validity
-	Comments          string             `bson:"comments,omitempty"`       // Optional comments
-	BankID            primitive.ObjectID `bson:"bank_id,omitempty"`        // Reference to associated bank
-	CreatedAt         time.Time          `bson:"created_at,omitempty"`     // Creation timestamp
-	UpdatedAt         time.Time          `bson:"updated_at,omitempty"`     // Update timestamp
-	IsDeleted         bool               `bson:"is_deleted"`               // Soft delete flag
-	PurchaseCount     int                `bson:"purchase_count,omitempty"` // Count of purchases (not persisted)
+	Code              string    `bson:"code"`
+	PromotionTitle    string    `bson:"promotion_title"`
+	NameStore         string    `bson:"name_store"`
+	CuitStore         string    `bson:"cuit_store"`
+	ValidityStartDate time.Time `bson:"validity_start_date"`
+	ValidityEndDate   time.Time `bson:"validity_end_date"`
+	Comments          string    `bson:"comments,omitempty"`
 }
 
-// DiscountEntity represents a type of promotion that applies a percentage discount to purchases.
-// Optionally, it may have a maximum discount amount.
-type DiscountEntityNonSQL struct {
-	ID                 primitive.ObjectID    `bson:"_id,omitempty"`       // MongoDB primary key
-	PromotionEntity    PromotionEntityNonSQL `bson:"promotion_entity"`    // Embedded promotion details
-	DiscountPercentage float64               `bson:"discount_percentage"` // Discount percentage
-	PriceCap           float64               `bson:"price_cap,omitempty"` // Optional maximum discount amount
-	OnlyCash           bool                  `bson:"only_cash"`           // Only cash flag
-}
-
-// FinancingEntity represents a promotion that offers installment payment options with specific interest rates.
 type FinancingEntityNonSQL struct {
-	ID              primitive.ObjectID    `bson:"_id,omitempty"`    // MongoDB primary key
-	PromotionEntity PromotionEntityNonSQL `bson:"promotion_entity"` // Embedded promotion details
-	NumberOfQuotas  int                   `bson:"number_of_quotas"` // Number of installment payments
-	Interest        float64               `bson:"interest"`         // Interest rate
+	ID              bson.ObjectID         `bson:"_id,omitempty"`
+	PromotionEntity PromotionEntityNonSQL `bson:"promotion_entity"`
+	NumberOfQuotas  int                   `bson:"number_of_quotas"`
+	Interest        float64               `bson:"interest"`
+	IsDeleted       bool                  `bson:"is_deleted"`
+	BankID          bson.ObjectID         `bson:"bank_id"`
+	CreatedAt       time.Time             `bson:"created_at,omitempty"`
+	UpdatedAt       time.Time             `bson:"updated_at,omitempty"`
 }
 
-// PaymentVoucherCount represents a summary of payment voucher usage counts.
+// DiscountEntityNonSQL represents discount promotions in NoSQL
+type DiscountEntityNonSQL struct {
+	PromotionEntity    PromotionEntityNonSQL `bson:"promotion_entity"`
+	DiscountPercentage float64               `bson:"discount_percentage"`
+	PriceCap           float64               `bson:"price_cap,omitempty"`
+	OnlyCash           bool                  `bson:"only_cash"`
+}
+
+// PaymentVoucherCountNonSQL represents voucher usage counts in NoSQL
 type PaymentVoucherCountNonSQL struct {
-	PaymentVoucher    string `bson:"payment_voucher"`    // Payment voucher identifier
-	TotalRepeticiones int    `bson:"total_repeticiones"` // Total number of repetitions
+	PaymentVoucher    string `bson:"payment_voucher"`
+	TotalRepeticiones int    `bson:"total_repeticiones"`
 }
 
-// Promotion represents a special offer provided by a bank to customers.
-// It applies to specific stores and is valid for a certain period of time.
+// ------------------ SQL Entities ------------------
+
+// PromotionEntitySQL represents a special offer in SQL (MySQL)
 type PromotionEntitySQL struct {
 	Code              string        `gorm:"size:255;unique"`
 	PromotionTitle    string        `gorm:"size:255"`
@@ -66,8 +64,7 @@ type PromotionEntitySQL struct {
 	PurchaseCount     int           `gorm:"-"`
 }
 
-// Discount represents a type of promotion that applies a percentage discount to purchases.
-// Optionally, it may have a maximum discount amount.
+// DiscountEntitySQL represents discount promotions in SQL
 type DiscountEntitySQL struct {
 	PromotionEntitySQL `gorm:"embedded"`
 	ID                 uint    `gorm:"primaryKey;autoIncrement"`
@@ -76,7 +73,7 @@ type DiscountEntitySQL struct {
 	OnlyCash           bool    `gorm:"default:false;not null"`
 }
 
-// Financing represents a promotion that offers installment payment options with specific interest rates.
+// FinancingEntitySQL represents installment-based promotions in SQL
 type FinancingEntitySQL struct {
 	PromotionEntitySQL `gorm:"embedded"`
 	ID                 uint    `gorm:"primaryKey;autoIncrement"`
@@ -84,10 +81,13 @@ type FinancingEntitySQL struct {
 	Interest           float64 `gorm:"not null;default:0"`
 }
 
+// PaymentVoucherCountSQL represents voucher usage counts in SQL
 type PaymentVoucherCountSQL struct {
 	PaymentVoucher    string
 	TotalRepeticiones int
 }
+
+// ------------------ Table Name Mappings ------------------
 
 func (PromotionEntitySQL) TableName() string {
 	return "PROMOTIONS"
@@ -105,9 +105,9 @@ func (PaymentVoucherCountSQL) TableName() string {
 	return "PAYMENT_VOUCHER_COUNTS"
 }
 
-// ------------ Mappers ------------	//
+// ------------------ Mappers ------------------
 
-// Mapper from PromotionModel to Promotion
+// SQL -> Models
 func ToPromotion(promotionEntity *PromotionEntitySQL) *models.Promotion {
 	return &models.Promotion{
 		Code:           promotionEntity.Code,
@@ -121,7 +121,7 @@ func ToPromotion(promotionEntity *PromotionEntitySQL) *models.Promotion {
 			Time: promotionEntity.ValidityEndDate,
 		},
 		Comments: promotionEntity.Comments,
-		Bank:     *ToBank(&promotionEntity.Bank), // Use the existing mapper for Bank
+		Bank:     *ToBank(&promotionEntity.Bank),
 	}
 }
 
@@ -131,13 +131,17 @@ func ToPromotionNonSQL(promotionEntity *PromotionEntityNonSQL) *models.Promotion
 		PromotionTitle: promotionEntity.PromotionTitle,
 		NameStore:      promotionEntity.NameStore,
 		CuitStore:      promotionEntity.CuitStore,
-		//ValidityStartDate: promotionEntity.ValidityStartDate,
-		//ValidityEndDate:   promotionEntity.ValidityEndDate,
+		ValidityStartDate: models.CustomTime{
+			Time: promotionEntity.ValidityStartDate,
+		},
+		ValidityEndDate: models.CustomTime{
+			Time: promotionEntity.ValidityEndDate,
+		},
 		Comments: promotionEntity.Comments,
 	}
 }
 
-// Mapper from Promotion to PromotionModel
+// Models -> SQL
 func ToPromotionEntity(promotion *models.Promotion, bankId uint) *PromotionEntitySQL {
 	return &PromotionEntitySQL{
 		Code:              promotion.Code,
@@ -147,20 +151,21 @@ func ToPromotionEntity(promotion *models.Promotion, bankId uint) *PromotionEntit
 		ValidityStartDate: promotion.ValidityStartDate.Time,
 		ValidityEndDate:   promotion.ValidityEndDate.Time,
 		Comments:          promotion.Comments,
-		Bank:              *ToBankEntity(&promotion.Bank), // Use the existing mapper for BankModel
-		BankID:            bankId,                         // Assign the bank's ID
+		Bank:              *ToBankEntity(&promotion.Bank),
+		BankID:            bankId,
 	}
 }
 
-// Mapper from FinancingModel to Financing
+// SQL -> Models
 func ToFinancing(financingEntity *FinancingEntitySQL) *models.Financing {
 	return &models.Financing{
-		Promotion:      *ToPromotion(&financingEntity.PromotionEntitySQL), // Reuse the PromotionModel mapping
+		Promotion:      *ToPromotion(&financingEntity.PromotionEntitySQL),
 		NumberOfQuotas: financingEntity.NumberOfQuotas,
 		Interest:       financingEntity.Interest,
 	}
 }
 
+// NoSQL -> Models
 func ToFinancingNonSQL(financingEntity *FinancingEntityNonSQL) *models.Financing {
 	return &models.Financing{
 		Promotion:      *ToPromotionNonSQL(&financingEntity.PromotionEntity),
@@ -169,25 +174,26 @@ func ToFinancingNonSQL(financingEntity *FinancingEntityNonSQL) *models.Financing
 	}
 }
 
-// Mapper from Financing to FinancingModel
+// Models -> SQL
 func ToFinancingEntity(financing *models.Financing, bankId uint) *FinancingEntitySQL {
 	return &FinancingEntitySQL{
-		PromotionEntitySQL: *ToPromotionEntity(&financing.Promotion, bankId), // Reuse the Promotion mapping
+		PromotionEntitySQL: *ToPromotionEntity(&financing.Promotion, bankId),
 		NumberOfQuotas:     financing.NumberOfQuotas,
 		Interest:           financing.Interest,
 	}
 }
 
-// Mapper from DiscountModel to Discount
+// SQL -> Models
 func ToDiscount(discountEntity *DiscountEntitySQL) *models.Discount {
 	return &models.Discount{
-		Promotion:          *ToPromotion(&discountEntity.PromotionEntitySQL), // Reuse the PromotionModel mapping
+		Promotion:          *ToPromotion(&discountEntity.PromotionEntitySQL),
 		DiscountPercentage: discountEntity.DiscountPercentage,
-		PriceCap:           discountEntity.DiscountPercentage,
+		PriceCap:           discountEntity.PriceCap,
 		OnlyCash:           discountEntity.OnlyCash,
 	}
 }
 
+// NoSQL -> Models
 func ToDiscountNonSQL(discountEntity *DiscountEntityNonSQL) *models.Discount {
 	return &models.Discount{
 		Promotion:          *ToPromotionNonSQL(&discountEntity.PromotionEntity),

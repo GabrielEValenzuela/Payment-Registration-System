@@ -1,3 +1,13 @@
+/*
+ * Payment Registration System - Custom Time
+ * -----------------------------------------
+ * This file defines a custom time type that allows parsing time values
+ * in a specific format for JSON unmarshalling.
+ *
+ * Created: Oct. 19, 2024
+ * License: GNU General Public License v3.0
+ */
+
 package models
 
 import (
@@ -5,12 +15,14 @@ import (
 	"time"
 )
 
+// CustomTime represents a custom time type that allows parsing time values in a specific format.
 type CustomTime struct {
 	time.Time
 }
 
 const customTimeFormat = "2006-01-02T15:04:05.999999"
 
+// MarshalJSON converts the CustomTime value to a JSON string.
 func (ct *CustomTime) UnmarshalJSON(b []byte) error {
 	// Eliminar las comillas del valor JSON
 	str := string(b)
