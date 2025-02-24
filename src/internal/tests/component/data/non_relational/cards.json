@@ -1,0 +1,1052 @@
+[
+  {
+    "number": "1234567812345678",
+    "ccv": "803",
+    "cardholder_name_in_card": "Eve Johnson",
+    "since": {
+      "$date": "2025-02-16T22:33:17.039233506-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039233662-03:00"
+    },
+    "bank_cuit": "30-12345678-9",
+    "customer_cuit": "20-59895562-6",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039233783-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.03923382-03:00"
+    }
+  },
+  {
+    "number": "7446548631079191",
+    "ccv": "422",
+    "cardholder_name_in_card": "Alice Moore",
+    "since": {
+      "$date": "2023-02-16T22:33:17.039238291-03:00"
+    },
+    "expiration_date": {
+      "$date": "2024-10-17T01:00:00Z"
+    },
+    "bank_cuit": "30-83814353-9",
+    "customer_cuit": "20-66122595-4",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.03923846-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.03923849-03:00"
+    }
+  },
+  {
+    "number": "1284164066103066",
+    "ccv": "858",
+    "cardholder_name_in_card": "Charlie Jones",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039242316-03:00"
+    },
+    "expiration_date": {
+      "$date": "2024-10-17T01:00:00Z"
+    },
+    "bank_cuit": "30-83814353-9",
+    "customer_cuit": "20-28773147-6",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039242479-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039242508-03:00"
+    }
+  },
+  {
+    "number": "1749323524953524",
+    "ccv": "782",
+    "cardholder_name_in_card": "David Davis",
+    "since": {
+      "$date": "2023-02-16T22:33:17.039246217-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039246303-03:00"
+    },
+    "bank_cuit": "30-83814353-9",
+    "customer_cuit": "20-40794352-7",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039246389-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039246418-03:00"
+    }
+  },
+  {
+    "number": "5069850170260438",
+    "ccv": "707",
+    "cardholder_name_in_card": "Charlie Moore",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039249617-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039249703-03:00"
+    },
+    "bank_cuit": "30-83814353-9",
+    "customer_cuit": "20-25714396-8",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039249781-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.03924981-03:00"
+    }
+  },
+  {
+    "number": "8135225854921599",
+    "ccv": "650",
+    "cardholder_name_in_card": "Charlie Jones",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039253462-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039253546-03:00"
+    },
+    "bank_cuit": "30-83814353-9",
+    "customer_cuit": "20-27268536-0",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039253629-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039253659-03:00"
+    }
+  },
+  {
+    "number": "7773339997114232",
+    "ccv": "322",
+    "cardholder_name_in_card": "Alice Johnson",
+    "since": {
+      "$date": "2025-02-16T22:33:17.039256761-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039256845-03:00"
+    },
+    "bank_cuit": "30-83814353-9",
+    "customer_cuit": "20-62405778-8",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039256925-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039256955-03:00"
+    }
+  },
+  {
+    "number": "2173215516246589",
+    "ccv": "587",
+    "cardholder_name_in_card": "Emily Taylor",
+    "since": {
+      "$date": "2025-02-16T22:33:17.039260097-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039260182-03:00"
+    },
+    "bank_cuit": "30-83814353-9",
+    "customer_cuit": "20-65318821-4",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039260262-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.03926029-03:00"
+    }
+  },
+  {
+    "number": "9222431311097724",
+    "ccv": "744",
+    "cardholder_name_in_card": "David Williams",
+    "since": {
+      "$date": "2023-02-16T22:33:17.039263396-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.03926348-03:00"
+    },
+    "bank_cuit": "30-83814353-9",
+    "customer_cuit": "20-14838998-9",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039263653-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039263683-03:00"
+    }
+  },
+  {
+    "number": "6128090098121775",
+    "ccv": "377",
+    "cardholder_name_in_card": "David Davis",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039271776-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039271865-03:00"
+    },
+    "bank_cuit": "30-83814353-9",
+    "customer_cuit": "20-21293644-9",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039271945-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039271975-03:00"
+    }
+  },
+  {
+    "number": "3065893074177424",
+    "ccv": "828",
+    "cardholder_name_in_card": "Jane Moore",
+    "since": {
+      "$date": "2024-02-16T22:33:17.039276132-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039276222-03:00"
+    },
+    "bank_cuit": "30-74188375-9",
+    "customer_cuit": "20-54826167-9",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039276313-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039276343-03:00"
+    }
+  },
+  {
+    "number": "2884996364961595",
+    "ccv": "115",
+    "cardholder_name_in_card": "John Jones",
+    "since": {
+      "$date": "2025-02-16T22:33:17.039279507-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039279593-03:00"
+    },
+    "bank_cuit": "30-74188375-9",
+    "customer_cuit": "20-51385348-2",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039279678-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039279707-03:00"
+    }
+  },
+  {
+    "number": "3049973119697158",
+    "ccv": "847",
+    "cardholder_name_in_card": "Frank Taylor",
+    "since": {
+      "$date": "2024-02-16T22:33:17.039282811-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.0392829-03:00"
+    },
+    "bank_cuit": "30-74188375-9",
+    "customer_cuit": "20-71256253-5",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039282991-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039283021-03:00"
+    }
+  },
+  {
+    "number": "7977798219994664",
+    "ccv": "234",
+    "cardholder_name_in_card": "David Wilson",
+    "since": {
+      "$date": "2024-02-16T22:33:17.039286077-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039286167-03:00"
+    },
+    "bank_cuit": "30-74188375-9",
+    "customer_cuit": "20-14999728-4",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039286247-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039286277-03:00"
+    }
+  },
+  {
+    "number": "6594968877023875",
+    "ccv": "039",
+    "cardholder_name_in_card": "Frank Jones",
+    "since": {
+      "$date": "2022-02-16T22:33:17.039289406-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039289495-03:00"
+    },
+    "bank_cuit": "30-74188375-9",
+    "customer_cuit": "20-51292315-6",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039289573-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039289603-03:00"
+    }
+  },
+  {
+    "number": "7340328647118317",
+    "ccv": "983",
+    "cardholder_name_in_card": "John Johnson",
+    "since": {
+      "$date": "2024-02-16T22:33:17.039292753-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039292843-03:00"
+    },
+    "bank_cuit": "30-74188375-9",
+    "customer_cuit": "20-26048629-0",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039292922-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039292952-03:00"
+    }
+  },
+  {
+    "number": "3519764612876070",
+    "ccv": "417",
+    "cardholder_name_in_card": "Alice Smith",
+    "since": {
+      "$date": "2024-02-16T22:33:17.039296024-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039296108-03:00"
+    },
+    "bank_cuit": "30-74188375-9",
+    "customer_cuit": "20-03631662-7",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039296191-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039296221-03:00"
+    }
+  },
+  {
+    "number": "3928675229856081",
+    "ccv": "799",
+    "cardholder_name_in_card": "Alice Taylor",
+    "since": {
+      "$date": "2023-02-16T22:33:17.039299303-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039299392-03:00"
+    },
+    "bank_cuit": "30-74188375-9",
+    "customer_cuit": "20-75783187-1",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039299471-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.0392995-03:00"
+    }
+  },
+  {
+    "number": "3451243890360969",
+    "ccv": "246",
+    "cardholder_name_in_card": "John Taylor",
+    "since": {
+      "$date": "2025-02-16T22:33:17.039306125-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039306215-03:00"
+    },
+    "bank_cuit": "30-74188375-9",
+    "customer_cuit": "20-32896342-2",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039306293-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039306323-03:00"
+    }
+  },
+  {
+    "number": "8265091785418213",
+    "ccv": "295",
+    "cardholder_name_in_card": "Alice Smith",
+    "since": {
+      "$date": "2021-02-16T22:33:17.03931059-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039310676-03:00"
+    },
+    "bank_cuit": "30-74188375-9",
+    "customer_cuit": "20-29376279-3",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.03931076-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039310791-03:00"
+    }
+  },
+  {
+    "number": "3696930500781286",
+    "ccv": "858",
+    "cardholder_name_in_card": "Eve Wilson",
+    "since": {
+      "$date": "2022-02-16T22:33:17.039314751-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039314835-03:00"
+    },
+    "bank_cuit": "30-34565005-1",
+    "customer_cuit": "20-76632463-4",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039314913-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039314943-03:00"
+    }
+  },
+  {
+    "number": "9535855571220034",
+    "ccv": "724",
+    "cardholder_name_in_card": "Alice Brown",
+    "since": {
+      "$date": "2025-02-16T22:33:17.039317991-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039318076-03:00"
+    },
+    "bank_cuit": "30-34565005-1",
+    "customer_cuit": "20-89482136-8",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039318155-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039318184-03:00"
+    }
+  },
+  {
+    "number": "8980421056149185",
+    "ccv": "717",
+    "cardholder_name_in_card": "Frank Smith",
+    "since": {
+      "$date": "2022-02-16T22:33:17.039321181-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039321267-03:00"
+    },
+    "bank_cuit": "30-34565005-1",
+    "customer_cuit": "20-40323879-8",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039321426-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039321455-03:00"
+    }
+  },
+  {
+    "number": "7170544728406084",
+    "ccv": "817",
+    "cardholder_name_in_card": "Eve Taylor",
+    "since": {
+      "$date": "2024-02-16T22:33:17.039324447-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039324538-03:00"
+    },
+    "bank_cuit": "30-34565005-1",
+    "customer_cuit": "20-18159621-7",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039324618-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039324647-03:00"
+    }
+  },
+  {
+    "number": "6796854536216285",
+    "ccv": "586",
+    "cardholder_name_in_card": "Frank Miller",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039327809-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039327893-03:00"
+    },
+    "bank_cuit": "30-34565005-1",
+    "customer_cuit": "20-16471621-5",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039327978-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039328009-03:00"
+    }
+  },
+  {
+    "number": "4164899000889082",
+    "ccv": "391",
+    "cardholder_name_in_card": "Alice Williams",
+    "since": {
+      "$date": "2025-02-16T22:33:17.039332588-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039332677-03:00"
+    },
+    "bank_cuit": "30-34565005-1",
+    "customer_cuit": "20-86112481-8",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039332756-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039332787-03:00"
+    }
+  },
+  {
+    "number": "3586286832400206",
+    "ccv": "123",
+    "cardholder_name_in_card": "Eve Williams",
+    "since": {
+      "$date": "2023-02-16T22:33:17.039335902-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039335987-03:00"
+    },
+    "bank_cuit": "30-34565005-1",
+    "customer_cuit": "20-92742231-3",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039336072-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039336101-03:00"
+    }
+  },
+  {
+    "number": "4517554894431590",
+    "ccv": "791",
+    "cardholder_name_in_card": "David Williams",
+    "since": {
+      "$date": "2023-02-16T22:33:17.039339195-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039339281-03:00"
+    },
+    "bank_cuit": "30-34565005-1",
+    "customer_cuit": "20-93514621-1",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039339365-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039339395-03:00"
+    }
+  },
+  {
+    "number": "9655861971268848",
+    "ccv": "468",
+    "cardholder_name_in_card": "Grace Taylor",
+    "since": {
+      "$date": "2023-02-16T22:33:17.039342511-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039342595-03:00"
+    },
+    "bank_cuit": "30-34565005-1",
+    "customer_cuit": "20-89245401-7",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039342676-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039342705-03:00"
+    }
+  },
+  {
+    "number": "3708629409853105",
+    "ccv": "753",
+    "cardholder_name_in_card": "Bob Moore",
+    "since": {
+      "$date": "2025-02-16T22:33:17.03934584-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039345923-03:00"
+    },
+    "bank_cuit": "30-34565005-1",
+    "customer_cuit": "20-90494631-1",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039346003-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039346033-03:00"
+    }
+  },
+  {
+    "number": "1397900405143580",
+    "ccv": "681",
+    "cardholder_name_in_card": "Jane Smith",
+    "since": {
+      "$date": "2022-02-16T22:33:17.039350056-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.03935014-03:00"
+    },
+    "bank_cuit": "30-53426236-0",
+    "customer_cuit": "20-34464982-7",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039350219-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039350248-03:00"
+    }
+  },
+  {
+    "number": "9112326379876053",
+    "ccv": "507",
+    "cardholder_name_in_card": "Alice Williams",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039353329-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039353413-03:00"
+    },
+    "bank_cuit": "30-53426236-0",
+    "customer_cuit": "20-90770936-3",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039353498-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039353527-03:00"
+    }
+  },
+  {
+    "number": "9268414459822450",
+    "ccv": "432",
+    "cardholder_name_in_card": "Grace Taylor",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039356645-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.03935673-03:00"
+    },
+    "bank_cuit": "30-53426236-0",
+    "customer_cuit": "20-11439530-5",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039356809-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039356839-03:00"
+    }
+  },
+  {
+    "number": "7615597508326076",
+    "ccv": "916",
+    "cardholder_name_in_card": "Emily Jones",
+    "since": {
+      "$date": "2024-02-16T22:33:17.039359903-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039359994-03:00"
+    },
+    "bank_cuit": "30-53426236-0",
+    "customer_cuit": "20-06754790-4",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039360074-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039360103-03:00"
+    }
+  },
+  {
+    "number": "7141079241336520",
+    "ccv": "715",
+    "cardholder_name_in_card": "John Moore",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039363201-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039363285-03:00"
+    },
+    "bank_cuit": "30-53426236-0",
+    "customer_cuit": "20-72485806-4",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039363364-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039363394-03:00"
+    }
+  },
+  {
+    "number": "4145145477400504",
+    "ccv": "872",
+    "cardholder_name_in_card": "Eve Williams",
+    "since": {
+      "$date": "2023-02-16T22:33:17.039367067-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039367153-03:00"
+    },
+    "bank_cuit": "30-53426236-0",
+    "customer_cuit": "20-82358411-2",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039367233-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039367262-03:00"
+    }
+  },
+  {
+    "number": "7630448536124647",
+    "ccv": "657",
+    "cardholder_name_in_card": "Frank Wilson",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039370377-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039370463-03:00"
+    },
+    "bank_cuit": "30-53426236-0",
+    "customer_cuit": "20-57283775-4",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039370548-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039370576-03:00"
+    }
+  },
+  {
+    "number": "2498039066767775",
+    "ccv": "043",
+    "cardholder_name_in_card": "Frank Moore",
+    "since": {
+      "$date": "2022-02-16T22:33:17.039373701-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039373786-03:00"
+    },
+    "bank_cuit": "30-53426236-0",
+    "customer_cuit": "20-68302685-5",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039373871-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.0393739-03:00"
+    }
+  },
+  {
+    "number": "1976317961980603",
+    "ccv": "036",
+    "cardholder_name_in_card": "Alice Smith",
+    "since": {
+      "$date": "2022-02-16T22:33:17.039380845-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.03938093-03:00"
+    },
+    "bank_cuit": "30-53426236-0",
+    "customer_cuit": "20-97441590-4",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039381009-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039381039-03:00"
+    }
+  },
+  {
+    "number": "1920843186432941",
+    "ccv": "075",
+    "cardholder_name_in_card": "Jane Miller",
+    "since": {
+      "$date": "2022-02-16T22:33:17.039384129-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039384214-03:00"
+    },
+    "bank_cuit": "30-53426236-0",
+    "customer_cuit": "20-48442517-7",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039384293-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039384323-03:00"
+    }
+  },
+  {
+    "number": "0024531490147875",
+    "ccv": "186",
+    "cardholder_name_in_card": "Emily Williams",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039388213-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039388296-03:00"
+    },
+    "bank_cuit": "30-00108494-4",
+    "customer_cuit": "20-65560904-7",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039388382-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039388412-03:00"
+    }
+  },
+  {
+    "number": "1386916746795581",
+    "ccv": "483",
+    "cardholder_name_in_card": "Frank Taylor",
+    "since": {
+      "$date": "2025-02-16T22:33:17.039391495-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039391581-03:00"
+    },
+    "bank_cuit": "30-00108494-4",
+    "customer_cuit": "20-81085837-2",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039391658-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039391686-03:00"
+    }
+  },
+  {
+    "number": "6715660600133417",
+    "ccv": "206",
+    "cardholder_name_in_card": "Alice Taylor",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039394738-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039394821-03:00"
+    },
+    "bank_cuit": "30-00108494-4",
+    "customer_cuit": "20-76625508-8",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.0393949-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039394929-03:00"
+    }
+  },
+  {
+    "number": "9870140642255458",
+    "ccv": "607",
+    "cardholder_name_in_card": "Jane Wilson",
+    "since": {
+      "$date": "2025-02-16T22:33:17.039398034-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039398118-03:00"
+    },
+    "bank_cuit": "30-00108494-4",
+    "customer_cuit": "20-84457373-8",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039398198-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039398227-03:00"
+    }
+  },
+  {
+    "number": "0699797749623271",
+    "ccv": "235",
+    "cardholder_name_in_card": "Frank Smith",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039401315-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.0394014-03:00"
+    },
+    "bank_cuit": "30-00108494-4",
+    "customer_cuit": "20-53337819-4",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039401486-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039401515-03:00"
+    }
+  },
+  {
+    "number": "2605745434233475",
+    "ccv": "390",
+    "cardholder_name_in_card": "Bob Jones",
+    "since": {
+      "$date": "2023-02-16T22:33:17.039404614-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039404699-03:00"
+    },
+    "bank_cuit": "30-00108494-4",
+    "customer_cuit": "20-37325761-1",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039404785-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039404815-03:00"
+    }
+  },
+  {
+    "number": "6283435820817650",
+    "ccv": "533",
+    "cardholder_name_in_card": "Alice Johnson",
+    "since": {
+      "$date": "2023-02-16T22:33:17.039407908-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039407993-03:00"
+    },
+    "bank_cuit": "30-00108494-4",
+    "customer_cuit": "20-24602924-4",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039408072-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039408101-03:00"
+    }
+  },
+  {
+    "number": "0286247521698043",
+    "ccv": "770",
+    "cardholder_name_in_card": "Eve Davis",
+    "since": {
+      "$date": "2023-02-16T22:33:17.03941119-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039411275-03:00"
+    },
+    "bank_cuit": "30-00108494-4",
+    "customer_cuit": "20-50478341-8",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039411356-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039411384-03:00"
+    }
+  },
+  {
+    "number": "9513042323835475",
+    "ccv": "771",
+    "cardholder_name_in_card": "Frank Williams",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039414387-03:00"
+    },
+    "expiration_date": {
+      "$date": "2027-02-16T22:33:17.039414469-03:00"
+    },
+    "bank_cuit": "30-00108494-4",
+    "customer_cuit": "20-27894492-1",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039414548-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039414578-03:00"
+    }
+  },
+  {
+    "number": "4326650048067656",
+    "ccv": "414",
+    "cardholder_name_in_card": "Jane Jones",
+    "since": {
+      "$date": "2021-02-16T22:33:17.039417718-03:00"
+    },
+    "expiration_date": {
+      "$date": "2028-02-16T22:33:17.039417804-03:00"
+    },
+    "bank_cuit": "30-00108494-4",
+    "customer_cuit": "20-45579756-0",
+    "purchase_single_payments": null,
+    "purchase_monthly_payments": null,
+    "created_at": {
+      "$date": "2025-02-16T22:33:17.039417888-03:00"
+    },
+    "updated_at": {
+      "$date": "2025-02-16T22:33:17.039417917-03:00"
+    }
+  }
+]

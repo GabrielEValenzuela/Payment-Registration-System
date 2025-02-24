@@ -1,0 +1,1032 @@
+basePath: /v1
+definitions:
+  models.Bank:
+    description: Contains details about a bank, including its name, tax identification
+      code (CUIT), address, contact information, and associated customers.
+    properties:
+      address:
+        description: Bank address
+        example: Av. 9 de Julio
+        type: string
+      cuit:
+        description: Bank tax identification code (CUIT)
+        example: 30-12345678-9
+        type: string
+      customers_ids:
+        description: List of customers associated with the bank
+        items:
+          $ref: '#/definitions/models.Customer'
+        type: array
+      name:
+        description: Bank name
+        example: Bank of Argentina
+        type: string
+      telephone:
+        description: Bank contact number
+        example: 0800-888-123
+        type: string
+    type: object
+  models.CustomTime:
+    properties:
+      time.Time:
+        type: string
+    type: object
+  models.Customer:
+    description: Contains personal details of a customer, including identification
+      information, contact details, associated banks, and linked cards.
+    properties:
+      address:
+        description: Customer's residential address
+        example: 456 Oak St, City
+        type: string
+      banks_ids:
+        description: List of bank IDs the customer is associated with
+        items:
+          type: integer
+        type: array
+      cards:
+        description: List of card IDs linked to the customer
+        items:
+          type: integer
+        type: array
+      complete_name:
+        description: Full name of the customer
+        example: John Doe
+        type: string
+      cuit:
+        description: Unique tax identification code (CUIT)
+        example: 20-12345678-9
+        type: string
+      dni:
+        description: National identification number (DNI)
+        example: "12345678"
+        type: string
+      entry_date:
+        description: Date the customer was registered
+        example: "2022-03-15T00:00:00Z"
+        type: string
+      telephone:
+        description: Contact number
+        example: +54 11 9876-5432
+        type: string
+    type: object
+  models.ExtendPromotionRequest:
+    description: Used to update the expiration date of a promotion.
+    properties:
+      new_date:
+        description: New expiration date in RFC3339 format
+        example: "2026-01-01T00:00:00Z"
+        type: string
+    type: object
+  models.Financing:
+    description: Contains details about a financing promotion, including the number
+      of installment payments and interest rate.
+    properties:
+      bank:
+        allOf:
+        - $ref: '#/definitions/models.Bank'
+        description: Associated bank details
+      code:
+        description: Unique promotion code
+        example: PROMO2025
+        type: string
+      comments:
+        description: Additional comments about the promotion
+        example: Limited-time offer!
+        type: string
+      cuit_store:
+        description: Unique tax identification code (CUIT) of the store
+        example: 30-98765432-1
+        type: string
+      interest:
+        description: Interest rate applied to the financing
+        example: 5.5
+        type: number
+      name_store:
+        description: Name of the store offering the promotion
+        example: Tech Store
+        type: string
+      number_of_quotas:
+        description: Number of installment payments available
+        example: 12
+        type: integer
+      promotion_title:
+        description: Title of the promotion
+        example: Holiday Special
+        type: string
+      validity_start_date:
+        allOf:
+        - $ref: '#/definitions/models.CustomTime'
+        description: Promotion start date
+      validityEndDate:
+        allOf:
+        - $ref: '#/definitions/models.CustomTime'
+        description: Promotion end date
+    type: object
+host: go-app.localhost
+info:
+  contact:
+    email: https://github.com/GabrielEValenzuela/Payment-Registration-System
+    name: '@marventu94, @GabrielEValenzuela'
+  description: This API manages payment registration and processing for the Database
+    Management Course at UNLP.
+  license:
+    name: GNU General Public License v3.0
+    url: https://www.gnu.org/licenses/gpl-3.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Payment Registration System API
+  version: "1.0"
+paths:
+  /no-sql/banks/customers/count:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the number of customers associated with each bank.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Bank customer counts retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to get bank customer counts
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get bank customer counts
+      tags:
+      - Bank
+  /no-sql/cards/expiring-next-30-days/{day}/{month}/{year}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of cards that will expire within the next 30 days
+        from the given date.
+      parameters:
+      - description: Day (1-31)
+        in: path
+        name: day
+        required: true
+        type: integer
+      - description: Month (1-12)
+        in: path
+        name: month
+        required: true
+        type: integer
+      - description: Year (e.g., 2025)
+        in: path
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of cards expiring in the next 30 days
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid day, month, or year parameter
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve expiring cards
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get cards expiring in the next 30 days
+      tags:
+      - Card
+  /no-sql/cards/payment-summary/{cardNumber}/{month}/{year}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the payment summary for a given card number, month, and
+        year.
+      parameters:
+      - description: Card Number
+        in: path
+        name: cardNumber
+        required: true
+        type: string
+      - description: Month (1-12)
+        in: path
+        name: month
+        required: true
+        type: integer
+      - description: Year (e.g., 2025)
+        in: path
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Payment summary retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid month or year parameter
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve payment summary
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get payment summary
+      tags:
+      - Card
+  /no-sql/cards/purchase-monthly/{cuit}/{finalAmount}/{paymentVoucher}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the purchase details for a given CUIT, final amount,
+        and payment voucher.
+      parameters:
+      - description: CUIT (Unique Tax Identification Code)
+        in: path
+        name: cuit
+        required: true
+        type: string
+      - description: Final purchase amount
+        in: path
+        name: finalAmount
+        required: true
+        type: number
+      - description: Payment voucher identifier
+        in: path
+        name: paymentVoucher
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Monthly purchase details retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid finalAmount parameter
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve monthly purchase details
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get monthly purchase details
+      tags:
+      - Card
+  /no-sql/cards/top:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the top 10 cards with the highest purchase volume.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Top 10 cards by purchases retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve top 10 cards
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get top 10 cards by purchases
+      tags:
+      - Card
+  /no-sql/promotions/add-promotion:
+    post:
+      consumes:
+      - application/json
+      description: Adds a new financing promotion using the request body data.
+      parameters:
+      - description: Financing promotion details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Financing'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Financing promotion added successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to add promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add a financing promotion to a bank
+      tags:
+      - Bank
+  /no-sql/promotions/available/{cuit}/{startDate}/{endDate}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the financing and discount promotions available for a
+        store between the specified start and end dates.
+      parameters:
+      - description: CUIT (Unique Tax Identification Code of the store)
+        in: path
+        name: cuit
+        required: true
+        type: string
+      - description: Start date (RFC3339 format)
+        in: path
+        name: startDate
+        required: true
+        type: string
+      - description: End date (RFC3339 format)
+        in: path
+        name: endDate
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Available promotions retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid startDate or endDate format
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve available promotions
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get available promotions by store and date range
+      tags:
+      - Promotion
+  /no-sql/promotions/discount/{code}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a discount promotion identified by its code.
+      parameters:
+      - description: Promotion Code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Discount promotion deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Missing promotion code
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to delete promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete discount promotion
+      tags:
+      - Bank
+    patch:
+      consumes:
+      - application/json
+      description: Updates the expiration date of a discount promotion identified
+        by its code.
+      parameters:
+      - description: Promotion Code
+        in: path
+        name: code
+        required: true
+        type: string
+      - description: New expiration date (RFC3339 format)
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ExtendPromotionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Discount promotion validity extended successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body or missing promotion code
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to extend promotion validity
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Extend discount promotion validity
+      tags:
+      - Bank
+  /no-sql/promotions/financing/{code}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a financing promotion identified by its code.
+      parameters:
+      - description: Promotion Code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Financing promotion deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Missing promotion code
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to delete promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete financing promotion
+      tags:
+      - Bank
+    patch:
+      consumes:
+      - application/json
+      description: Updates the expiration date of a financing promotion identified
+        by its code.
+      parameters:
+      - description: Promotion Code
+        in: path
+        name: code
+        required: true
+        type: string
+      - description: New expiration date (RFC3339 format)
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ExtendPromotionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Financing promotion validity extended successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body or missing promotion code
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to extend promotion validity
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Extend financing promotion validity
+      tags:
+      - Bank
+  /no-sql/promotions/most-used:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the promotion that has been used the most.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Most used promotion retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve most used promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get most used promotion
+      tags:
+      - Promotion
+  /no-sql/stores/highest-revenue/{month}/{year}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the store that generated the highest revenue in a specified
+        month and year.
+      parameters:
+      - description: Month (1-12)
+        in: path
+        name: month
+        required: true
+        type: integer
+      - description: Year (e.g., 2025)
+        in: path
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Store with highest revenue retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid month or year parameter
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve store with highest revenue
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get store with highest revenue by month
+      tags:
+      - Store
+  /sql/banks/customers/count:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the number of customers associated with each bank.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Bank customer counts retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to get bank customer counts
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get bank customer counts
+      tags:
+      - Bank
+  /sql/cards/expiring-next-30-days/{day}/{month}/{year}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a list of cards that will expire within the next 30 days
+        from the given date.
+      parameters:
+      - description: Day (1-31)
+        in: path
+        name: day
+        required: true
+        type: integer
+      - description: Month (1-12)
+        in: path
+        name: month
+        required: true
+        type: integer
+      - description: Year (e.g., 2025)
+        in: path
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of cards expiring in the next 30 days
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid day, month, or year parameter
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve expiring cards
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get cards expiring in the next 30 days
+      tags:
+      - Card
+  /sql/cards/payment-summary/{cardNumber}/{month}/{year}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the payment summary for a given card number, month, and
+        year.
+      parameters:
+      - description: Card Number
+        in: path
+        name: cardNumber
+        required: true
+        type: string
+      - description: Month (1-12)
+        in: path
+        name: month
+        required: true
+        type: integer
+      - description: Year (e.g., 2025)
+        in: path
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Payment summary retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid month or year parameter
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve payment summary
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get payment summary
+      tags:
+      - Card
+  /sql/cards/purchase-monthly/{cuit}/{finalAmount}/{paymentVoucher}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the purchase details for a given CUIT, final amount,
+        and payment voucher.
+      parameters:
+      - description: CUIT (Unique Tax Identification Code)
+        in: path
+        name: cuit
+        required: true
+        type: string
+      - description: Final purchase amount
+        in: path
+        name: finalAmount
+        required: true
+        type: number
+      - description: Payment voucher identifier
+        in: path
+        name: paymentVoucher
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Monthly purchase details retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid finalAmount parameter
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve monthly purchase details
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get monthly purchase details
+      tags:
+      - Card
+  /sql/cards/top:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the top 10 cards with the highest purchase volume.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Top 10 cards by purchases retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve top 10 cards
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get top 10 cards by purchases
+      tags:
+      - Card
+  /sql/promotions/add-promotion:
+    post:
+      consumes:
+      - application/json
+      description: Adds a new financing promotion using the request body data.
+      parameters:
+      - description: Financing promotion details
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.Financing'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Financing promotion added successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to add promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Add a financing promotion to a bank
+      tags:
+      - Bank
+  /sql/promotions/available/{cuit}/{startDate}/{endDate}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the financing and discount promotions available for a
+        store between the specified start and end dates.
+      parameters:
+      - description: CUIT (Unique Tax Identification Code of the store)
+        in: path
+        name: cuit
+        required: true
+        type: string
+      - description: Start date (RFC3339 format)
+        in: path
+        name: startDate
+        required: true
+        type: string
+      - description: End date (RFC3339 format)
+        in: path
+        name: endDate
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Available promotions retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid startDate or endDate format
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve available promotions
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get available promotions by store and date range
+      tags:
+      - Promotion
+  /sql/promotions/discount/{code}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a discount promotion identified by its code.
+      parameters:
+      - description: Promotion Code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Discount promotion deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Missing promotion code
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to delete promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete discount promotion
+      tags:
+      - Bank
+    patch:
+      consumes:
+      - application/json
+      description: Updates the expiration date of a discount promotion identified
+        by its code.
+      parameters:
+      - description: Promotion Code
+        in: path
+        name: code
+        required: true
+        type: string
+      - description: New expiration date (RFC3339 format)
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ExtendPromotionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Discount promotion validity extended successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body or missing promotion code
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to extend promotion validity
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Extend discount promotion validity
+      tags:
+      - Bank
+  /sql/promotions/financing/{code}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a financing promotion identified by its code.
+      parameters:
+      - description: Promotion Code
+        in: path
+        name: code
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Financing promotion deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Missing promotion code
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to delete promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete financing promotion
+      tags:
+      - Bank
+    patch:
+      consumes:
+      - application/json
+      description: Updates the expiration date of a financing promotion identified
+        by its code.
+      parameters:
+      - description: Promotion Code
+        in: path
+        name: code
+        required: true
+        type: string
+      - description: New expiration date (RFC3339 format)
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.ExtendPromotionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Financing promotion validity extended successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid request body or missing promotion code
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to extend promotion validity
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Extend financing promotion validity
+      tags:
+      - Bank
+  /sql/promotions/most-used:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the promotion that has been used the most.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Most used promotion retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve most used promotion
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get most used promotion
+      tags:
+      - Promotion
+  /sql/stores/highest-revenue/{month}/{year}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves the store that generated the highest revenue in a specified
+        month and year.
+      parameters:
+      - description: Month (1-12)
+        in: path
+        name: month
+        required: true
+        type: integer
+      - description: Year (e.g., 2025)
+        in: path
+        name: year
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Store with highest revenue retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid month or year parameter
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to retrieve store with highest revenue
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get store with highest revenue by month
+      tags:
+      - Store
+swagger: "2.0"

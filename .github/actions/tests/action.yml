@@ -1,0 +1,16 @@
+name: Tests
+description: Run testing on Go code and check coverage
+runs:
+  using: "composite"
+  steps:
+    - name: Run Tests with Coverage
+      shell: bash
+      id: coverage
+      run: |
+        echo "Running tests"
+        bash src/internal/tests/component/run_test.sh
+        if [ $? -ne 0 ]; then
+          echo "Tests failed"
+          exit 1
+        fi
+        echo "Tests passed"

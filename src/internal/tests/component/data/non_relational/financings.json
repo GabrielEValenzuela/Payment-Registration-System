@@ -1,0 +1,152 @@
+[
+    {
+        "_id": {
+            "$oid": "67b70875008eb580b021faec"
+        },
+        "promotion_entity": {
+            "code": "PROMO123",
+            "promotion_title": "Winter Sale 2024",
+            "name_store": "Store B",
+            "cuit_store": "30-12345678-9",
+            "validity_start_date": {
+                "$date": "2024-10-01T08:00:00Z"
+            },
+            "validity_end_date": {
+                "$date": "2024-10-30T23:59:59Z"
+            },
+            "comments": "Special financing for winter purchases"
+        },
+        "number_of_quotas": 5,
+        "interest": 10,
+        "is_deleted": false,
+        "bank_id": {
+            "$oid": "67b291dd1048b71798ccd9e7"
+        },
+        "created_at": {
+            "$date": "2025-02-20T07:48:21.794990559-03:00"
+        },
+        "updated_at": {
+            "$date": "2025-02-20T07:48:21.794990596-03:00"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67b70875008eb580b021faee"
+        },
+        "promotion_entity": {
+            "code": "PV20241001",
+            "promotion_title": "Deal",
+            "name_store": "Clothing Store",
+            "cuit_store": "30-77624585-1",
+            "validity_start_date": {
+                "$date": "2025-07-16T07:48:21.794991222-03:00"
+            },
+            "validity_end_date": {
+                "$date": "2025-12-02T07:48:21.79499132-03:00"
+            },
+            "comments": "Comments 8wEjCYrjzY"
+        },
+        "number_of_quotas": 7,
+        "interest": 12,
+        "is_deleted": false,
+        "bank_id": {
+            "$oid": "67b70875008eb580b021faef"
+        },
+        "created_at": {
+            "$date": "2025-02-20T07:48:21.794991846-03:00"
+        },
+        "updated_at": {
+            "$date": "2025-02-20T07:48:21.794991877-03:00"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67b70875008eb580b021faf0"
+        },
+        "promotion_entity": {
+            "code": "PROMO-8520",
+            "promotion_title": "Bargain",
+            "name_store": "Pet Shop",
+            "cuit_store": "30-14200744-9",
+            "validity_start_date": {
+                "$date": "2025-04-13T07:48:21.794992483-03:00"
+            },
+            "validity_end_date": {
+                "$date": "2025-12-10T07:48:21.794992579-03:00"
+            },
+            "comments": "Comments oEzGdOytk2"
+        },
+        "number_of_quotas": 8,
+        "interest": 9,
+        "is_deleted": false,
+        "bank_id": {
+            "$oid": "67b70875008eb580b021faf1"
+        },
+        "created_at": {
+            "$date": "2025-02-20T07:48:21.794993103-03:00"
+        },
+        "updated_at": {
+            "$date": "2025-02-20T07:48:21.794993133-03:00"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67b70875008eb580b021faf2"
+        },
+        "promotion_entity": {
+            "code": "PROMO-4043",
+            "promotion_title": "Special Deal",
+            "name_store": "Toy Store",
+            "cuit_store": "30-42026678-0",
+            "validity_start_date": {
+                "$date": "2025-06-25T07:48:21.79499368-03:00"
+            },
+            "validity_end_date": {
+                "$date": "2025-12-19T07:48:21.794993776-03:00"
+            },
+            "comments": "Comments atTg2OaFa2"
+        },
+        "number_of_quotas": 7,
+        "interest": 14,
+        "is_deleted": false,
+        "bank_id": {
+            "$oid": "67b70875008eb580b021faf3"
+        },
+        "created_at": {
+            "$date": "2025-02-20T07:48:21.794994377-03:00"
+        },
+        "updated_at": {
+            "$date": "2025-02-20T07:48:21.794994406-03:00"
+        }
+    },
+    {
+        "_id": {
+            "$oid": "67b70875008eb580b021faf4"
+        },
+        "promotion_entity": {
+            "code": "PROMO-5243",
+            "promotion_title": "Bargain",
+            "name_store": "Hardware Store",
+            "cuit_store": "30-37201046-5",
+            "validity_start_date": {
+                "$date": "2025-06-26T07:48:21.794994836-03:00"
+            },
+            "validity_end_date": {
+                "$date": "2025-10-13T07:48:21.794994934-03:00"
+            },
+            "comments": "Comments veLdy7kr5x"
+        },
+        "number_of_quotas": 6,
+        "interest": 3,
+        "is_deleted": false,
+        "bank_id": {
+            "$oid": "67b70875008eb580b021faf5"
+        },
+        "created_at": {
+            "$date": "2025-02-20T07:48:21.794995538-03:00"
+        },
+        "updated_at": {
+            "$date": "2025-02-20T07:48:21.794995567-03:00"
+        }
+    }
+]

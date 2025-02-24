@@ -1,0 +1,16 @@
+sqldb:
+  dsn: "app-user:app-pwd@tcp(mysql:3306)/payment_registration_system?charset=utf8mb4&parseTime=True&loc=Local"
+  clean: true
+
+nosqldb:
+  uri: "mongodb://app-user:app-pwd@mongodb:27017/payment_registration_system"
+  database: "payment_registration_system"
+  clean: true
+
+app:
+  port: 9000
+  read_timeout: 15
+  write_timeout: 15
+  graceful_shutdown: 15
+  log_path: "payment_system.log"
+  is_production: false

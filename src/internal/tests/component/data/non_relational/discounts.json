@@ -1,0 +1,92 @@
+[
+    {
+        "promotion_entity": {
+            "code": "WINTERSALE2024",
+            "promotion_title": "Winter Sale",
+            "name_store": "Store C",
+            "cuit_store": "30-12345678-9",
+            "validity_start_date": {
+                "$date": "2024-10-01T08:00:00Z"
+            },
+            "validity_end_date": {
+                "$date": "2024-10-30T23:59:59Z"
+            },
+            "comments": "Big discounts for winter"
+        },
+        "discount_percentage": 20,
+        "price_cap": 678,
+        "only_cash": true
+    },
+    {
+        "promotion_entity": {
+            "code": "SPRINGDEAL2024",
+            "promotion_title": "Clearance",
+            "name_store": "Electronics Store",
+            "cuit_store": "30-49104892-1",
+            "validity_start_date": {
+                "$date": "2024-10-01T08:00:00Z"
+            },
+            "validity_end_date": {
+                "$date": "2024-10-30T23:59:59Z"
+            },
+            "comments": "Time to renew your electronics"
+        },
+        "discount_percentage": 3,
+        "price_cap": 653,
+        "only_cash": false
+    },
+    {
+        "promotion_entity": {
+            "code": "PROMO-8008",
+            "promotion_title": "Sale",
+            "name_store": "Pharmacy",
+            "cuit_store": "30-13259026-8",
+            "validity_start_date": {
+                "$date": "2025-07-15T07:48:21.794920588-03:00"
+            },
+            "validity_end_date": {
+                "$date": "2025-10-31T07:48:21.794920685-03:00"
+            },
+            "comments": "Your ally in health"
+        },
+        "discount_percentage": 24,
+        "price_cap": 514,
+        "only_cash": true
+    },
+    {
+        "promotion_entity": {
+            "code": "PROMO-2272",
+            "promotion_title": "Special Sale",
+            "name_store": "Toy Store",
+            "cuit_store": "30-67407651-1",
+            "validity_start_date": {
+                "$date": "2025-03-25T07:48:21.794921713-03:00"
+            },
+            "validity_end_date": {
+                "$date": "2026-02-05T07:48:21.794921811-03:00"
+            },
+            "comments": "The best toys for your children"
+        },
+        "discount_percentage": 7,
+        "price_cap": 522,
+        "only_cash": false
+    },
+    {
+        "promotion_entity": {
+            "code": "PROMO-4481",
+            "promotion_title": "Sale",
+            "name_store": "Hardware Store",
+            "cuit_store": "30-46875533-7",
+            "validity_start_date": {
+                "$date": "2025-07-27T07:48:21.794922657-03:00"
+            },
+            "validity_end_date": {
+                "$date": "2025-10-10T07:48:21.794922751-03:00"
+            },
+            "comments": "Are you looking for tools?"
+        },
+        "discount_percentage": 28,
+        "price_cap": 714,
+        "only_cash": false
+    }
+]
