@@ -12,25 +12,37 @@ package models
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
-// CustomTime represents a custom time type that allows parsing time values in a specific format.
+// CustomTime struct to handle time parsing correctly
 type CustomTime struct {
 	time.Time
 }
 
-const customTimeFormat = "2006-01-02T15:04:05.999999"
+const customTimeFormat = time.RFC3339 // Use standard RFC3339 format
 
-// MarshalJSON converts the CustomTime value to a JSON string.
+// MarshalJSON converts CustomTime to JSON as an RFC3339 string.
+func (ct CustomTime) MarshalJSON() ([]byte, error) {
+	if ct.Time.IsZero() {
+		return []byte(`null`), nil // Properly handle zero values
+	}
+	return []byte(`"` + ct.Time.Format(customTimeFormat) + `"`), nil
+}
+
+// UnmarshalJSON parses an RFC3339 time string into CustomTime.
 func (ct *CustomTime) UnmarshalJSON(b []byte) error {
-	// Eliminar las comillas del valor JSON
-	str := string(b)
-	if len(str) >= 2 && str[0] == '"' && str[len(str)-1] == '"' {
-		str = str[1 : len(str)-1]
+	// Remove quotes from the JSON string
+	str := strings.Trim(string(b), `"`)
+
+	// If empty, return zero time
+	if str == "null" || str == "" {
+		ct.Time = time.Time{}
+		return nil
 	}
 
-	// Parsear el tiempo usando el formato personalizado
+	// Parse time using RFC3339
 	parsedTime, err := time.Parse(customTimeFormat, str)
 	if err != nil {
 		return fmt.Errorf("invalid time format: %v", err)
