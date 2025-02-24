@@ -194,29 +194,48 @@ func (srv *Server) setupRoutes() {
 	storeHandlerRelation := handlers.NewStoreHandler(services.NewStoreService(relational_repository.NewStoreRelationalRepository(srv.sqlDb)))
 	storeHandlerNonRelation := handlers.NewStoreHandler(services.NewStoreService(non_relational_repository.NewStoreNonRelationalRepository(srv.noSqlDb)))
 
-	// API groups
+	// API version group
 	apiGroup := srv.app.Group("/v1")
+
+	// SQL routes group
 	sqlGroup := apiGroup.Group("/sql")
+	// NoSQL routes group
 	mongoGroup := apiGroup.Group("/no-sql")
 
-	// Bank Routes
+	// -- Bank Routes --
 	sqlGroup.Post("/promotions/add-promotion", bankHandlerRelational.AddFinancingPromotionToBank())
 	sqlGroup.Patch("/promotions/financing/:code", bankHandlerRelational.ExtendFinancingPromotionValidity())
 	sqlGroup.Delete("/promotions/financing/:code", bankHandlerRelational.DeleteFinancingPromotion())
+	sqlGroup.Patch("/promotions/discount/:code", bankHandlerRelational.ExtendDiscountPromotionValidity())
+	sqlGroup.Delete("/promotions/discount/:code", bankHandlerRelational.DeleteDiscountPromotion())
+	sqlGroup.Get("/banks/customers/count", bankHandlerRelational.GetBankCustomerCounts())
 
 	mongoGroup.Post("/promotions/add-promotion", bankHandlerNonRelational.AddFinancingPromotionToBank())
 	mongoGroup.Patch("/promotions/financing/:code", bankHandlerNonRelational.ExtendFinancingPromotionValidity())
 	mongoGroup.Delete("/promotions/financing/:code", bankHandlerNonRelational.DeleteFinancingPromotion())
+	mongoGroup.Patch("/promotions/discount/:code", bankHandlerNonRelational.ExtendDiscountPromotionValidity())
+	mongoGroup.Delete("/promotions/discount/:code", bankHandlerNonRelational.DeleteDiscountPromotion())
+	mongoGroup.Get("/banks/customers/count", bankHandlerNonRelational.GetBankCustomerCounts())
 
-	// Card Routes
+	// -- Card Routes --
+	sqlGroup.Get("/cards/summary/:cardNumber/:month/:year", cardHandlerRelational.GetPaymentSummary())
+	sqlGroup.Get("/cards/expiring/:day/:month/:year", cardHandlerRelational.GetCardsExpiringInNext30Days())
+	sqlGroup.Get("/cards/purchase/monthly/:cuit/:finalAmount/:paymentVoucher", cardHandlerRelational.GetPurchaseMonthly())
 	sqlGroup.Get("/cards/top", cardHandlerRelational.GetTop10CardsByPurchases())
+
+	mongoGroup.Get("/cards/summary/:cardNumber/:month/:year", cardHandlerNonRelational.GetPaymentSummary())
+	mongoGroup.Get("/cards/expiring/:day/:month/:year", cardHandlerNonRelational.GetCardsExpiringInNext30Days())
+	mongoGroup.Get("/cards/purchase/monthly/:cuit/:finalAmount/:paymentVoucher", cardHandlerNonRelational.GetPurchaseMonthly())
 	mongoGroup.Get("/cards/top", cardHandlerNonRelational.GetTop10CardsByPurchases())
 
-	// Promotion Routes
+	// -- Promotion Routes --
+	sqlGroup.Get("/promotions/:cuit/:startDate/:endDate", promotionHandlerRelation.GetAvailablePromotionsByStoreAndDateRange())
 	sqlGroup.Get("/promotions/most-used", promotionHandlerRelation.GetMostUsedPromotion())
+
+	mongoGroup.Get("/promotions/:cuit/:startDate/:endDate", promotionHandlerNonRelation.GetAvailablePromotionsByStoreAndDateRange())
 	mongoGroup.Get("/promotions/most-used", promotionHandlerNonRelation.GetMostUsedPromotion())
 
-	// Store Routes
+	// -- Store Routes --
 	sqlGroup.Get("/stores/highest-revenue/:month/:year", storeHandlerRelation.GetStoreWithHighestRevenueByMonth())
 	mongoGroup.Get("/stores/highest-revenue/:month/:year", storeHandlerNonRelation.GetStoreWithHighestRevenueByMonth())
 }
