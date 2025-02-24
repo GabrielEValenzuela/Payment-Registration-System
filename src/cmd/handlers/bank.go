@@ -30,16 +30,19 @@ func NewBankHandler(bank services.BankService) *BankHandler {
 	}
 }
 
-// @Summary Add a financing promotion to a bank
-// @Description Adds a new financing promotion to the bank using the provided details in the request body.
-// @Tags Bank
-// @Accept json
-// @Produce json
-// @Success 201 {object} map[string]interface{} "Financing promotion added successfully"
-// @Failure 400 {object} map[string]interface{} "Invalid request body"
-// @Failure 500 {object} map[string]interface{} "Failed to add financing promotion to bank"
-// @Router /v1/sql/promotions/financing [post]
-// @Router /v1/no-sql/promotions/financing [post]
+// AddFinancingPromotionToBank adds a financing promotion to a bank.
+//
+//	@Summary		Add a financing promotion to a bank
+//	@Description	Adds a new financing promotion using the request body data.
+//	@Tags			Bank
+//	@Accept			json
+//	@Produce		json
+//	@Param			request	body		models.Financing		true	"Financing promotion details"
+//	@Success		201		{object}	map[string]interface{}	"Financing promotion added successfully"
+//	@Failure		400		{object}	map[string]interface{}	"Invalid request body"
+//	@Failure		500		{object}	map[string]interface{}	"Failed to add promotion"
+//	@Router			/sql/promotions/add-promotion [post]
+//	@Router			/no-sql/promotions/add-promotion [post]
 func (h *BankHandler) AddFinancingPromotionToBank() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
@@ -71,18 +74,20 @@ func (h *BankHandler) AddFinancingPromotionToBank() fiber.Handler {
 	}
 }
 
-// @Summary Extend the validity of a financing promotion
-// @Description Extends the validity of a financing promotion using the provided details in the request body.
-// @Tags Bank
-// @Accept json
-// @Produce json
-// @Param code path string true "Promotion code"
-// @Success 200 {object} map[string]interface{} "Financing promotion validity extended successfully"
-// @Failure 400 {object} map[string]interface{} "Invalid request body"
-// @Failure 404 {object} map[string]interface{} "Promotion not found"
-// @Failure 500 {object} map[string]interface{} "Failed to extend financing promotion validity"
-// @Router /promotions/financing/{code}/extend [patch]
-// @Router /promotions/financing/{code}/extend [patch]
+// ExtendFinancingPromotionValidity extends the validity of an existing financing promotion.
+//
+//	@Summary		Extend financing promotion validity
+//	@Description	Updates the expiration date of a financing promotion identified by its code.
+//	@Tags			Bank
+//	@Accept			json
+//	@Produce		json
+//	@Param			code	path		string							true	"Promotion Code"
+//	@Param			request	body		models.ExtendPromotionRequest	true	"New expiration date (RFC3339 format)"
+//	@Success		200		{object}	map[string]interface{}			"Financing promotion validity extended successfully"
+//	@Failure		400		{object}	map[string]interface{}			"Invalid request body or missing promotion code"
+//	@Failure		500		{object}	map[string]interface{}			"Failed to extend promotion validity"
+//	@Router			/sql/promotions/financing/{code} [patch]
+//	@Router			/no-sql/promotions/financing/{code} [patch]
 func (h *BankHandler) ExtendFinancingPromotionValidity() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
@@ -96,9 +101,7 @@ func (h *BankHandler) ExtendFinancingPromotionValidity() fiber.Handler {
 			})
 		}
 
-		var requestBody struct {
-			NewDate string `json:"new_date"`
-		}
+		var requestBody models.ExtendPromotionRequest
 
 		if err := c.BodyParser(&requestBody); err != nil {
 			logger.Warn("Invalid request body")
@@ -132,18 +135,20 @@ func (h *BankHandler) ExtendFinancingPromotionValidity() fiber.Handler {
 	}
 }
 
-// @Summary Extend the validity of a discount promotion
-// @Description Extends the validity of a discount promotion using the provided details in the request body.
-// @Tags Bank
-// @Accept json
-// @Produce json
-// @Param code path string true "Promotion code"
-// @Success 200 {object} map[string]interface{} "Discount promotion validity extended successfully"
-// @Failure 400 {object} map[string]interface{} "Invalid request body"
-// @Failure 404 {object} map[string]interface{} "Promotion not found"
-// @Failure 500 {object} map[string]interface{} "Failed to extend discount promotion validity"
-// @Router /promotions/discount/{code}/extend [patch]
-// @Router /promotions/discount/{code}/extend [patch]
+// ExtendDiscountPromotionValidity extends the validity of an existing discount promotion.
+//
+//	@Summary		Extend discount promotion validity
+//	@Description	Updates the expiration date of a discount promotion identified by its code.
+//	@Tags			Bank
+//	@Accept			json
+//	@Produce		json
+//	@Param			code	path		string							true	"Promotion Code"
+//	@Param			request	body		models.ExtendPromotionRequest	true	"New expiration date (RFC3339 format)"
+//	@Success		200		{object}	map[string]interface{}			"Discount promotion validity extended successfully"
+//	@Failure		400		{object}	map[string]interface{}			"Invalid request body or missing promotion code"
+//	@Failure		500		{object}	map[string]interface{}			"Failed to extend promotion validity"
+//	@Router			/sql/promotions/discount/{code} [patch]
+//	@Router			/no-sql/promotions/discount/{code} [patch]
 func (h *BankHandler) ExtendDiscountPromotionValidity() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
@@ -157,9 +162,7 @@ func (h *BankHandler) ExtendDiscountPromotionValidity() fiber.Handler {
 			})
 		}
 
-		var requestBody struct {
-			NewDate string `json:"new_date"`
-		}
+		var requestBody models.ExtendPromotionRequest
 
 		if err := c.BodyParser(&requestBody); err != nil {
 			logger.Warn("Invalid request body")
@@ -193,17 +196,19 @@ func (h *BankHandler) ExtendDiscountPromotionValidity() fiber.Handler {
 	}
 }
 
-// @Summary Delete a financing promotion
-// @Description Deletes a financing promotion from the bank using the provided promotion code.
-// @Tags Bank
-// @Accept json
-// @Produce json
-// @Param code path string true "Promotion code"
-// @Success 200 {object} map[string]interface{} "Financing promotion deleted successfully"
-// @Failure 400 {object} map[string]interface{} "Invalid request body"
-// @Failure 404 {object} map[string]interface{} "Promotion not found"
-// @Failure 500 {object} map[string]interface{} "Failed to delete financing promotion"
-// @Router /promotions/financing/{code} [delete]
+// DeleteFinancingPromotion removes an existing financing promotion.
+//
+//	@Summary		Delete financing promotion
+//	@Description	Deletes a financing promotion identified by its code.
+//	@Tags			Bank
+//	@Accept			json
+//	@Produce		json
+//	@Param			code	path		string					true	"Promotion Code"
+//	@Success		200		{object}	map[string]interface{}	"Financing promotion deleted successfully"
+//	@Failure		400		{object}	map[string]interface{}	"Missing promotion code"
+//	@Failure		500		{object}	map[string]interface{}	"Failed to delete promotion"
+//	@Router			/sql/promotions/financing/{code} [delete]
+//	@Router			/no-sql/promotions/financing/{code} [delete]
 func (h *BankHandler) DeleteFinancingPromotion() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
@@ -233,17 +238,19 @@ func (h *BankHandler) DeleteFinancingPromotion() fiber.Handler {
 	}
 }
 
-// @Summary Delete a discount promotion
-// @Description Deletes a discount promotion from the bank using the provided promotion code.
-// @Tags Bank
-// @Accept json
-// @Produce json
-// @Param code path string true "Promotion code"
-// @Success 200 {object} map[string]interface{} "Discount promotion deleted successfully"
-// @Failure 400 {object} map[string]interface{} "Invalid request body"
-// @Failure 404 {object} map[string]interface{} "Promotion not found"
-// @Failure 500 {object} map[string]interface{} "Failed to delete discount promotion"
-// @Router /promotions/discount/{code} [delete]
+// DeleteDiscountPromotion removes an existing discount promotion.
+//
+//	@Summary		Delete discount promotion
+//	@Description	Deletes a discount promotion identified by its code.
+//	@Tags			Bank
+//	@Accept			json
+//	@Produce		json
+//	@Param			code	path		string					true	"Promotion Code"
+//	@Success		200		{object}	map[string]interface{}	"Discount promotion deleted successfully"
+//	@Failure		400		{object}	map[string]interface{}	"Missing promotion code"
+//	@Failure		500		{object}	map[string]interface{}	"Failed to delete promotion"
+//	@Router			/sql/promotions/discount/{code} [delete]
+//	@Router			/no-sql/promotions/discount/{code} [delete]
 func (h *BankHandler) DeleteDiscountPromotion() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
@@ -275,13 +282,17 @@ func (h *BankHandler) DeleteDiscountPromotion() fiber.Handler {
 	}
 }
 
-// @Summary Get the number of customers for each bank
-// @Description Returns the number of customers for each bank in the system.
-// @Tags Bank
-// @Accept json
-// @Produce json
-// @Failure 500 {object} map[string]interface{} "Failed to get bank customer counts"
-// @Router /customers/count [get]
+// GetBankCustomerCounts retrieves the total number of customers per bank.
+//
+//	@Summary		Get bank customer counts
+//	@Description	Retrieves the number of customers associated with each bank.
+//	@Tags			Bank
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	map[string]interface{}	"Bank customer counts retrieved successfully"
+//	@Failure		500	{object}	map[string]interface{}	"Failed to get bank customer counts"
+//	@Router			/sql/banks/customers/count [get]
+//	@Router			/no-sql/banks/customers/count [get]
 func (h *BankHandler) GetBankCustomerCounts() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 
@@ -296,6 +307,13 @@ func (h *BankHandler) GetBankCustomerCounts() fiber.Handler {
 		}
 
 		logger.Info("Bank customer counts retrieved successfully")
-		return c.JSON(customerCounts)
+
+		if customerCounts == nil {
+			return c.JSON(fiber.Map{
+				"message": "Oops! Apparently, there are no data to show at the moment.",
+			})
+		} else {
+			return c.JSON(customerCounts)
+		}
 	}
 }

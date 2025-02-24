@@ -21,10 +21,6 @@ check_docker() {
     fi
     if docker-compose ps >/dev/null 2>&1; then
         echo "Docker is running. Proceeding with the tests..."
-    else
-        echo "Docker is not running. Please start Docker and try again."
-        docker-compose down -v
-        docker-compose up -d
     fi
 }
 
@@ -32,9 +28,9 @@ check_docker() {
 run_docker_compose() {
     echo "Running docker-compose..."
     # First, in case of conflict, remove and stop the containers
-    docker-compose down -v
+    docker-compose -f src/internal/tests/component/docker-compose.yml down -v
     # Then, run the containers
-    docker-compose up -d
+    docker-compose -f src/internal/tests/component/docker-compose.yml up -d
 }
 
 # Setup MongoDB
@@ -58,7 +54,7 @@ setup_mongodb() {
         });
     "
     echo "Loading data..."
-    for file in data/non_relational/*.json; do
+    for file in src/internal/tests/component/data/non_relational/*.json; do
         if [ -f "$file" ]; then
             collection_name=$(basename "$file" .json) # Extract filename without .json extension
             echo "Importing $file into $collection_name collection in MongoDB..."
@@ -107,14 +103,22 @@ wait_for() {
 # Run go test
 run_go_test() {
     echo "Running go test..."
-    go test -v ./...
+    go test -v ./src/internal/tests/component/...
 
     if [ $? -eq 0 ]; then
         echo "All tests passed!"
+        cleanup
     else
         echo "Some tests failed. Please check the logs."
+        cleanup
         exit 1
     fi
+}
+
+# Cleanup
+cleanup() {
+    echo "Cleaning up..."
+    docker-compose -f src/internal/tests/component/docker-compose.yml down -v
 }
 
 # Main function

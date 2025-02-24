@@ -16,7 +16,6 @@ package server
 import (
 	"context"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -32,6 +31,7 @@ import (
 	relational_repository "github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/storage/relational/repository"
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/limiter"
 	"github.com/gofiber/swagger"
 	"go.mongodb.org/mongo-driver/v2/mongo"
@@ -84,21 +84,7 @@ func (srv *Server) InitDatabases() {
 	}
 	srv.sqlDb = sqlDb
 
-	// Check if data initialization is required
-	shouldInitialize, err := relational.ShouldInitializeData(sqlDb)
-	if err != nil {
-		logger.Fatal("Failed to check data initialization status: %v", err)
-	}
-
-	if shouldInitialize {
-		logger.Info("Running data initialization: adding default data to the database.")
-		err = relational.ExecuteSQLFile(sqlDb, "./src/internal/storage/relational/insert.sql")
-		if err != nil {
-			log.Fatalf("Failed to execute SQL file: %v", err)
-		}
-	} else {
-		logger.Info("Data initialization script not required.")
-	}
+	logger.Info("Successfully connected to MySQL database")
 
 	// Initialize the MongoDB database
 	mongoDb, err := nonrelational.NewMongoDB(srv.cfg.NoSQLDb.URI, srv.cfg.NoSQLDb.Database, srv.cfg.NoSQLDb.Clean)
@@ -107,6 +93,8 @@ func (srv *Server) InitDatabases() {
 	}
 
 	srv.noSqlDb = mongoDb
+
+	logger.Info("Successfully connected to MongoDB database")
 }
 
 /*
@@ -164,6 +152,13 @@ func (srv *Server) initFiber() {
 	srv.app.Use(limiter.New(limiter.Config{
 		Max:        100,             // Allow 100 requests per window
 		Expiration: 1 * time.Minute, // Reset every minute
+	}))
+
+	// Enable CORS for all routes
+	srv.app.Use(cors.New(cors.Config{
+		AllowOrigins: "*", // ToDo: Change to production domains
+		AllowMethods: "GET,POST,PUT,DELETE,PATCH,OPTIONS",
+		AllowHeaders: "Origin, Content-Type, Accept, Authorization",
 	}))
 
 	srv.setupRoutes()

@@ -14,29 +14,20 @@ import (
 	"time"
 )
 
-/*
- * Card
- * ----------------------------------------
- * Represents a credit or debit card issued by a bank to a customer.
- * A card is linked to a specific bank and customer, and it records purchases made with the card.
- *
- * Fields:
- * - Number (string): Unique identifier of the card (e.g., 16-digit card number).
- * - Ccv (string): Card verification code (e.g., 3 or 4 digits).
- * - CardholderNameInCard (string): The name printed on the card.
- * - Since (time.Time): The date when the card was issued.
- * - ExpirationDate (time.Time): The date when the card expires.
- * - Bank (Bank): The issuing bank associated with this card.
- * - PurchaseMonthlyPayments ([]PurchaseMonthlyPayment): List of monthly installment purchases linked to this card.
- * - PurchaseSinglePayments ([]PurchaseSinglePayment): List of single-payment purchases made with this card.
- */
+// Card represents a payment card issued by a bank.
+//
+//	@Summary		Card model
+//	@Description	Contains details about a payment card, including its number, security code, cardholder name, issuance and expiration dates, associated bank, and purchase transactions.
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type Card struct {
-	Number                  string                   `json:"number"`                    // Unique card number
-	Ccv                     string                   `json:"ccv"`                       // Card verification code
-	CardholderNameInCard    string                   `json:"cardholdername_in_card"`    // Name as printed on the card
-	Since                   time.Time                `json:"since"`                     // Issuance date of the card
-	ExpirationDate          time.Time                `json:"expiration_date"`           // Expiration date of the card
-	Bank                    Bank                     `json:"bank"`                      // Issuing bank details
-	PurchaseMonthlyPayments []PurchaseMonthlyPayment `json:"purchase_monthly_payments"` // Monthly installment payments
-	PurchaseSinglePayments  []PurchaseSinglePayment  `json:"purchase_single_payment"`   // Single-payment transactions
+	Number                  string                   `json:"number" example:"1234-5678-9012-3456"`           // Unique card number
+	Ccv                     string                   `json:"ccv" example:"123"`                              // Card verification code
+	CardholderNameInCard    string                   `json:"cardholdername_in_card" example:"John Doe"`      // Name as printed on the card
+	Since                   time.Time                `json:"since" example:"2020-01-01T00:00:00Z"`           // Issuance date of the card
+	ExpirationDate          time.Time                `json:"expiration_date" example:"2025-12-31T23:59:59Z"` // Expiration date of the card
+	Bank                    Bank                     `json:"bank"`                                           // Issuing bank details
+	PurchaseMonthlyPayments []PurchaseMonthlyPayment `json:"purchase_monthly_payments"`                      // Monthly installment payments
+	PurchaseSinglePayments  []PurchaseSinglePayment  `json:"purchase_single_payment"`                        // Single-payment transactions
 }

@@ -11,21 +11,21 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "API Support",
+            "name": "@marventu94, @GabrielEValenzuela",
             "email": "https://github.com/GabrielEValenzuela/Payment-Registration-System"
         },
         "license": {
-            "name": "MIT License",
-            "url": "http://www.apache.org/licenses/MIT.html"
+            "name": "GNU General Public License v3.0",
+            "url": "https://www.gnu.org/licenses/gpl-3.0.html"
         },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/customers/count": {
+        "/no-sql/banks/customers/count": {
             "get": {
-                "description": "Returns the number of customers for each bank in the system.",
+                "description": "Retrieves the number of customers associated with each bank.",
                 "consumes": [
                     "application/json"
                 ],
@@ -35,8 +35,15 @@ const docTemplate = `{
                 "tags": [
                     "Bank"
                 ],
-                "summary": "Get the number of customers for each bank",
+                "summary": "Get bank customer counts",
                 "responses": {
+                    "200": {
+                        "description": "Bank customer counts retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
                     "500": {
                         "description": "Failed to get bank customer counts",
                         "schema": {
@@ -47,225 +54,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/promotions/discount/{code}": {
-            "delete": {
-                "description": "Deletes a discount promotion from the bank using the provided promotion code.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Bank"
-                ],
-                "summary": "Delete a discount promotion",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Promotion code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Discount promotion deleted successfully",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "404": {
-                        "description": "Promotion not found",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to delete discount promotion",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
-        "/promotions/discount/{code}/extend": {
-            "patch": {
-                "description": "Extends the validity of a discount promotion using the provided details in the request body.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Bank"
-                ],
-                "summary": "Extend the validity of a discount promotion",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Promotion code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Discount promotion validity extended successfully",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "404": {
-                        "description": "Promotion not found",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to extend discount promotion validity",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
-        "/promotions/financing/{code}": {
-            "delete": {
-                "description": "Deletes a financing promotion from the bank using the provided promotion code.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Bank"
-                ],
-                "summary": "Delete a financing promotion",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Promotion code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Financing promotion deleted successfully",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "404": {
-                        "description": "Promotion not found",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to delete financing promotion",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
-        "/promotions/financing/{code}/extend": {
-            "patch": {
-                "description": "Extends the validity of a financing promotion using the provided details in the request body.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Bank"
-                ],
-                "summary": "Extend the validity of a financing promotion",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Promotion code",
-                        "name": "code",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Financing promotion validity extended successfully",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request body",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "404": {
-                        "description": "Promotion not found",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to extend financing promotion validity",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/cards/expiring/{day}/{month}/{year}": {
+        "/no-sql/cards/expiring-next-30-days/{day}/{month}/{year}": {
             "get": {
-                "description": "Retrieves the cards that will expire in the next 30 days based on the current day, month, and year.",
+                "description": "Retrieves a list of cards that will expire within the next 30 days from the given date.",
                 "consumes": [
                     "application/json"
                 ],
@@ -279,21 +70,21 @@ const docTemplate = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Day",
+                        "description": "Day (1-31)",
                         "name": "day",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "Month",
+                        "description": "Month (1-12)",
                         "name": "month",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "Year",
+                        "description": "Year (e.g., 2025)",
                         "name": "year",
                         "in": "path",
                         "required": true
@@ -301,13 +92,17 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Cards expiring in the next 30 days",
+                        "description": "List of cards expiring in the next 30 days",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "additionalProperties": true
-                            }
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid day, month, or year parameter",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
                         }
                     },
                     "500": {
@@ -320,9 +115,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/cards/purchase/monthly": {
+        "/no-sql/cards/payment-summary/{cardNumber}/{month}/{year}": {
             "get": {
-                "description": "Retrieves the monthly purchase details for the specified card based on CUIT and payment voucher.",
+                "description": "Retrieves the payment summary for a given card number, month, and year.",
                 "consumes": [
                     "application/json"
                 ],
@@ -332,86 +127,25 @@ const docTemplate = `{
                 "tags": [
                     "Card"
                 ],
-                "summary": "Get monthly purchase details for a card",
+                "summary": "Get payment summary",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "CUIT",
-                        "name": "cuit",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "number",
-                        "description": "Final amount",
-                        "name": "finalAmount",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Payment voucher",
-                        "name": "paymentVoucher",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Monthly purchase details retrieved successfully",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request parameters",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to retrieve monthly purchase details",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/cards/summary/{cardNumber}/{month}/{year}": {
-            "get": {
-                "description": "Retrieves the payment summary for the specified card number, month, and year.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Card"
-                ],
-                "summary": "Get the payment summary for a card",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Card number",
+                        "description": "Card Number",
                         "name": "cardNumber",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "Month",
+                        "description": "Month (1-12)",
                         "name": "month",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "Year",
+                        "description": "Year (e.g., 2025)",
                         "name": "year",
                         "in": "path",
                         "required": true
@@ -426,7 +160,7 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "Invalid request parameters",
+                        "description": "Invalid month or year parameter",
                         "schema": {
                             "type": "object",
                             "additionalProperties": true
@@ -442,9 +176,70 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/cards/top": {
+        "/no-sql/cards/purchase-monthly/{cuit}/{finalAmount}/{paymentVoucher}": {
             "get": {
-                "description": "Retrieves the top 10 cards by purchases.",
+                "description": "Retrieves the purchase details for a given CUIT, final amount, and payment voucher.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Card"
+                ],
+                "summary": "Get monthly purchase details",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "CUIT (Unique Tax Identification Code)",
+                        "name": "cuit",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "number",
+                        "description": "Final purchase amount",
+                        "name": "finalAmount",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Payment voucher identifier",
+                        "name": "paymentVoucher",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Monthly purchase details retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid finalAmount parameter",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve monthly purchase details",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/no-sql/cards/top": {
+            "get": {
+                "description": "Retrieves the top 10 cards with the highest purchase volume.",
                 "consumes": [
                     "application/json"
                 ],
@@ -457,13 +252,10 @@ const docTemplate = `{
                 "summary": "Get top 10 cards by purchases",
                 "responses": {
                     "200": {
-                        "description": "Top 10 cards by purchases",
+                        "description": "Top 10 cards by purchases retrieved successfully",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "additionalProperties": true
-                            }
+                            "type": "object",
+                            "additionalProperties": true
                         }
                     },
                     "500": {
@@ -476,104 +268,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/promotions/most-used": {
-            "get": {
-                "description": "Retrieves the most used promotion in the system.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Promotion"
-                ],
-                "summary": "Get the most used promotion",
-                "responses": {
-                    "200": {
-                        "description": "Most used promotion",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to retrieve the most used promotion",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/promotions/{cuit}/{startDate}/{endDate}": {
-            "get": {
-                "description": "Retrieves available financing and discount promotions for a specific store within a date range.",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Promotion"
-                ],
-                "summary": "Get available promotions by store and date range",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "Store CUIT",
-                        "name": "cuit",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Start date in RFC3339 format",
-                        "name": "startDate",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "End date in RFC3339 format",
-                        "name": "endDate",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Available discount promotions",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "object",
-                                "additionalProperties": true
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Invalid request parameters",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    },
-                    "500": {
-                        "description": "Failed to retrieve promotions",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": true
-                        }
-                    }
-                }
-            }
-        },
-        "/v1/sql/promotions/financing": {
+        "/no-sql/promotions/add-promotion": {
             "post": {
-                "description": "Adds a new financing promotion to the bank using the provided details in the request body.",
+                "description": "Adds a new financing promotion using the request body data.",
                 "consumes": [
                     "application/json"
                 ],
@@ -584,6 +281,17 @@ const docTemplate = `{
                     "Bank"
                 ],
                 "summary": "Add a financing promotion to a bank",
+                "parameters": [
+                    {
+                        "description": "Financing promotion details",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Financing"
+                        }
+                    }
+                ],
                 "responses": {
                     "201": {
                         "description": "Financing promotion added successfully",
@@ -600,7 +308,7 @@ const docTemplate = `{
                         }
                     },
                     "500": {
-                        "description": "Failed to add financing promotion to bank",
+                        "description": "Failed to add promotion",
                         "schema": {
                             "type": "object",
                             "additionalProperties": true
@@ -609,9 +317,303 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/stores/highest-revenue/{month}/{year}": {
+        "/no-sql/promotions/available/{cuit}/{startDate}/{endDate}": {
             "get": {
-                "description": "Retrieves the store with the highest revenue for a specific month and year.",
+                "description": "Retrieves the financing and discount promotions available for a store between the specified start and end dates.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Promotion"
+                ],
+                "summary": "Get available promotions by store and date range",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "CUIT (Unique Tax Identification Code of the store)",
+                        "name": "cuit",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date (RFC3339 format)",
+                        "name": "startDate",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date (RFC3339 format)",
+                        "name": "endDate",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Available promotions retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid startDate or endDate format",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve available promotions",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/no-sql/promotions/discount/{code}": {
+            "delete": {
+                "description": "Deletes a discount promotion identified by its code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Delete discount promotion",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Promotion Code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Discount promotion deleted successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Missing promotion code",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to delete promotion",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates the expiration date of a discount promotion identified by its code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Extend discount promotion validity",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Promotion Code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New expiration date (RFC3339 format)",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ExtendPromotionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Discount promotion validity extended successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body or missing promotion code",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to extend promotion validity",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/no-sql/promotions/financing/{code}": {
+            "delete": {
+                "description": "Deletes a financing promotion identified by its code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Delete financing promotion",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Promotion Code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Financing promotion deleted successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Missing promotion code",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to delete promotion",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates the expiration date of a financing promotion identified by its code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Extend financing promotion validity",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Promotion Code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New expiration date (RFC3339 format)",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ExtendPromotionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Financing promotion validity extended successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body or missing promotion code",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to extend promotion validity",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/no-sql/promotions/most-used": {
+            "get": {
+                "description": "Retrieves the promotion that has been used the most.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Promotion"
+                ],
+                "summary": "Get most used promotion",
+                "responses": {
+                    "200": {
+                        "description": "Most used promotion retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve most used promotion",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/no-sql/stores/highest-revenue/{month}/{year}": {
+            "get": {
+                "description": "Retrieves the store that generated the highest revenue in a specified month and year.",
                 "consumes": [
                     "application/json"
                 ],
@@ -621,18 +623,18 @@ const docTemplate = `{
                 "tags": [
                     "Store"
                 ],
-                "summary": "Get the store with the highest revenue by month",
+                "summary": "Get store with highest revenue by month",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Month",
+                        "description": "Month (1-12)",
                         "name": "month",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "Year",
+                        "description": "Year (e.g., 2025)",
                         "name": "year",
                         "in": "path",
                         "required": true
@@ -640,26 +642,837 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "Store with the highest revenue",
+                        "description": "Store with highest revenue retrieved successfully",
                         "schema": {
                             "type": "object",
                             "additionalProperties": true
                         }
                     },
                     "400": {
-                        "description": "Invalid request parameters",
+                        "description": "Invalid month or year parameter",
                         "schema": {
                             "type": "object",
                             "additionalProperties": true
                         }
                     },
                     "500": {
-                        "description": "Failed to retrieve store information",
+                        "description": "Failed to retrieve store with highest revenue",
                         "schema": {
                             "type": "object",
                             "additionalProperties": true
                         }
                     }
+                }
+            }
+        },
+        "/sql/banks/customers/count": {
+            "get": {
+                "description": "Retrieves the number of customers associated with each bank.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Get bank customer counts",
+                "responses": {
+                    "200": {
+                        "description": "Bank customer counts retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to get bank customer counts",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/sql/cards/expiring-next-30-days/{day}/{month}/{year}": {
+            "get": {
+                "description": "Retrieves a list of cards that will expire within the next 30 days from the given date.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Card"
+                ],
+                "summary": "Get cards expiring in the next 30 days",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Day (1-31)",
+                        "name": "day",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Month (1-12)",
+                        "name": "month",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Year (e.g., 2025)",
+                        "name": "year",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of cards expiring in the next 30 days",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid day, month, or year parameter",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve expiring cards",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/sql/cards/payment-summary/{cardNumber}/{month}/{year}": {
+            "get": {
+                "description": "Retrieves the payment summary for a given card number, month, and year.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Card"
+                ],
+                "summary": "Get payment summary",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Card Number",
+                        "name": "cardNumber",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Month (1-12)",
+                        "name": "month",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Year (e.g., 2025)",
+                        "name": "year",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Payment summary retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid month or year parameter",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve payment summary",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/sql/cards/purchase-monthly/{cuit}/{finalAmount}/{paymentVoucher}": {
+            "get": {
+                "description": "Retrieves the purchase details for a given CUIT, final amount, and payment voucher.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Card"
+                ],
+                "summary": "Get monthly purchase details",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "CUIT (Unique Tax Identification Code)",
+                        "name": "cuit",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "number",
+                        "description": "Final purchase amount",
+                        "name": "finalAmount",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Payment voucher identifier",
+                        "name": "paymentVoucher",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Monthly purchase details retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid finalAmount parameter",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve monthly purchase details",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/sql/cards/top": {
+            "get": {
+                "description": "Retrieves the top 10 cards with the highest purchase volume.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Card"
+                ],
+                "summary": "Get top 10 cards by purchases",
+                "responses": {
+                    "200": {
+                        "description": "Top 10 cards by purchases retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve top 10 cards",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/sql/promotions/add-promotion": {
+            "post": {
+                "description": "Adds a new financing promotion using the request body data.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Add a financing promotion to a bank",
+                "parameters": [
+                    {
+                        "description": "Financing promotion details",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Financing"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Financing promotion added successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to add promotion",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/sql/promotions/available/{cuit}/{startDate}/{endDate}": {
+            "get": {
+                "description": "Retrieves the financing and discount promotions available for a store between the specified start and end dates.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Promotion"
+                ],
+                "summary": "Get available promotions by store and date range",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "CUIT (Unique Tax Identification Code of the store)",
+                        "name": "cuit",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date (RFC3339 format)",
+                        "name": "startDate",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date (RFC3339 format)",
+                        "name": "endDate",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Available promotions retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid startDate or endDate format",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve available promotions",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/sql/promotions/discount/{code}": {
+            "delete": {
+                "description": "Deletes a discount promotion identified by its code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Delete discount promotion",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Promotion Code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Discount promotion deleted successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Missing promotion code",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to delete promotion",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates the expiration date of a discount promotion identified by its code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Extend discount promotion validity",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Promotion Code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New expiration date (RFC3339 format)",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ExtendPromotionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Discount promotion validity extended successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body or missing promotion code",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to extend promotion validity",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/sql/promotions/financing/{code}": {
+            "delete": {
+                "description": "Deletes a financing promotion identified by its code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Delete financing promotion",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Promotion Code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Financing promotion deleted successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Missing promotion code",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to delete promotion",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "description": "Updates the expiration date of a financing promotion identified by its code.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Bank"
+                ],
+                "summary": "Extend financing promotion validity",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Promotion Code",
+                        "name": "code",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "New expiration date (RFC3339 format)",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ExtendPromotionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Financing promotion validity extended successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body or missing promotion code",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to extend promotion validity",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/sql/promotions/most-used": {
+            "get": {
+                "description": "Retrieves the promotion that has been used the most.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Promotion"
+                ],
+                "summary": "Get most used promotion",
+                "responses": {
+                    "200": {
+                        "description": "Most used promotion retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve most used promotion",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        },
+        "/sql/stores/highest-revenue/{month}/{year}": {
+            "get": {
+                "description": "Retrieves the store that generated the highest revenue in a specified month and year.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Get store with highest revenue by month",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Month (1-12)",
+                        "name": "month",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Year (e.g., 2025)",
+                        "name": "year",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Store with highest revenue retrieved successfully",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid month or year parameter",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    },
+                    "500": {
+                        "description": "Failed to retrieve store with highest revenue",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": true
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Bank": {
+            "description": "Contains details about a bank, including its name, tax identification code (CUIT), address, contact information, and associated customers.",
+            "type": "object",
+            "properties": {
+                "address": {
+                    "description": "Bank address",
+                    "type": "string",
+                    "example": "Av. 9 de Julio"
+                },
+                "cuit": {
+                    "description": "Bank tax identification code (CUIT)",
+                    "type": "string",
+                    "example": "30-12345678-9"
+                },
+                "customers_ids": {
+                    "description": "List of customers associated with the bank",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Customer"
+                    }
+                },
+                "name": {
+                    "description": "Bank name",
+                    "type": "string",
+                    "example": "Bank of Argentina"
+                },
+                "telephone": {
+                    "description": "Bank contact number",
+                    "type": "string",
+                    "example": "0800-888-123"
+                }
+            }
+        },
+        "models.CustomTime": {
+            "type": "object",
+            "properties": {
+                "time.Time": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.Customer": {
+            "description": "Contains personal details of a customer, including identification information, contact details, associated banks, and linked cards.",
+            "type": "object",
+            "properties": {
+                "address": {
+                    "description": "Customer's residential address",
+                    "type": "string",
+                    "example": "456 Oak St, City"
+                },
+                "banks_ids": {
+                    "description": "List of bank IDs the customer is associated with",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "cards": {
+                    "description": "List of card IDs linked to the customer",
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "complete_name": {
+                    "description": "Full name of the customer",
+                    "type": "string",
+                    "example": "John Doe"
+                },
+                "cuit": {
+                    "description": "Unique tax identification code (CUIT)",
+                    "type": "string",
+                    "example": "20-12345678-9"
+                },
+                "dni": {
+                    "description": "National identification number (DNI)",
+                    "type": "string",
+                    "example": "12345678"
+                },
+                "entry_date": {
+                    "description": "Date the customer was registered",
+                    "type": "string",
+                    "example": "2022-03-15T00:00:00Z"
+                },
+                "telephone": {
+                    "description": "Contact number",
+                    "type": "string",
+                    "example": "+54 11 9876-5432"
+                }
+            }
+        },
+        "models.ExtendPromotionRequest": {
+            "description": "Used to update the expiration date of a promotion.",
+            "type": "object",
+            "properties": {
+                "new_date": {
+                    "description": "New expiration date in RFC3339 format",
+                    "type": "string",
+                    "example": "2026-01-01T00:00:00Z"
+                }
+            }
+        },
+        "models.Financing": {
+            "description": "Contains details about a financing promotion, including the number of installment payments and interest rate.",
+            "type": "object",
+            "properties": {
+                "bank": {
+                    "description": "Associated bank details",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.Bank"
+                        }
+                    ]
+                },
+                "code": {
+                    "description": "Unique promotion code",
+                    "type": "string",
+                    "example": "PROMO2025"
+                },
+                "comments": {
+                    "description": "Additional comments about the promotion",
+                    "type": "string",
+                    "example": "Limited-time offer!"
+                },
+                "cuit_store": {
+                    "description": "Unique tax identification code (CUIT) of the store",
+                    "type": "string",
+                    "example": "30-98765432-1"
+                },
+                "interest": {
+                    "description": "Interest rate applied to the financing",
+                    "type": "number",
+                    "example": 5.5
+                },
+                "name_store": {
+                    "description": "Name of the store offering the promotion",
+                    "type": "string",
+                    "example": "Tech Store"
+                },
+                "number_of_quotas": {
+                    "description": "Number of installment payments available",
+                    "type": "integer",
+                    "example": 12
+                },
+                "promotion_title": {
+                    "description": "Title of the promotion",
+                    "type": "string",
+                    "example": "Holiday Special"
+                },
+                "validityEndDate": {
+                    "description": "Promotion end date",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.CustomTime"
+                        }
+                    ]
+                },
+                "validity_start_date": {
+                    "description": "Promotion start date",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/models.CustomTime"
+                        }
+                    ]
                 }
             }
         }
@@ -669,11 +1482,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
-	BasePath:         "/",
+	Host:             "go-app.localhost",
+	BasePath:         "/v1",
 	Schemes:          []string{},
-	Title:            "Payment Registration System",
-	Description:      "Payment Registration System API for Database Management Course UNLP",
+	Title:            "Payment Registration System API",
+	Description:      "This API manages payment registration and processing for the Database Management Course at UNLP.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

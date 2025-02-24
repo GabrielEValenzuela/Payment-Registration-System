@@ -11,61 +11,55 @@
 
 package models
 
-/*
- * Purchase
- * ----------------------------------------
- * Represents a purchase made by a customer using a card.
- *
- * Fields:
- * - PaymentVoucher (string): The payment voucher or receipt number.
- * - Store (string): The name of the store where the purchase was made.
- * - CuitStore (string): The unique tax identification code for the store.
- * - Amount (float64): The initial amount of the purchase.
- * - FinalAmount (float64): The final amount after any discounts or interest.
- * - PurchaseType (PurchaseType): The type of purchase, either single payment or monthly payments.
- */
+// Purchase represents a financial transaction made at a store.
+//
+//	@Summary		Purchase model
+//	@Description	Contains details about a purchase, including the store, amount, and type of purchase.
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type Purchase struct {
-	PaymentVoucher string       `json:"payment_voucher"`
-	Store          string       `json:"store"`
-	CuitStore      string       `json:"cuit_store"`
-	Amount         float64      `json:"amount"`
-	FinalAmount    float64      `json:"final_amount"`
-	PurchaseType   PurchaseType `json:"purchase_type"` // Enum type
+	PaymentVoucher string       `json:"payment_voucher" example:"VCHR-202502"` // Unique identifier for the purchase
+	Store          string       `json:"store" example:"ElectroStore"`          // Name of the store where the purchase was made
+	CuitStore      string       `json:"cuit_store" example:"30-98765432-1"`    // Unique tax identification code (CUIT) of the store
+	Amount         float64      `json:"amount" example:"1500.75"`              // Initial purchase amount before any adjustments
+	FinalAmount    float64      `json:"final_amount" example:"1400.00"`        // Final amount after discounts or interest
+	PurchaseType   PurchaseType `json:"purchase_type" example:"0"`             // Type of purchase (single payment or installments)
 }
 
-/*
- * PurchaseSinglePayment
- * ----------------------------------------
- * Represents a purchase made in a single payment.
- *
- * Fields:
- * - Purchase (Purchase): The base purchase details.
- * - StoreDiscount (float64): The discount applied by the store.
- */
+// PurchaseSinglePayment represents a single-payment purchase.
+//
+//	@Summary		PurchaseSinglePayment model
+//	@Description	Contains details about a single-payment purchase, including applicable store discounts.
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type PurchaseSinglePayment struct {
 	Purchase
-	StoreDiscount float64 `json:"store_discount"`
+	StoreDiscount float64 `json:"store_discount" example:"5.0"` // Discount applied to the purchase
 }
 
-/*
- * PurchaseMonthlyPayment
- * ----------------------------------------
- * Represents a purchase made with monthly payments.
- *
- * Fields:
- * - Purchase (Purchase): The base purchase details.
- * - Interest (float64): The interest rate applied to the purchase.
- * - NumberOfQuotas (int): The number of installments for the purchase.
- * - Quota ([]Quota): List of installment details.
- */
+// PurchaseMonthlyPayment represents a purchase paid in monthly installments.
+//
+//	@Summary		PurchaseMonthlyPayment model
+//	@Description	Contains details about a monthly installment purchase, including interest rate, number of quotas, and quota breakdown.
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type PurchaseMonthlyPayment struct {
 	Purchase
-	Interest       float64 `json:"interest"`
-	NumberOfQuotas int     `json:"number_of_quotas"`
-	Quota          []Quota `json:"quota"`
+	Interest       float64 `json:"interest" example:"3.5"`        // Interest rate applied to the purchase
+	NumberOfQuotas int     `json:"number_of_quotas" example:"12"` // Number of monthly installments
+	Quota          []Quota `json:"quota"`                         // Breakdown of installment payments
 }
 
 // PurchaseType represents the type of a purchase, either single payment or monthly payments.
+//
+//	@Summary		PurchaseType model
+//	@Description	Enum representing whether a purchase is a single payment or paid in multiple installments.
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type PurchaseType int
 
 const (

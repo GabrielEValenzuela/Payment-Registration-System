@@ -10,38 +10,30 @@
 
 package models
 
-/*
- * Bank
- * ----------------------------------------
- * Represents a financial institution that holds customers and issues cards.
- *
- * Fields:
- * - Name (string): The name of the bank.
- * - Cuit (string): The unique tax identification code for the bank.
- * - Address (string): The physical address of the bank.
- * - Telephone (string): The contact number for the bank.
- * - Members ([]Customer): A list of associated customers, represented by their IDs.
- */
+// Bank represents a financial institution.
+//
+//	@Summary		Bank model
+//	@Description	Contains details about a bank, including its name, tax identification code (CUIT), address, contact information, and associated customers.
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type Bank struct {
-	Name      string     `json:"name"`          // Bank name
-	Cuit      string     `json:"cuit"`          // Bank tax identification code (CUIT)
-	Address   string     `json:"address"`       // Bank address
-	Telephone string     `json:"telephone"`     // Bank contact number
-	Members   []Customer `json:"customers_ids"` // List of customers associated with the bank
+	Name      string     `json:"name" example:"Bank of Argentina"` // Bank name
+	Cuit      string     `json:"cuit" example:"30-12345678-9"`     // Bank tax identification code (CUIT)
+	Address   string     `json:"address" example:"Av. 9 de Julio"` // Bank address
+	Telephone string     `json:"telephone" example:"0800-888-123"` // Bank contact number
+	Members   []Customer `json:"customers_ids"`                    // List of customers associated with the bank
 }
 
-/*
- * BankCustomerCountDTO
- * ----------------------------------------
- * Represents a data transfer object (DTO) for aggregating customer counts per bank.
- *
- * Fields:
- * - BankCuit (string): The unique tax identification code for the bank.
- * - BankName (string): The name of the bank.
- * - CustomerCount (int): The total number of customers associated with the bank.
- */
+// BankCustomerCountDTO represents the number of customers associated with a bank.
+//
+//	@Summary		Bank customer count model
+//	@Description	Provides a summary of the number of customers linked to a bank.
+//	@Tags			Models
+//	@Accept			json
+//	@Produce		json
 type BankCustomerCountDTO struct {
-	BankCuit      string `json:"bank_cuit"`      // Unique tax identification code (CUIT) of the bank
-	BankName      string `json:"bank_name"`      // Name of the bank
-	CustomerCount int    `json:"customer_count"` // Number of customers associated with the bank
+	BankCuit      string `json:"bank_cuit" example:"30-12345678-9"`     // Unique tax identification code (CUIT) of the bank
+	BankName      string `json:"bank_name" example:"Bank of Argentina"` // Name of the bank
+	CustomerCount int    `json:"customer_count" example:"2500"`         // Number of customers associated with the bank
 }

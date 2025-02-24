@@ -28,19 +28,21 @@ func NewPromotionHandler(promotion services.PromotionService) *PromotionHandler 
 	}
 }
 
-// @Summary Get available promotions by store and date range
-// @Description Retrieves available financing and discount promotions for a specific store within a date range.
-// @Tags Promotion
-// @Accept json
-// @Produce json
-// @Param cuit path string true "Store CUIT"
-// @Param startDate path string true "Start date in RFC3339 format"
-// @Param endDate path string true "End date in RFC3339 format"
-// @Success 200 {array} map[string]interface{} "Available financing promotions"
-// @Success 200 {array} map[string]interface{} "Available discount promotions"
-// @Failure 400 {object} map[string]interface{} "Invalid request parameters"
-// @Failure 500 {object} map[string]interface{} "Failed to retrieve promotions"
-// @Router /v1/promotions/{cuit}/{startDate}/{endDate} [get]
+// GetAvailablePromotionsByStoreAndDateRange retrieves available promotions for a store within a specified date range.
+//
+//	@Summary		Get available promotions by store and date range
+//	@Description	Retrieves the financing and discount promotions available for a store between the specified start and end dates.
+//	@Tags			Promotion
+//	@Accept			json
+//	@Produce		json
+//	@Param			cuit		path		string					true	"CUIT (Unique Tax Identification Code of the store)"
+//	@Param			startDate	path		string					true	"Start date (RFC3339 format)"
+//	@Param			endDate		path		string					true	"End date (RFC3339 format)"
+//	@Success		200			{object}	map[string]interface{}	"Available promotions retrieved successfully"
+//	@Failure		400			{object}	map[string]interface{}	"Invalid startDate or endDate format"
+//	@Failure		500			{object}	map[string]interface{}	"Failed to retrieve available promotions"
+//	@Router			/sql/promotions/available/{cuit}/{startDate}/{endDate} [get]
+//	@Router			/no-sql/promotions/available/{cuit}/{startDate}/{endDate} [get]
 func (h *PromotionHandler) GetAvailablePromotionsByStoreAndDateRange() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		// Log request
@@ -76,23 +78,31 @@ func (h *PromotionHandler) GetAvailablePromotionsByStoreAndDateRange() fiber.Han
 			})
 		}
 
-		// Return success response with financing and discount promotions
-		logger.Info("Available promotions retrieved successfully")
-		return c.JSON(fiber.Map{
-			"financing_promotions": financingPromotions,
-			"discount_promotions":  discountPromotions,
-		})
+		if financingPromotions == nil && discountPromotions == nil {
+			return c.JSON(fiber.Map{
+				"message": "Oops! Apparently, there are no data to show at the moment.",
+			})
+		} else {
+			logger.Info("Available promotions retrieved successfully")
+			return c.JSON(fiber.Map{
+				"financing_promotions": financingPromotions,
+				"discount_promotions":  discountPromotions,
+			})
+		}
 	}
 }
 
-// @Summary Get the most used promotion
-// @Description Retrieves the most used promotion in the system.
-// @Tags Promotion
-// @Accept json
-// @Produce json
-// @Success 200 {object} map[string]interface{} "Most used promotion"
-// @Failure 500 {object} map[string]interface{} "Failed to retrieve the most used promotion"
-// @Router /v1/promotions/most-used [get]
+// GetMostUsedPromotion retrieves the most used promotion.
+//
+//	@Summary		Get most used promotion
+//	@Description	Retrieves the promotion that has been used the most.
+//	@Tags			Promotion
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	map[string]interface{}	"Most used promotion retrieved successfully"
+//	@Failure		500	{object}	map[string]interface{}	"Failed to retrieve most used promotion"
+//	@Router			/sql/promotions/most-used [get]
+//	@Router			/no-sql/promotions/most-used [get]
 func (h *PromotionHandler) GetMostUsedPromotion() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		// Log request
@@ -107,8 +117,14 @@ func (h *PromotionHandler) GetMostUsedPromotion() fiber.Handler {
 			})
 		}
 
-		// Return success response with the most used promotion
 		logger.Info("Most used promotion retrieved successfully")
-		return c.JSON(promotion)
+
+		if promotion == nil {
+			return c.JSON(fiber.Map{
+				"message": "Oops! Apparently, there are no data to show at the moment.",
+			})
+		} else {
+			return c.JSON(promotion)
+		}
 	}
 }
