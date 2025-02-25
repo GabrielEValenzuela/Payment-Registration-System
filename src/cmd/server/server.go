@@ -77,24 +77,42 @@ func NewServer(cfg *config.Config) *Server {
  * Also runs data initialization if required.
  */
 func (srv *Server) InitDatabases() {
-	// Initialize the SQL database
-	sqlDb, err := relational.NewMySQLDB(srv.cfg.SQLDb.DSN, srv.cfg.SQLDb.Clean)
-	if err != nil {
-		logger.Fatal("Failed to initialize MySQL database: %v", err)
+	// Initial delay before retrying
+	delay := 2 * time.Second
+	maxDelay := 60 * time.Second
+
+	for {
+		// Attempt to connect to MySQL
+		sqlDb, err := relational.NewMySQLDB(srv.cfg.SQLDb.DSN, srv.cfg.SQLDb.Clean)
+		if err != nil {
+			logger.Warn("Failed to initialize MySQL database: %v. Retrying in %v...", err, delay)
+			time.Sleep(delay)
+			if delay < maxDelay {
+				delay *= 2 // Exponential backoff
+			}
+			continue
+		}
+
+		srv.sqlDb = sqlDb
+		logger.Info("Successfully connected to MySQL database")
+
+		// Attempt to connect to MongoDB
+		mongoDb, err := nonrelational.NewMongoDB(srv.cfg.NoSQLDb.URI, srv.cfg.NoSQLDb.Database, srv.cfg.NoSQLDb.Clean)
+		if err != nil {
+			logger.Warn("Failed to initialize MongoDB database: %v. Retrying in %v...", err, delay)
+			time.Sleep(delay)
+			if delay < maxDelay {
+				delay *= 2
+			}
+			continue
+		}
+
+		srv.noSqlDb = mongoDb
+		logger.Info("Successfully connected to MongoDB database")
+
+		// Both databases are successfully connected, break the loop
+		break
 	}
-	srv.sqlDb = sqlDb
-
-	logger.Info("Successfully connected to MySQL database")
-
-	// Initialize the MongoDB database
-	mongoDb, err := nonrelational.NewMongoDB(srv.cfg.NoSQLDb.URI, srv.cfg.NoSQLDb.Database, srv.cfg.NoSQLDb.Clean)
-	if err != nil {
-		logger.Fatal("Failed to initialize MongoDB database: %v", err)
-	}
-
-	srv.noSqlDb = mongoDb
-
-	logger.Info("Successfully connected to MongoDB database")
 }
 
 /*

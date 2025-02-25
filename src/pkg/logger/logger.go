@@ -67,8 +67,13 @@ func Info(format string, args ...interface{}) {
 }
 
 // Warn logs a warning message.
-func Warn(msg string, keysAndValues ...interface{}) {
-	logger.Warnw(msg, keysAndValues...)
+func Warn(format string, args ...interface{}) {
+	// Use Sprintf to format the message if arguments are provided
+	message := format
+	if len(args) > 0 {
+		message = fmt.Sprintf(format, args...)
+	}
+	logger.Warn(message)
 }
 
 // Error logs an error message.
@@ -78,7 +83,7 @@ func Error(format string, args ...interface{}) {
 	if len(args) > 0 {
 		message = fmt.Sprintf(format, args...)
 	}
-	logger.Errorw(message)
+	logger.Error(message)
 }
 
 // Debug logs a debug message.
@@ -88,7 +93,7 @@ func Debug(format string, args ...interface{}) {
 	if len(args) > 0 {
 		message = fmt.Sprintf(format, args...)
 	}
-	logger.Debugw(message)
+	logger.Debug(message)
 }
 
 // Fatal logs a fatal message and exits the application.
@@ -98,5 +103,5 @@ func Fatal(format string, args ...interface{}) {
 	if len(args) > 0 {
 		message = fmt.Sprintf(format, args...)
 	}
-	logger.Fatalw(message)
+	logger.Fatal(message)
 }
