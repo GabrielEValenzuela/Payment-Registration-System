@@ -47,8 +47,8 @@ func TestAddFinancingPromotionToBank(t *testing.T) {
 			PromotionTitle:    "Summer Sale 2024",
 			NameStore:         "Tech Store",
 			CuitStore:         "30-12345678-9",
-			ValidityStartDate: models.CustomTime{Time: time.Now().AddDate(0, -1, 0)}, // Mouth before
-			ValidityEndDate:   models.CustomTime{Time: time.Now().AddDate(0, 1, 0)},  // Mouth after
+			ValidityStartDate: time.Now().AddDate(0, -1, 0).Format(time.RFC3339), // 1 month before
+			ValidityEndDate:   time.Now().AddDate(0, 1, 0).Format(time.RFC3339),  // 1 month after
 			Comments:          "Special financing for summer purchases",
 			Bank:              newBank,
 		},

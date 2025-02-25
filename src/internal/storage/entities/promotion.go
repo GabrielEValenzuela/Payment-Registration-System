@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/GabrielEValenzuela/Payment-Registration-System/src/internal/models"
+	"github.com/GabrielEValenzuela/Payment-Registration-System/src/pkg/logger"
 	"go.mongodb.org/mongo-driver/v2/bson"
 )
 
@@ -110,46 +111,54 @@ func (PaymentVoucherCountSQL) TableName() string {
 // SQL -> Models
 func ToPromotion(promotionEntity *PromotionEntitySQL) *models.Promotion {
 	return &models.Promotion{
-		Code:           promotionEntity.Code,
-		PromotionTitle: promotionEntity.PromotionTitle,
-		NameStore:      promotionEntity.NameStore,
-		CuitStore:      promotionEntity.CuitStore,
-		ValidityStartDate: models.CustomTime{
-			Time: promotionEntity.ValidityStartDate,
-		},
-		ValidityEndDate: models.CustomTime{
-			Time: promotionEntity.ValidityEndDate,
-		},
-		Comments: promotionEntity.Comments,
-		Bank:     *ToBank(&promotionEntity.Bank),
+		Code:              promotionEntity.Code,
+		PromotionTitle:    promotionEntity.PromotionTitle,
+		NameStore:         promotionEntity.NameStore,
+		CuitStore:         promotionEntity.CuitStore,
+		ValidityStartDate: promotionEntity.ValidityStartDate.Format(time.RFC3339),
+		ValidityEndDate:   promotionEntity.ValidityEndDate.Format(time.RFC3339),
+		Comments:          promotionEntity.Comments,
+		Bank:              *ToBank(&promotionEntity.Bank),
 	}
 }
 
 func ToPromotionNonSQL(promotionEntity *PromotionEntityNonSQL) *models.Promotion {
 	return &models.Promotion{
-		Code:           promotionEntity.Code,
-		PromotionTitle: promotionEntity.PromotionTitle,
-		NameStore:      promotionEntity.NameStore,
-		CuitStore:      promotionEntity.CuitStore,
-		ValidityStartDate: models.CustomTime{
-			Time: promotionEntity.ValidityStartDate,
-		},
-		ValidityEndDate: models.CustomTime{
-			Time: promotionEntity.ValidityEndDate,
-		},
-		Comments: promotionEntity.Comments,
+		Code:              promotionEntity.Code,
+		PromotionTitle:    promotionEntity.PromotionTitle,
+		NameStore:         promotionEntity.NameStore,
+		CuitStore:         promotionEntity.CuitStore,
+		ValidityStartDate: promotionEntity.ValidityStartDate.Format(time.RFC3339),
+		ValidityEndDate:   promotionEntity.ValidityEndDate.Format(time.RFC3339),
+		Comments:          promotionEntity.Comments,
 	}
 }
 
 // Models -> SQL
+// Models -> SQL
 func ToPromotionEntity(promotion *models.Promotion, bankId uint) *PromotionEntitySQL {
+	defaultTime := time.Time{} // Zero time
+
+	// Parse the date strings into time.Time, use default time if parsing fails
+	startDate, err := time.Parse(time.RFC3339, promotion.ValidityStartDate)
+	if err != nil {
+		logger.Warn("Invalid format for ValidityStartDate '%s', using default time: %v", promotion.ValidityStartDate, err)
+		startDate = defaultTime
+	}
+
+	endDate, err := time.Parse(time.RFC3339, promotion.ValidityEndDate)
+	if err != nil {
+		logger.Warn("Invalid format for ValidityEndDate '%s', using default time: %v", promotion.ValidityEndDate, err)
+		endDate = defaultTime
+	}
+
 	return &PromotionEntitySQL{
 		Code:              promotion.Code,
 		PromotionTitle:    promotion.PromotionTitle,
 		NameStore:         promotion.NameStore,
 		CuitStore:         promotion.CuitStore,
-		ValidityStartDate: promotion.ValidityStartDate.Time,
-		ValidityEndDate:   promotion.ValidityEndDate.Time,
+		ValidityStartDate: startDate,
+		ValidityEndDate:   endDate,
 		Comments:          promotion.Comments,
 		Bank:              *ToBankEntity(&promotion.Bank),
 		BankID:            bankId,
