@@ -26,11 +26,6 @@ definitions:
         example: 0800-888-123
         type: string
     type: object
-  models.CustomTime:
-    properties:
-      time.Time:
-        type: string
-    type: object
   models.Customer:
     description: Contains personal details of a customer, including identification
       information, contact details, associated banks, and linked cards.
@@ -114,14 +109,14 @@ definitions:
         description: Title of the promotion
         example: Holiday Special
         type: string
+      validity_end_date:
+        description: Change to string for Swagger compatibility
+        example: "2026-01-01T00:00:00Z"
+        type: string
       validity_start_date:
-        allOf:
-        - $ref: '#/definitions/models.CustomTime'
-        description: Promotion start date
-      validityEndDate:
-        allOf:
-        - $ref: '#/definitions/models.CustomTime'
-        description: Promotion end date
+        description: Change to string for Swagger compatibility
+        example: "2025-01-01T00:00:00Z"
+        type: string
     type: object
 host: go-app.localhost
 info:

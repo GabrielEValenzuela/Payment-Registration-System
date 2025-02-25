@@ -1342,14 +1342,6 @@ const docTemplate = `{
                 }
             }
         },
-        "models.CustomTime": {
-            "type": "object",
-            "properties": {
-                "time.Time": {
-                    "type": "string"
-                }
-            }
-        },
         "models.Customer": {
             "description": "Contains personal details of a customer, including identification information, contact details, associated banks, and linked cards.",
             "type": "object",
@@ -1458,21 +1450,15 @@ const docTemplate = `{
                     "type": "string",
                     "example": "Holiday Special"
                 },
-                "validityEndDate": {
-                    "description": "Promotion end date",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/models.CustomTime"
-                        }
-                    ]
+                "validity_end_date": {
+                    "description": "Change to string for Swagger compatibility",
+                    "type": "string",
+                    "example": "2026-01-01T00:00:00Z"
                 },
                 "validity_start_date": {
-                    "description": "Promotion start date",
-                    "allOf": [
-                        {
-                            "$ref": "#/definitions/models.CustomTime"
-                        }
-                    ]
+                    "description": "Change to string for Swagger compatibility",
+                    "type": "string",
+                    "example": "2025-01-01T00:00:00Z"
                 }
             }
         }
