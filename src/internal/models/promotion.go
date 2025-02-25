@@ -18,14 +18,14 @@ package models
 //	@Accept			json
 //	@Produce		json
 type Promotion struct {
-	Code              string     `json:"code" example:"PROMO2025"`                           // Unique promotion code
-	PromotionTitle    string     `json:"promotion_title" example:"Holiday Special"`          // Title of the promotion
-	NameStore         string     `json:"name_store" example:"Tech Store"`                    // Name of the store offering the promotion
-	CuitStore         string     `json:"cuit_store" example:"30-98765432-1"`                 // Unique tax identification code (CUIT) of the store
-	ValidityStartDate CustomTime `json:"validity_start_date" example:"2025-01-01T00:00:00Z"` // Promotion start date
-	ValidityEndDate   CustomTime `json:"validity_end_date" example:"2026-01-01T00:00:00Z"`   // Promotion end date
-	Comments          string     `json:"comments" example:"Limited-time offer!"`             // Additional comments about the promotion
-	Bank              Bank       `json:"bank"`                                               // Associated bank details
+	Code              string `json:"code" example:"PROMO2025"`                           // Unique promotion code
+	PromotionTitle    string `json:"promotion_title" example:"Holiday Special"`          // Title of the promotion
+	NameStore         string `json:"name_store" example:"Tech Store"`                    // Name of the store offering the promotion
+	CuitStore         string `json:"cuit_store" example:"30-98765432-1"`                 // Unique tax identification code (CUIT) of the store
+	ValidityStartDate string `json:"validity_start_date" example:"2025-01-01T00:00:00Z"` // Change to string for Swagger compatibility
+	ValidityEndDate   string `json:"validity_end_date" example:"2026-01-01T00:00:00Z"`   // Change to string for Swagger compatibility
+	Comments          string `json:"comments" example:"Limited-time offer!"`             // Additional comments about the promotion
+	Bank              Bank   `json:"bank"`                                               // Associated bank details
 }
 
 // Discount represents a promotion that offers a discount on purchases.

@@ -45,14 +45,29 @@ func (r *BankRepositoryMongo) AddFinancingPromotionToBank(promotionFinancing mod
 	// Fetched bank
 	logger.Info("Information for bank 'cuit' %s: %v", promotionFinancing.Promotion.Bank.Cuit, bank)
 
+	defaultTime := time.Time{} // Zero time
+
+	// Parse the date strings into time.Time, use default time if parsing fails
+	startDate, err := time.Parse(time.RFC3339, promotionFinancing.Promotion.ValidityStartDate)
+	if err != nil {
+		logger.Warn("Invalid format for ValidityStartDate '%s', using default time: %v", promotionFinancing.Promotion.ValidityStartDate, err)
+		startDate = defaultTime
+	}
+
+	endDate, err := time.Parse(time.RFC3339, promotionFinancing.Promotion.ValidityEndDate)
+	if err != nil {
+		logger.Warn("Invalid format for ValidityEndDate '%s', using default time: %v", promotionFinancing.Promotion.ValidityEndDate, err)
+		endDate = defaultTime
+	}
+
 	financingEntity := entities.FinancingEntityNonSQL{
 		PromotionEntity: entities.PromotionEntityNonSQL{
 			Code:              promotionFinancing.Promotion.Code,
 			PromotionTitle:    promotionFinancing.Promotion.PromotionTitle,
 			NameStore:         promotionFinancing.Promotion.NameStore,
 			CuitStore:         promotionFinancing.Promotion.CuitStore,
-			ValidityStartDate: promotionFinancing.Promotion.ValidityStartDate.Time,
-			ValidityEndDate:   promotionFinancing.Promotion.ValidityEndDate.Time,
+			ValidityStartDate: startDate,
+			ValidityEndDate:   endDate,
 			Comments:          promotionFinancing.Promotion.Comments,
 		},
 		NumberOfQuotas: promotionFinancing.NumberOfQuotas,
@@ -63,7 +78,7 @@ func (r *BankRepositoryMongo) AddFinancingPromotionToBank(promotionFinancing mod
 		UpdatedAt:      time.Now(),
 	}
 
-	_, err := r.db.Collection("financings").InsertOne(ctx, financingEntity)
+	_, err = r.db.Collection("financings").InsertOne(ctx, financingEntity)
 	if err != nil {
 		logger.Error("Failed to add financing promotion %v", err)
 		return fmt.Errorf("could not add financing promotion: %w", err)
