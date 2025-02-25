@@ -55,20 +55,20 @@ Create a `config.yml` file with:
 
 ```yml
 sqldb:
-  dsn: "testuser:testpassword@tcp(127.0.0.1:3306)/payment-registration-db?charset=utf8mb4&parseTime=True&loc=Local"
+  dsn: "app-user:app-pwd@tcp(mysql:3306)/payment_registration_system?charset=utf8mb4&parseTime=True&loc=Local"
   clean: true
 
 nosqldb:
-  uri: "mongodb://testuser:testpassword@localhost:27017/payment_registration_system?authSource=admin"
+  uri: "mongodb://app-user:app-pwd@mongodb:27017/payment_registration_system"
   database: "payment_registration_system"
   clean: true
 
 app:
-  port: 8080
+  port: 9000
   read_timeout: 15
   write_timeout: 15
   graceful_shutdown: 15
-  log_path: "debug_payment.log"
+  log_path: "payment_system.log"
   is_production: false
 ```
 
@@ -78,7 +78,7 @@ app:
 go run main.go --config=config.yml
 ```
 
-📌 The API will be accessible at: **`http://localhost:8080`**
+📌 The API will be accessible at: **`http://localhost:<PORT>`**
 
 > [!TIP]
 > Make sure to have a MySQL and MongoDB instance running locally!
@@ -90,32 +90,48 @@ go run main.go --config=config.yml
 1️⃣ **Build and run using Docker Compose**
 
 ```bash
+docker build -t go-app .
+```
+
+Then, run the application:
+
+```bash
 docker-compose up -d --build
 ```
 
-📌 The API will be available at: **`http://localhost:8080`**
+📌 The API will be available at: **`http://go-app.localhost/`**
+
+> [!TIP]
+> We create an auxiliary script if you want populate the database with some data. Run `bash src/internal/testutils/populate.sh` to do it. This is test data, so you can use it to test the API.
 
 ---
 
 ## 📡 API Endpoints
 
-### ✅ Promotion Management
-- **POST** `/v1/sql/promotions/financing` – Add a financing promotion to a bank.
-- **PATCH** `/v1/sql/promotions/financing/{code}` – Extend the validity of a financing promotion.
-- **PATCH** `/v1/sql/promotions/discount/{code}` – Extend the validity of a discount promotion.
-- **DELETE** `/v1/sql/promotions/financing/{code}` – Remove a financing promotion.
-- **DELETE** `/v1/sql/promotions/discount/{code}` – Remove a discount promotion.
+> [!NOTE]
+> For each endpoint, you can choose between SQL or NoSQL storage by changing the URL path. For SQL, use `/v1/sql/` and for NoSQL, use `/v1/nosql/`.
 
-### ✅ Payment & Card Handling
-- **POST** `/v1/sql/cards/summary/` – Get the total payment summary for a card.
-- **POST** `/v1/sql/cards/expiring/` – Retrieve expiring cards within 30 days.
-- **GET** `/v1/sql/cards/top` – Get the 10 most-used cards.
-- **POST** `/v1/sql/cards/purchase/monthly/` – Retrieve purchase information including installments.
+### ✅ Bank group
 
-### ✅ Store & Analytics
-- **GET** `/v1/sql/stores/highest-revenue/{month}/{year}` – Get the store with the highest revenue.
-- **GET** `/v1/sql/promotions/most-used` – Retrieve the most used promotion.
-- **GET** `/v1/sql/banks/customers/count` – Get the number of customers per bank.
+- **GET** `<STORAGE>/customers/count` – Retrieves the number of customers associated with each bank.
+- **POST** `<STORAGE>/promotions/add-promotion/` – Adds a new financing promotion using the request body data.
+- **DELETE** `<STORAGE>/promotions/discount/{code}` – Deletes a discount promotion identified by its code.
+- **PATCH** `<STORAGE>/promotions/discount/{code}` – Updates the expiration date of a discount promotion identified by its code.
+- **DELETE** `<STORAGE>/promotions/financing/{code}` – Deletes a financing promotion identified by its code.
+- **PATCH** `<STORAGE>/promotions/financing/{code}` – Updates the expiration date of a financing promotion identified by its code.
+
+### ✅ Card group
+
+- **GET** `<STORAGE>/cards/expiring-next-30-days/{month}/{year}` – Retrieves the cards that will expire in the given month and year.
+- **GET** `<STORAGE>/cards/payment-summary/{cardNumber}/{month}/{year}` – Retrieves the payment summary for the given month and year.
+- **GET** `<STORAGE>/cards/purchase-monthly/{cuit}/{finalAmount}/{paymentVoucher}` – Retrieves the purchase details for a given CUIT, final amount, and payment voucher.
+- **GET** `<STORAGE>/cards/top` – Retrieves the top 10 cards with the highest usage.
+
+### ✅ Promotion & Store group
+
+- **GET** `<STORAGE>/stores/highest-revenue/{month}/{year}` – Retrieves the stores with the highest revenue for the given month and year.
+- **GET** `<STORAGE>/promotions/available/{cuit}/{startDate}/{endDate}` – Retrieves the financing and discount promotions available for a store between the specified start and end dates.
+- **GET** `<STORAGE>/promotions/most-used` – Retrieves the most used promotions.
 
 ---
 
@@ -128,4 +144,3 @@ This project is licensed under the **GNU General Public License v3.0**. See the 
 🌟 **Contributions & Feedback**
 
 Feel free to **fork, contribute, or submit issues** to help improve this project! 🚀
-
